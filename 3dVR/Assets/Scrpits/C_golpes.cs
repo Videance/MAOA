@@ -1,0 +1,16 @@
+[System.Serializable]
+public class C_golpes
+{
+    public string nome;
+
+    public int JcustoStamina;
+    public int IcustoStamina;
+
+    public string conectorImaoEsq;
+    public string conectorImaoDir;
+
+    public string JdirEqui;
+    public string IdirEqui;
+
+    public bool pernaAberta;
+}

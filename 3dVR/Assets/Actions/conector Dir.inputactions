@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "conector Dir",
+    "maps": [
+        {
+            "name": "conecta Dir",
+            "id": "6e958e5f-2e09-4437-9cc8-605f6230767f",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "d52bb624-a796-4412-971f-a056f02233d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bf8540f2-7015-4b29-af31-dce671d5961e",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

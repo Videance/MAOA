@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "conector Esq",
+    "maps": [
+        {
+            "name": "conecta Esq",
+            "id": "85e0ea1a-1fe3-4aee-8db3-d9431b6605be",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "c3503994-26c9-448f-bc08-d17fccf5dbe4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83e0bc9f-17ee-47a8-a2b2-b1170221bb5b",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
