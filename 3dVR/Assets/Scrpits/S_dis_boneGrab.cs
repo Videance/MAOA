@@ -38,5 +38,7 @@ public class S_dis_boneGrab : MonoBehaviour
 
         if (Vector3.Distance(transform.position, GOinicial.transform.position) >= dis)
             transform.position = GOinicial.transform.position + dir * dis;
+        if (Vector3.Distance(transform.position, GOinicial.transform.position) <= (dis * 0.3f))
+            transform.position = GOinicial.transform.position + dir * (dis * 0.3f);
     }
 }

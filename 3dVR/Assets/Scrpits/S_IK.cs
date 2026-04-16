@@ -22,13 +22,11 @@ public class S_IK : MonoBehaviour
 
     [Header("CONTROLE DA STAMINA")]
     public S_imaos conector;
-    public SphereCollider coll;
 
     private void Awake()
     {
+        conector = GetComponent<S_imaos>();
         rb = GetComponent<Rigidbody>();
-        coll = GetComponent<SphereCollider>();
-        coll.isTrigger = false;
         grab = GetComponent<XRGrabInteractable>();
         cNoAlcance = new List<S_Conector>();
     }
@@ -58,14 +56,19 @@ public class S_IK : MonoBehaviour
                 conectado = cNoAlcance[index].gameObject;
             }
 
-            if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
-            else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
-            Vgolpes.AcharGolpe();
-            grab.trackPosition = false;
-            grab.trackRotation = false;
-            conector.tempo = 0;
+            Conecta();
         }
         else if (conectado != null && botao.action.WasPressedThisFrame()) Desconecta();
+    }
+
+    public void Conecta()
+    {
+        if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
+        else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
+        Vgolpes.AcharGolpe();
+        grab.trackPosition = false;
+        grab.trackRotation = false;
+        conector.tempo = 0;
     }
 
     public void Desconecta()
