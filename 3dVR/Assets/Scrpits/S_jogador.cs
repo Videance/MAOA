@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class S_jogador : MonoBehaviour
 {
+    public S_jogador adversario;
+
     public string imaoEsq;
     public string imaoDir;
 
-    public string dirEqui;
+    public string dirEqui = "c";
 
     public bool pernaAberta;
+
+    [Header("conectores")]
+    List<GameObject> conectores;
 
     [Header("ragdoll")]
     private Animator animator;
@@ -17,7 +22,13 @@ public class S_jogador : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        conectores = new List<GameObject>();
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.CompareTag("c")) conectores.Add(t.gameObject);
+            if (t.CompareTag("p") && t.gameObject.GetComponent<Rigidbody>() == true) ragdollBodies.Add(t.gameObject.GetComponent<Rigidbody>());
+        }
         Ragdoll(false);
     }
 

@@ -9,23 +9,23 @@ public class S_IK : MonoBehaviour
     [Header("JOGADOR 1 OU 2")]
     public string cJ;
     public bool ladoEsq;
-    public S_jogador jogador;
+    private S_jogador jogador;
 
     [Header("PEGADA")]
     public bool segurando;
     public GameObject conectado; // S_dis_boneGrab = mão que tem que pegar
     public InputActionReference botao;
     private Rigidbody rb;
-    public XRGrabInteractable grab;
+    private XRGrabInteractable grab;
     private List<S_Conector> cNoAlcance;
-    public S_verificaGolpe Vgolpes;
 
     [Header("CONTROLE DA STAMINA")]
-    public S_imaos conector;
+    private S_energia energia;
 
     private void Awake()
     {
-        conector = GetComponent<S_imaos>();
+        jogador = GetComponentInParent<S_jogador>();
+        energia = GetComponent<S_energia>();
         rb = GetComponent<Rigidbody>();
         grab = GetComponent<XRGrabInteractable>();
         cNoAlcance = new List<S_Conector>();
@@ -65,17 +65,15 @@ public class S_IK : MonoBehaviour
     {
         if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
         else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
-        Vgolpes.AcharGolpe();
+        S_verificaGolpe.AcharGolpe(jogador, jogador.adversario);
         grab.trackPosition = false;
         grab.trackRotation = false;
-        conector.tempo = 0;
     }
 
     public void Desconecta()
     {
         grab.trackPosition = true;
         grab.trackRotation = true;
-        conector.tempo = 0;
         conectado = null;
     }
 
