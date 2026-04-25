@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
@@ -38,6 +37,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
     private void Update()
     {
+        if (S_verificaGolpe.timeSlow) return;
+
         // troca imagem da bateria
         if (energia > 80) TrocaSprite(0);
         else if (energia > 60) TrocaSprite(n+1);
@@ -73,6 +74,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
     IEnumerator SemStamina()
     {
+        if (S_verificaGolpe.timeSlow) yield break;
+
         rodandoSS = true;
         foreach (var i in IK) if (i.conectado) i.Desconecta();
         foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = false; 
@@ -91,5 +94,11 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         n = 0;
         foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = true;
         rodandoSS = false;
+    }
+
+    public void DesativaStamina()
+    {
+        foreach (var i in IK) if (i.conectado) i.Desconecta();
+        foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = false;
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - c
   - p
+  - IK
   layers:
   - Default
   - TransparentFX

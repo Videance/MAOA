@@ -33,6 +33,7 @@ public class S_Equilibrio : MonoBehaviour
         inicialPos = pCentral.transform.position;
         JinicialPos = transform.position;
         blocos[0].material.color = corAtiva;
+        TrocaEquilibrio("c", 0);
     }
 
     // Update is called once per frame
@@ -43,7 +44,7 @@ public class S_Equilibrio : MonoBehaviour
         Vector3 posAtual = transform.position;
         Vector3 dis = posAtual - ultimaPos;
 
-        if (Vector3.Distance(posAtual, JinicialPos) < dist) pCentral.transform.position += new Vector3(dis.x, 0, dis.z);
+        if (Vector3.Distance(posAtual, JinicialPos) < dist) pCentral.transform.position += new Vector3(dis.x, 0, dis.z) * 2;
         else
         {
             Vector3 dir = (posAtual - JinicialPos).normalized;

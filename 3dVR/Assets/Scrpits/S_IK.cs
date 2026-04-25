@@ -34,9 +34,12 @@ public class S_IK : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (botao.action.WasPressedThisFrame()) Debug.Log("cliclou");
         // conexão por botão
         if (conectado == null && botao.action.WasPressedThisFrame() && cNoAlcance.Count > 0)
         {
+            Debug.Log("conectou");
+
             if (cNoAlcance.Count == 1) conectado = cNoAlcance[0].gameObject;
             else if (cNoAlcance.Count >= 2)
             {
@@ -72,6 +75,8 @@ public class S_IK : MonoBehaviour
 
     public void Desconecta()
     {
+        if (ladoEsq) jogador.imaoEsq = null;
+        else jogador.imaoDir = null;
         grab.trackPosition = true;
         grab.trackRotation = true;
         conectado = null;
@@ -79,7 +84,8 @@ public class S_IK : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(cJ)) return;
+        if (conectado != null) return;
+        if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject)) return;
 
         Debug.Log("entrou");
         cNoAlcance.Add(other.GetComponent<S_Conector>());
@@ -87,7 +93,8 @@ public class S_IK : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(cJ)) return;
+        if (conectado != null) return;
+        if (!other.gameObject.CompareTag("c") || !cNoAlcance.Contains(other.gameObject.GetComponent<S_Conector>())) return;
 
         Debug.Log("saiu");
         cNoAlcance.Remove(other.GetComponent<S_Conector>());

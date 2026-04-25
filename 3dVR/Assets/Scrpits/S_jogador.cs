@@ -13,15 +13,42 @@ public class S_jogador : MonoBehaviour
     public bool pernaAberta;
 
     [Header("conectores")]
-    List<GameObject> conectores;
+    public List<GameObject> conectores;
 
     [Header("ragdoll")]
-    private Animator animator;
+    public bool emRagdoll = false;
+    public Animator animator;
     public GameObject RIG;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
     private void Awake()
     {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        Collider[] advC = adversario.GetComponentsInChildren<Collider>();
+        // 1. Ignorar colisão interna
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            for (int j = i + 1; j < colliders.Length; j++)
+            {
+                Physics.IgnoreCollision(colliders[i], colliders[j]);
+            }
+        }
+
+        // 2. Regras com adversário
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("IK")) // só mãos
+            {
+                for (int j = 0; j < advC.Length; j++)
+                {
+                    if (!advC[j].CompareTag("c")) // ignora tudo menos "c"
+                    {
+                        Physics.IgnoreCollision(colliders[i], advC[j]);
+                    }
+                }
+            }
+        }
+
         animator = GetComponentInChildren<Animator>();
         conectores = new List<GameObject>();
         foreach (Transform t in GetComponentsInChildren<Transform>())
@@ -34,13 +61,16 @@ public class S_jogador : MonoBehaviour
 
     public void Ragdoll(bool forma) //true vira ragdoll
     {
+        emRagdoll = forma;
         animator.enabled = !forma;
         RIG.gameObject.SetActive(!forma);
 
         foreach (Rigidbody rb in ragdollBodies)
         {
             rb.isKinematic = !forma;
-            rb.useGravity = forma;
+            Gravidade(forma);
         }
     }
+
+    public void Gravidade(bool ativada) { foreach (Rigidbody rb in ragdollBodies) rb.useGravity = ativada; }
 }

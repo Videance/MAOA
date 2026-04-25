@@ -10,6 +10,7 @@ public class S_verificaGolpe : MonoBehaviour
 
     public static S_verificaGolpe Vgolpe;
     private void Awake() { Vgolpe = this; }
+    private float tempo = 0;
 
     public static void AcharGolpe(S_jogador jog, S_jogador adv)
     {
@@ -32,17 +33,31 @@ public class S_verificaGolpe : MonoBehaviour
                 Vgolpe.StartCoroutine(Vgolpe.TimeSlow(golpe, jog, adv));
                 break;
             }
+
+            jog.GetComponent<S_energia>().energia -= golpe.custoEnergia;
         }
     }
 
     public IEnumerator TimeSlow(C_golpes move, S_jogador jog, S_jogador adv)
     {
+        if (timeSlow) yield break;
         timeSlow = true;
 
-        
         adv.Ragdoll(true);
+        adv.GetComponent<S_energia>().DesativaStamina();
 
-        yield return new WaitForSecondsRealtime(10f); //espera e 'reseta' partida
+        tempo = 0f;
+        S_IK ik = jog.GetComponentInChildren<S_IK>();
+
+        while (tempo < 5f && ik.conectado != null)
+        {
+            tempo += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        adv.Gravidade(true);
+
+        yield return new WaitForSecondsRealtime(10f);
 
         timeSlow = false;
     }

@@ -3,8 +3,7 @@ public class C_golpes
 {
     public string nome;
 
-    public int JcustoStamina;
-    public int IcustoStamina;
+    public int custoEnergia;
 
     public string conectorImaoEsq;
     public string conectorImaoDir;
