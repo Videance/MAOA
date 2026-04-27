@@ -276,9 +276,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &14581642
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Je
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!1 &280411038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,6 +1410,9 @@ MonoBehaviour:
   segurando: 0
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
+  rb: {fileID: 0}
+  coll: {fileID: 0}
+  estado: 0
 --- !u!114 &285212615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1623,7 +1626,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!144 &304859930
@@ -2024,9 +2027,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!65 &385263569
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2430,6 +2433,9 @@ MonoBehaviour:
   segurando: 0
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
+  rb: {fileID: 0}
+  coll: {fileID: 0}
+  estado: 0
 --- !u!114 &524682461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,7 +2649,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!136 &539083644
@@ -2739,9 +2745,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!1 &547263811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,6 +2968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90808c103d8e6841bdea578649324c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_verificaGolpe
+  pDesequil: {fileID: 946963652544258887, guid: 70c975656603a7d48a824250c4df930b, type: 3}
   golpes:
   - nome: agarramento
     custoEnergia: 10
@@ -2970,6 +2977,7 @@ MonoBehaviour:
     JdirEqui: c
     IdirEqui: c
     pernaAberta: 0
+    dirPdes: {fileID: 1144552815726186088, guid: cd8acdc43f0a7b04f8c73b40eca7b800, type: 3}
 --- !u!4 &601401875
 Transform:
   m_ObjectHideFlags: 0
@@ -3793,7 +3801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Oe
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!1 &890517709
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,9 +3943,11 @@ MonoBehaviour:
   dirEqui: 
   pernaAberta: 0
   conectores: []
+  iks: []
+  IKs: []
   emRagdoll: 0
-  animator: {fileID: 0}
-  RIG: {fileID: 8192787003602529883}
+  animator: {fileID: 1021162314}
+  RIG: {fileID: 1536082992}
   ragdollBodies: []
 --- !u!114 &899273429
 MonoBehaviour:
@@ -4264,9 +4274,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &1005866620
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4383,9 +4393,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!144 &1018805529
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -4456,9 +4466,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &1018805531
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5072,6 +5082,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8975321795187609733, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1562694832}
+    - targetCorrespondingSourceObject: {fileID: 8975321795187609733, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1562694834}
     - targetCorrespondingSourceObject: {fileID: 4820653289747416678, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1014889849}
@@ -5557,7 +5570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: P
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!144 &1021162307
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -5628,9 +5641,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!135 &1021162309
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5833,7 +5846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Od
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &1047554607
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6186,7 +6199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Je
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!1 &1114555583
 GameObject:
   m_ObjectHideFlags: 0
@@ -6838,8 +6851,8 @@ Transform:
   m_GameObject: {fileID: 1179067085}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17526, y: -0.002, z: -0.33536}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.17526, y: -0.2, z: -0.33536}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 216253792}
@@ -6858,7 +6871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Q
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!65 &1196086945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6894,7 +6907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Cd
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &1200085127
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6935,7 +6948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Jd
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!65 &1204985240
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7279,9 +7292,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &1252880129
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7562,7 +7575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Ce
-  ocupado: 1
+  maoOcupando: {fileID: 0}
 --- !u!135 &1395879505
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8064,9 +8077,9 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 20
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -8242,6 +8255,9 @@ MonoBehaviour:
   segurando: 0
   conectado: {fileID: 0}
   botao: {fileID: -3429141879968731858, guid: bfa7cae1789bb5042b4c277a7e1e13b8, type: 3}
+  rb: {fileID: 0}
+  coll: {fileID: 0}
+  estado: 0
 --- !u!114 &1527256015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8600,9 +8616,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1562694832
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8663,15 +8679,29 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 20
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &1562694834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021162277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc32a1ab7d0e715488f99fa276c6aa97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_segueC
+  SpontoDes: {fileID: 0}
+  pDes: {fileID: 0}
 --- !u!1001 &1575996928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9389,6 +9419,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8975321795187609733, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1677453182}
+    - targetCorrespondingSourceObject: {fileID: 8975321795187609733, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1677453183}
     - targetCorrespondingSourceObject: {fileID: 4820653289747416678, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 656319365}
@@ -10345,9 +10378,11 @@ MonoBehaviour:
   dirEqui: 
   pernaAberta: 0
   conectores: []
+  iks: []
+  IKs: []
   emRagdoll: 0
-  animator: {fileID: 0}
-  RIG: {fileID: 8192787003602529883}
+  animator: {fileID: 1575996974}
+  RIG: {fileID: 1983728214}
   ragdollBodies: []
 --- !u!136 &1677453182
 CapsuleCollider:
@@ -10372,6 +10407,20 @@ CapsuleCollider:
   m_Height: 0.009
   m_Direction: 1
   m_Center: {x: 0, y: 0.004, z: 0}
+--- !u!114 &1677453183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521244015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc32a1ab7d0e715488f99fa276c6aa97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_segueC
+  SpontoDes: {fileID: 0}
+  pDes: {fileID: 0}
 --- !u!114 &1687391253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10386,7 +10435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Q
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!65 &1687391256
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10576,7 +10625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: P
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!65 &1716376175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11595,6 +11644,9 @@ MonoBehaviour:
   segurando: 0
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
+  rb: {fileID: 0}
+  coll: {fileID: 0}
+  estado: 0
 --- !u!114 &1755761207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11830,7 +11882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Ce
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &1762873888
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11953,7 +12005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Jd
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!65 &1768469944
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12297,9 +12349,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &1774619698
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13002,7 +13054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Cd
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &2016868129
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13809,9 +13861,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &2099706911 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7578455392156801954, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -13836,7 +13888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Oe
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &2099706920
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13872,7 +13924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Conector
   rb: {fileID: 0}
   localDoCorpo: Od
-  ocupado: 0
+  maoOcupando: {fileID: 0}
 --- !u!135 &2128916733
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14484,11 +14536,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7180d7d08c20e554ea084116300f3d06, type: 3}
---- !u!1 &8192787003602529883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2704665863430645577, guid: 601225aaddc5c1e4c8dff3f284ab96ff, type: 3}
-  m_PrefabInstance: {fileID: 4663138674453676639}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

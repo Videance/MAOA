@@ -27,7 +27,7 @@ public class S_dis_boneGrab : MonoBehaviour
         {
             transform.position = ik.conectado.transform.position;
 
-            if (Vector3.Distance(ik.conectado.transform.position, GOinicial.transform.position) >= (dis * 1.1f)) ik.Desconecta();
+            if (Vector3.Distance(ik.conectado.transform.position, GOinicial.transform.position) >= (dis + (ik.coll.radius / 50f))) ik.Desconecta();
         }
 
         // MOVIMENTO COM LIMITE MÁXIMO

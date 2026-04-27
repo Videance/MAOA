@@ -12,8 +12,10 @@ public class S_jogador : MonoBehaviour
 
     public bool pernaAberta;
 
-    [Header("conectores")]
+    [Header("Partes do corpo")]
     public List<GameObject> conectores;
+    public S_dis_boneGrab[] iks;
+    public S_IK[] IKs;
 
     [Header("ragdoll")]
     public bool emRagdoll = false;
@@ -23,6 +25,12 @@ public class S_jogador : MonoBehaviour
 
     private void Awake()
     {
+        iks = new S_dis_boneGrab[4];
+        iks = GetComponentsInChildren<S_dis_boneGrab>();
+
+        IKs = new S_IK[2];
+        IKs = GetComponentsInChildren<S_IK>();
+
         Collider[] colliders = GetComponentsInChildren<Collider>();
         Collider[] advC = adversario.GetComponentsInChildren<Collider>();
         // 1. Ignorar colisão interna
@@ -33,7 +41,6 @@ public class S_jogador : MonoBehaviour
                 Physics.IgnoreCollision(colliders[i], colliders[j]);
             }
         }
-
         // 2. Regras com adversário
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -68,9 +75,16 @@ public class S_jogador : MonoBehaviour
         foreach (Rigidbody rb in ragdollBodies)
         {
             rb.isKinematic = !forma;
-            Gravidade(forma);
+            Gravidade(false);
         }
     }
 
-    public void Gravidade(bool ativada) { foreach (Rigidbody rb in ragdollBodies) rb.useGravity = ativada; }
+    public void Gravidade(bool ativada)
+    {
+        foreach (Rigidbody rb in ragdollBodies)
+        {
+            if (rb.name == "B Peitoral") rb.useGravity = ativada;
+            else rb.useGravity = false;
+        }
+    }
 }

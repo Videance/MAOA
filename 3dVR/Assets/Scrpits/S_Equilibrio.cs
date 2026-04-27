@@ -19,6 +19,7 @@ public class S_Equilibrio : MonoBehaviour
 
     [Header("Direcao do equilibrio")]
     public string direcaoEquilibrio;
+    bool primeira = true;
 
     [Header("Cores")]
     public Color corNormal = Color.white;
@@ -32,7 +33,6 @@ public class S_Equilibrio : MonoBehaviour
         ultimaPos = transform.position;
         inicialPos = pCentral.transform.position;
         JinicialPos = transform.position;
-        blocos[0].material.color = corAtiva;
         TrocaEquilibrio("c", 0);
     }
 
@@ -70,7 +70,8 @@ public class S_Equilibrio : MonoBehaviour
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
         S_verificaGolpe.AcharGolpe(jogador, jogador.adversario);
-        energia.energia -= 3;
+        if (primeira) primeira = false;
+        else energia.energia -= 3;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
         for (int i = 0; i < blocos.Count; i++)
         {

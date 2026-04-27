@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class C_golpes
 {
@@ -12,4 +14,6 @@ public class C_golpes
     public string IdirEqui;
 
     public bool pernaAberta;
+
+    public GameObject dirPdes;
 }

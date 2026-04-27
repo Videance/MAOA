@@ -7,6 +7,8 @@ TagManager:
   - c
   - p
   - IK
+  - t
+  - tt
   layers:
   - Default
   - TransparentFX

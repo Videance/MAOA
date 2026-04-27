@@ -13,13 +13,8 @@ public class S_Conector : MonoBehaviour
     [Header("m - esquerdo")]
     [Header("")]
     public Rigidbody rb;
-    private CharacterJoint bone;
     public string localDoCorpo;
-    public bool ocupado;
+    public S_IK maoOcupando;
 
-    private void Awake()
-    { 
-        rb = GetComponent<Rigidbody>(); 
-        bone = GetComponentInParent<CharacterJoint>();
-    }
+    private void Awake() { rb = GetComponent<Rigidbody>(); }
 }

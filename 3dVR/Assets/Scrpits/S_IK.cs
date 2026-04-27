@@ -15,89 +15,134 @@ public class S_IK : MonoBehaviour
     public bool segurando;
     public GameObject conectado; // S_dis_boneGrab = mão que tem que pegar
     public InputActionReference botao;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private XRGrabInteractable grab;
     private List<S_Conector> cNoAlcance;
+    public SphereCollider coll;
 
-    [Header("CONTROLE DA STAMINA")]
-    private S_energia energia;
+    public enum estadoMao
+    {
+        livre,
+        segurando,
+        conectada,
+        desativada
+    }
+    public estadoMao estado;
 
     private void Awake()
     {
+        coll = GetComponent<SphereCollider>();
         jogador = GetComponentInParent<S_jogador>();
-        energia = GetComponent<S_energia>();
         rb = GetComponent<Rigidbody>();
         grab = GetComponent<XRGrabInteractable>();
         cNoAlcance = new List<S_Conector>();
+        estado = estadoMao.livre;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (botao.action.WasPressedThisFrame()) Debug.Log("cliclou");
-        // conexão por botão
-        if (conectado == null && botao.action.WasPressedThisFrame() && cNoAlcance.Count > 0)
+        if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
         {
-            Debug.Log("conectou");
-
-            if (cNoAlcance.Count == 1) conectado = cNoAlcance[0].gameObject;
-            else if (cNoAlcance.Count >= 2)
+            Debug.Log("cliclou");
+            
+            if (estado == estadoMao.segurando && cNoAlcance.Count > 0)
             {
-                int index = 0;
-                float disA = 9999;
+                Debug.Log("conectou");
 
-                for (int i = 0; i < cNoAlcance.Count; i++)
+                if (cNoAlcance.Count == 1) conectado = cNoAlcance[0].gameObject;
+                else if (cNoAlcance.Count >= 2)
                 {
-                    float dis = Vector3.Distance(transform.position, cNoAlcance[i].transform.position);
-                    if (dis < disA)
+                    int index = 0;
+                    float disA = 9999;
+                    for (int i = 0; i < cNoAlcance.Count; i++)
                     {
-                        disA = dis;
-                        index = i;
+                        float dis = Vector3.Distance(transform.position, cNoAlcance[i].transform.position);
+                        if (dis < disA)
+                        {
+                            disA = dis;
+                            index = i;
+                        }
                     }
+                    conectado = cNoAlcance[index].gameObject;
                 }
 
-                conectado = cNoAlcance[index].gameObject;
+                Conecta();
             }
-
-            Conecta();
+            else if (estado == estadoMao.conectada) Desconecta();
         }
-        else if (conectado != null && botao.action.WasPressedThisFrame()) Desconecta();
+    }
+
+    public void trocaEstado(estadoMao es)
+    {
+        estado = es;
+        if (es == estadoMao.desativada || es == estadoMao.conectada)
+        {
+            grab.trackPosition = false;
+            grab.trackRotation = false;
+            grab.enabled = false;
+        }
+        if (es == estadoMao.livre)
+        {
+            grab.trackPosition = true;
+            grab.trackRotation = true;
+            grab.enabled = true;
+        }
+
+        if (es == estadoMao.segurando) segurando = true;
+        else segurando = false;
     }
 
     public void Conecta()
     {
+        if (grab.isSelected)
+        {
+            var interactor = grab.firstInteractorSelecting;
+            grab.interactionManager.SelectExit(interactor, grab);
+        }
+
         if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
         else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
+
         S_verificaGolpe.AcharGolpe(jogador, jogador.adversario);
-        grab.trackPosition = false;
-        grab.trackRotation = false;
+
+        conectado.GetComponent<S_Conector>().maoOcupando = this;
+
+        trocaEstado(estadoMao.conectada);
     }
 
     public void Desconecta()
     {
         if (ladoEsq) jogador.imaoEsq = null;
         else jogador.imaoDir = null;
-        grab.trackPosition = true;
-        grab.trackRotation = true;
+
+        conectado.GetComponent<S_Conector>().maoOcupando = null;
         conectado = null;
+
+        trocaEstado(estadoMao.livre);
     }
 
+    //---------- CONTROLE DE COLISÕES ----------
     private void OnTriggerEnter(Collider other)
     {
-        if (conectado != null) return;
         if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject)) return;
 
         Debug.Log("entrou");
-        cNoAlcance.Add(other.GetComponent<S_Conector>());
+        if (!cNoAlcance.Contains(other.GetComponent<S_Conector>())) cNoAlcance.Add(other.GetComponent<S_Conector>());
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (conectado != null) return;
-        if (!other.gameObject.CompareTag("c") || !cNoAlcance.Contains(other.gameObject.GetComponent<S_Conector>())) return;
+        S_Conector sOther = other.gameObject.GetComponent<S_Conector>();
+
+        if (!other.gameObject.CompareTag("c") || !cNoAlcance.Contains(sOther)) return;
 
         Debug.Log("saiu");
-        cNoAlcance.Remove(other.GetComponent<S_Conector>());
+        if (cNoAlcance.Contains(sOther))
+        {
+            if (conectado != null && sOther == conectado.GetComponent<S_Conector>()) return;
+            else cNoAlcance.Remove(sOther);
+        }
     }
 
 
@@ -114,13 +159,9 @@ public class S_IK : MonoBehaviour
         grab.selectExited.RemoveListener(OnRelease);
     }
 
-    private void OnGrab(SelectEnterEventArgs args)
-    {
-        segurando = true;
-    }
+    private void OnGrab(SelectEnterEventArgs args) 
+    { estado = estadoMao.segurando; }
 
-    private void OnRelease(SelectExitEventArgs args)
-    {
-        segurando = false;
-    }
+    private void OnRelease(SelectExitEventArgs args) 
+    { if (estado == estadoMao.segurando) estado = estadoMao.livre; }
 }
