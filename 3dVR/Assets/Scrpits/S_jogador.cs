@@ -5,11 +5,10 @@ public class S_jogador : MonoBehaviour
 {
     public S_jogador adversario;
 
+    [Header("Pos atual")]
     public string imaoEsq;
     public string imaoDir;
-
     public string dirEqui = "c";
-
     public bool pernaAberta;
 
     [Header("Partes do corpo")]
@@ -23,7 +22,10 @@ public class S_jogador : MonoBehaviour
     public GameObject RIG;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
-    private void Awake()
+    [Header("pontuacao")]
+    public int jogPontos = 0;
+
+    protected virtual void Awake()
     {
         iks = new S_dis_boneGrab[4];
         iks = GetComponentsInChildren<S_dis_boneGrab>();

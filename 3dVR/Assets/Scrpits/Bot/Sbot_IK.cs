@@ -1,34 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class S_IK : MonoBehaviour
+public class Sbot_IK : S_IK
 {
-    [Header("JOGADOR 1 OU 2")]
-    public string cJ;
-    public bool ladoEsq;
-    protected S_jogador jogador;
-
-    [Header("PEGADA")]
-    public bool segurando;
-    public GameObject conectado; // S_dis_boneGrab = mão que tem que pegar
-    public InputActionReference botao;
-    public Rigidbody rb;
-    protected XRGrabInteractable grab;
-    protected List<S_Conector> cNoAlcance;
-    public SphereCollider coll;
-
-    public enum estadoMao
-    {
-        livre,
-        segurando,
-        conectada,
-        desativada
-    }
-    public estadoMao estado;
-
     private void Awake()
     {
         coll = GetComponent<SphereCollider>();
@@ -45,7 +21,7 @@ public class S_IK : MonoBehaviour
         if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
         {
             Debug.Log("cliclou");
-            
+
             if (estado == estadoMao.segurando && cNoAlcance.Count > 0)
             {
                 Debug.Log("conectou");
@@ -159,9 +135,9 @@ public class S_IK : MonoBehaviour
         grab.selectExited.RemoveListener(OnRelease);
     }
 
-    private void OnGrab(SelectEnterEventArgs args) 
+    private void OnGrab(SelectEnterEventArgs args)
     { estado = estadoMao.segurando; }
 
-    private void OnRelease(SelectExitEventArgs args) 
+    private void OnRelease(SelectExitEventArgs args)
     { if (estado == estadoMao.segurando) estado = estadoMao.livre; }
 }

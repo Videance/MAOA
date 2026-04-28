@@ -1,22 +1,47 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class S_verificaGolpe : MonoBehaviour
 {
     public GameObject pDesequil;
+    public TextMesh textTempo;
 
     [Header("Lista de golpes")]
     [SerializeField] public List<C_golpes> golpes = new List<C_golpes>();
     private static C_golpes ataque;
 
+    public static bool resetaCena = false;
     public static bool timeSlow = false;
-
+    private Light luz;
     public static S_verificaGolpe Vgolpe;
-    private void Awake() { Vgolpe = this; }
 
-    public static void AcharGolpe(S_jogador jog, S_jogador adv)
+    private void Awake()
+    {
+        if (Vgolpe == null)
+        {
+            Vgolpe = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        textTempo.text = "";
+        luz = FindAnyObjectByType<Light>();
+    }
+
+    void OnEnable() { SceneManager.sceneLoaded += AoCarregarCena; }
+    void OnDisable() { SceneManager.sceneLoaded -= AoCarregarCena; }
+    void AoCarregarCena(Scene scene, LoadSceneMode mode)
+    {
+        luz = FindAnyObjectByType<Light>();
+        textTempo = S_instancia.StextNum.texto;
+    }
+
+    public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
         if (timeSlow) return;
 
@@ -38,8 +63,7 @@ public class S_verificaGolpe : MonoBehaviour
                 Vgolpe.StartCoroutine(Vgolpe.TimeSlow(golpe, jog, adv));
                 break;
             }
-
-            jog.GetComponent<S_energia>().energia -= golpe.custoEnergia;
+            else if (pontos == 4 && golpe.IdirEqui != adv.dirEqui) jog.GetComponent<S_energia>().energia -= golpe.custoEnergia;
         }
     }
 
@@ -50,13 +74,14 @@ public class S_verificaGolpe : MonoBehaviour
 
         //cria o ponto
         Vector3 meio = (jog.IKs[0].transform.position + jog.IKs[1].transform.position) / 2f;
+        Vector3 meio2 = (jog.transform.position - adv.transform.position) / 2f;
 
-        GameObject pde = Instantiate(pDesequil, meio, pDesequil.transform.rotation);
+        GameObject pde = Instantiate(pDesequil, new Vector3(meio.x, meio.y, meio2.z), pDesequil.transform.rotation);
         adv.GetComponentInChildren<S_segueC>().pDes = pde.GetComponent<S_rb>().rb;
         adv.GetComponentInChildren<S_segueC>().SpontoDes = pde.GetComponent<S_pontoDes>();
         S_pontoDes Spde = pde.GetComponent<S_pontoDes>();
 
-        GameObject caminho = Instantiate(ataque.dirPdes, meio, ataque.dirPdes.transform.rotation);
+        GameObject caminho = Instantiate(ataque.dirPdes, new Vector3(meio.x, meio.y, meio2.z), ataque.dirPdes.transform.rotation);
 
         //pega energia
         S_energia jogEner = jog.GetComponent<S_energia>();
@@ -70,25 +95,39 @@ public class S_verificaGolpe : MonoBehaviour
         for (int i = 0; i < jog.iks.Length; i++) { jog.iks[i].gameObject.layer = LayerMask.NameToLayer("xG"); }
 
         //tempo lento:
-        Time.timeScale = 0.2f;
+        Time.timeScale = 0.1f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        //controla luz
+        luz.enabled = false;
 
         //controla o tempo máximo
-        float tempo = 0f;
+        float tempo = 3.5f;
         S_IK ik = jog.GetComponentInChildren<S_IK>();
-        while (tempo < 4f && !Spde.jogado && Spde.noCaminho)
+        while (tempo > 0.5f && !Spde.jogado && Spde.noCaminho)
         {
-            tempo += Time.unscaledDeltaTime;
+            tempo -= Time.unscaledDeltaTime;
+            textTempo.text = Mathf.RoundToInt(tempo).ToString();
             yield return null;
         }
 
+        textTempo.text = "";
         Destroy(pde);
         Destroy(caminho);
         adv.Gravidade(true);
 
+        luz.enabled = true;
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
 
-        yield return new WaitForSecondsRealtime(10f);
+        yield return new WaitUntil(() => resetaCena == true);
+        Time.timeScale = 0.4f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        yield return new WaitForSecondsRealtime(5f);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
 
         timeSlow = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);      
     }
 }

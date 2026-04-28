@@ -1,25 +1,22 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S_Equilibrio : MonoBehaviour
 {
     public GameObject pCentral;
-    private Vector3 ultimaPos;
-    private Vector3 inicialPos;
-    private Vector3 JinicialPos;
+    protected Vector3 inicialPos;
+    protected Vector3 JinicialPos;
     public S_jogador jogador;
-    private S_energia energia;
+    protected S_energia energia;
 
     [Header("Valor do equilibrio")]
     public float dist = 0.0768f;
     public float XYdir = 0.74f;
-
-    private Vector3 dir;
+    public float multiplicador = 1f;
 
     [Header("Direcao do equilibrio")]
     public string direcaoEquilibrio;
-    bool primeira = true;
+    protected bool primeira = true;
 
     [Header("Cores")]
     public Color corNormal = Color.white;
@@ -30,7 +27,6 @@ public class S_Equilibrio : MonoBehaviour
     {
         jogador = GetComponentInParent<S_jogador>();
         energia = GetComponentInParent<S_energia>();
-        ultimaPos = transform.position;
         inicialPos = pCentral.transform.position;
         JinicialPos = transform.position;
         TrocaEquilibrio("c", 0);
@@ -41,22 +37,27 @@ public class S_Equilibrio : MonoBehaviour
     {
         if (pCentral == null || energia.rodandoSS) return;
 
-        Vector3 posAtual = transform.position;
-        Vector3 dis = posAtual - ultimaPos;
+        Vector3 offset = transform.position - JinicialPos;
+        offset.y = 0;
 
-        if (Vector3.Distance(posAtual, JinicialPos) < dist) pCentral.transform.position += new Vector3(dis.x, 0, dis.z) * 2;
-        else
-        {
-            Vector3 dir = (posAtual - JinicialPos).normalized;
-            pCentral.transform.position = inicialPos + new Vector3(dir.x, 0, dir.z) * dist;
-        }
+        float mag = offset.magnitude;
 
-        ultimaPos = posAtual;
+        if (mag < 0.0001f) return;
+
+        float distancia = Mathf.Min(mag * multiplicador, dist);
+
+        Vector3 alvo = inicialPos + offset.normalized * distancia;
+
+        pCentral.transform.position = Vector3.Lerp(
+            pCentral.transform.position,
+            alvo,
+            Time.deltaTime * 20f
+        );
 
         if (Vector3.Distance(pCentral.transform.position, inicialPos) <= (dist * 0.52f) && direcaoEquilibrio != "c") TrocaEquilibrio("c", 0);
         else if (Vector3.Distance(pCentral.transform.position, inicialPos) >= (dist * 0.6f))
         {
-            dir = (pCentral.transform.position - inicialPos).normalized;
+            Vector3 dir = (pCentral.transform.position - inicialPos).normalized;
             if (dir.x > XYdir && direcaoEquilibrio != "d") TrocaEquilibrio("d", 2);
             else if (dir.x < -XYdir && direcaoEquilibrio != "e") TrocaEquilibrio("e", 4);
             else if (dir.z > XYdir && direcaoEquilibrio != "f") TrocaEquilibrio("f", 3);
@@ -69,7 +70,7 @@ public class S_Equilibrio : MonoBehaviour
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
-        S_verificaGolpe.AcharGolpe(jogador, jogador.adversario);
+        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
         if (primeira) primeira = false;
         else energia.energia -= 3;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);

@@ -36,7 +36,7 @@ public class S_Postura : MonoBehaviour
     {
         if (jogador.pernaAberta == aberta) return;
         jogador.pernaAberta = aberta;
-        S_verificaGolpe.AcharGolpe(jogador, jogador.adversario);
+        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
         energia.energia -= 3;
     }
 }
