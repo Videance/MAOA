@@ -1,93 +1,49 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections;
 
 public class Sbot_IK : S_IK
 {
-    private void Awake()
+    public string alvoC;
+    public float speed = 0.05f;
+
+    protected override void Awake()
     {
-        coll = GetComponent<SphereCollider>();
-        jogador = GetComponentInParent<S_jogador>();
-        rb = GetComponent<Rigidbody>();
-        grab = GetComponent<XRGrabInteractable>();
-        cNoAlcance = new List<S_Conector>();
-        estado = estadoMao.livre;
+        base.Awake();
+
+        jogador = GetComponentInParent<Sbot_jogador>();
+
+        speed = Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade * speed);
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Move(Transform conector)
     {
-        if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
+        if (conectado != null)
         {
-            Debug.Log("cliclou");
-
-            if (estado == estadoMao.segurando && cNoAlcance.Count > 0)
-            {
-                Debug.Log("conectou");
-
-                if (cNoAlcance.Count == 1) conectado = cNoAlcance[0].gameObject;
-                else if (cNoAlcance.Count >= 2)
-                {
-                    int index = 0;
-                    float disA = 9999;
-                    for (int i = 0; i < cNoAlcance.Count; i++)
-                    {
-                        float dis = Vector3.Distance(transform.position, cNoAlcance[i].transform.position);
-                        if (dis < disA)
-                        {
-                            disA = dis;
-                            index = i;
-                        }
-                    }
-                    conectado = cNoAlcance[index].gameObject;
-                }
-
-                Conecta();
-            }
-            else if (estado == estadoMao.conectada) Desconecta();
+            Desconecta();
+            float t = 2 / ((((Sbot_jogador)jogador).dificuldade + 1) / 2);
+            yield return new WaitForSeconds(t);
         }
+
+        float te = 0f;
+        while (conectado == null && te < 3f)
+        {
+            Debug.Log("eu");
+            te += Time.unscaledDeltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, conector.position, speed * Time.deltaTime);
+            yield return null;
+        }
+        Debug.Log("fim");
     }
 
-    public void trocaEstado(estadoMao es)
+    public override void Conecta()
     {
-        estado = es;
-        if (es == estadoMao.desativada || es == estadoMao.conectada)
-        {
-            grab.trackPosition = false;
-            grab.trackRotation = false;
-            grab.enabled = false;
-        }
-        if (es == estadoMao.livre)
-        {
-            grab.trackPosition = true;
-            grab.trackRotation = true;
-            grab.enabled = true;
-        }
-
-        if (es == estadoMao.segurando) segurando = true;
-        else segurando = false;
-    }
-
-    public void Conecta()
-    {
-        if (grab.isSelected)
-        {
-            var interactor = grab.firstInteractorSelecting;
-            grab.interactionManager.SelectExit(interactor, grab);
-        }
-
         if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
-        else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
-
-        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
+        else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;  
 
         conectado.GetComponent<S_Conector>().maoOcupando = this;
-
-        trocaEstado(estadoMao.conectada);
     }
 
-    public void Desconecta()
+    public override void Desconecta()
     {
         if (ladoEsq) jogador.imaoEsq = null;
         else jogador.imaoDir = null;
@@ -95,49 +51,23 @@ public class Sbot_IK : S_IK
         conectado.GetComponent<S_Conector>().maoOcupando = null;
         conectado = null;
 
-        trocaEstado(estadoMao.livre);
+        Vector3 dir = (transform.position - peito.position).normalized;
+        rb.linearVelocity = dir * 200;
     }
 
     //---------- CONTROLE DE COLISÕES ----------
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject)) return;
-
-        Debug.Log("entrou");
-        if (!cNoAlcance.Contains(other.GetComponent<S_Conector>())) cNoAlcance.Add(other.GetComponent<S_Conector>());
+        if (other.gameObject.CompareTag("c") && !conectado && other.GetComponent<S_Conector>().localDoCorpo == alvoC)
+        {
+            conectado = other.gameObject;
+            Conecta();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        S_Conector sOther = other.gameObject.GetComponent<S_Conector>();
-
-        if (!other.gameObject.CompareTag("c") || !cNoAlcance.Contains(sOther)) return;
-
-        Debug.Log("saiu");
-        if (cNoAlcance.Contains(sOther))
-        {
-            if (conectado != null && sOther == conectado.GetComponent<S_Conector>()) return;
-            else cNoAlcance.Remove(sOther);
-        }
+        if (other.gameObject.CompareTag("c") && conectado && other.GetComponent<S_Conector>().localDoCorpo == alvoC)
+            Desconecta();
     }
-
-
-    // ---------- CONTROLE DE VARIÁVEL QUANDO SEGURANDO OU NÃO ----------
-    private void OnEnable()
-    {
-        grab.selectEntered.AddListener(OnGrab);
-        grab.selectExited.AddListener(OnRelease);
-    }
-
-    private void OnDisable()
-    {
-        grab.selectEntered.RemoveListener(OnGrab);
-        grab.selectExited.RemoveListener(OnRelease);
-    }
-
-    private void OnGrab(SelectEnterEventArgs args)
-    { estado = estadoMao.segurando; }
-
-    private void OnRelease(SelectExitEventArgs args)
-    { if (estado == estadoMao.segurando) estado = estadoMao.livre; }
 }

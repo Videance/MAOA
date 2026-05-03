@@ -17,6 +17,8 @@ public class S_verificaGolpe : MonoBehaviour
     private Light luz;
     public static S_verificaGolpe Vgolpe;
 
+    public static float tempo = 0;
+
     private void Awake()
     {
         if (Vgolpe == null)
@@ -29,7 +31,7 @@ public class S_verificaGolpe : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        textTempo.text = "";
+        if (textTempo != null)  textTempo.text = "";
         luz = FindAnyObjectByType<Light>();
     }
 
@@ -38,7 +40,6 @@ public class S_verificaGolpe : MonoBehaviour
     void AoCarregarCena(Scene scene, LoadSceneMode mode)
     {
         luz = FindAnyObjectByType<Light>();
-        textTempo = S_instancia.StextNum.texto;
     }
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
@@ -102,16 +103,16 @@ public class S_verificaGolpe : MonoBehaviour
         luz.enabled = false;
 
         //controla o tempo máximo
-        float tempo = 3.5f;
+        float t = 3.5f;
         S_IK ik = jog.GetComponentInChildren<S_IK>();
-        while (tempo > 0.5f && !Spde.jogado && Spde.noCaminho)
+        while (t > 0.5f && !Spde.jogado && Spde.noCaminho)
         {
-            tempo -= Time.unscaledDeltaTime;
-            textTempo.text = Mathf.RoundToInt(tempo).ToString();
+            t -= Time.unscaledDeltaTime;
+            if(textTempo != null) textTempo.text = Mathf.RoundToInt(tempo).ToString();
             yield return null;
         }
 
-        textTempo.text = "";
+        if (textTempo != null) textTempo.text = "";
         Destroy(pde);
         Destroy(caminho);
         adv.Gravidade(true);
@@ -120,7 +121,20 @@ public class S_verificaGolpe : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        yield return new WaitUntil(() => resetaCena == true);
+        tempo = 10f;
+        while (tempo > 0f)
+        {
+            tempo -= Time.unscaledDeltaTime;
+            if (resetaCena)
+            {
+                jog.jogPontos = 1;
+                continue;
+            }
+            yield return null;
+        }
+
+        jog.jogPontos += 1;
+
         Time.timeScale = 0.4f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         yield return new WaitForSecondsRealtime(5f);

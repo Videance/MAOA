@@ -77,7 +77,11 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         if (S_verificaGolpe.timeSlow) yield break;
 
         rodandoSS = true;
-        foreach (var i in IK) if (i.conectado) i.Desconecta();
+        foreach (var i in IK)
+        {
+            i.trocaEstado(S_IK.estadoMao.desativada);
+            if (i.conectado) i.Desconecta();
+        }
         foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = false; 
         
         n = 5;
@@ -92,6 +96,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
         energia = Mathf.Clamp(energia, 0, energiaMax);
         n = 0;
+        foreach (var i in IK) i.trocaEstado(S_IK.estadoMao.livre);
         foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = true;
         rodandoSS = false;
     }

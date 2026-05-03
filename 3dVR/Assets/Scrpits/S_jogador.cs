@@ -6,14 +6,14 @@ public class S_jogador : MonoBehaviour
     public S_jogador adversario;
 
     [Header("Pos atual")]
-    public string imaoEsq;
-    public string imaoDir;
+    public string imaoEsq = null;
+    public string imaoDir = null;
     public string dirEqui = "c";
-    public bool pernaAberta;
+    public bool pernaAberta = false;
 
     [Header("Partes do corpo")]
-    public List<GameObject> conectores;
-    public S_dis_boneGrab[] iks;
+    public List<S_Conector> conectores;
+    public S_dis_boneGrab[] pernas;
     public S_IK[] IKs;
 
     [Header("ragdoll")]
@@ -27,7 +27,7 @@ public class S_jogador : MonoBehaviour
 
     protected virtual void Awake()
     {
-        iks = new S_dis_boneGrab[4];
+        pernas = new S_dis_boneGrab[2];
         iks = GetComponentsInChildren<S_dis_boneGrab>();
 
         IKs = new S_IK[2];
@@ -59,10 +59,10 @@ public class S_jogador : MonoBehaviour
         }
 
         animator = GetComponentInChildren<Animator>();
-        conectores = new List<GameObject>();
+        conectores = new List<S_Conector>();
         foreach (Transform t in GetComponentsInChildren<Transform>())
         {
-            if (t.CompareTag("c")) conectores.Add(t.gameObject);
+            if (t.CompareTag("c")) conectores.Add(t.GetComponent<S_Conector>());
             if (t.CompareTag("p") && t.gameObject.GetComponent<Rigidbody>() == true) ragdollBodies.Add(t.gameObject.GetComponent<Rigidbody>());
         }
         Ragdoll(false);

@@ -18,7 +18,13 @@ public class S_IK : MonoBehaviour
     public Rigidbody rb;
     protected XRGrabInteractable grab;
     protected List<S_Conector> cNoAlcance;
+    public Renderer rend;
     public SphereCollider coll;
+    public Transform peito;
+
+    private Color corBase;
+    private Color corAtivada;
+    private Color corDesligado;
 
     public enum estadoMao
     {
@@ -29,13 +35,18 @@ public class S_IK : MonoBehaviour
     }
     public estadoMao estado;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         coll = GetComponent<SphereCollider>();
         jogador = GetComponentInParent<S_jogador>();
         rb = GetComponent<Rigidbody>();
         grab = GetComponent<XRGrabInteractable>();
         cNoAlcance = new List<S_Conector>();
+
+        ColorUtility.TryParseHtmlString("#BA1AB8", out corBase);
+        ColorUtility.TryParseHtmlString("#1AA9BA", out corAtivada);
+        ColorUtility.TryParseHtmlString("#111011", out corDesligado);
+
         estado = estadoMao.livre;
     }
 
@@ -73,27 +84,42 @@ public class S_IK : MonoBehaviour
         }
     }
 
-    public void trocaEstado(estadoMao es)
+    public virtual void trocaEstado(estadoMao es)
     {
         estado = es;
-        if (es == estadoMao.desativada || es == estadoMao.conectada)
+
+        Material mat = rend.material;
+
+        if (es == estadoMao.conectada)
         {
+            mat.SetColor("_Cor", corAtivada);
+            grab.trackPosition = false;
+            grab.trackRotation = false;
+            grab.enabled = false;
+        }
+        if (es == estadoMao.desativada)
+        {
+            mat.SetColor("_Cor", corDesligado);
             grab.trackPosition = false;
             grab.trackRotation = false;
             grab.enabled = false;
         }
         if (es == estadoMao.livre)
         {
+            mat.SetColor("_Cor", corBase);
             grab.trackPosition = true;
             grab.trackRotation = true;
             grab.enabled = true;
         }
-
-        if (es == estadoMao.segurando) segurando = true;
+        if (es == estadoMao.segurando)
+        {
+            mat.SetColor("_Cor", corBase);
+            segurando = true;
+        }
         else segurando = false;
     }
 
-    public void Conecta()
+    public virtual void Conecta()
     {
         if (grab.isSelected)
         {
@@ -107,25 +133,31 @@ public class S_IK : MonoBehaviour
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
 
         conectado.GetComponent<S_Conector>().maoOcupando = this;
+        conectado.GetComponent<S_Conector>().rend.material.SetColor("_Cor", corAtivada);
 
         trocaEstado(estadoMao.conectada);
     }
 
-    public void Desconecta()
+    public virtual void Desconecta()
     {
         if (ladoEsq) jogador.imaoEsq = null;
         else jogador.imaoDir = null;
+
+        conectado.GetComponent<S_Conector>().rend.material.SetColor("_Cor", corBase);
 
         conectado.GetComponent<S_Conector>().maoOcupando = null;
         conectado = null;
 
         trocaEstado(estadoMao.livre);
+
+        Vector3 dir = (transform.position - peito.position).normalized;
+        rb.linearVelocity = dir * 2;
     }
 
     //---------- CONTROLE DE COLISÕES ----------
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject)) return;
+        if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject.GetComponent<S_Conector>())) return;
 
         Debug.Log("entrou");
         if (!cNoAlcance.Contains(other.GetComponent<S_Conector>())) cNoAlcance.Add(other.GetComponent<S_Conector>());

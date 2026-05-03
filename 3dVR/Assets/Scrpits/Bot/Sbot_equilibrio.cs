@@ -45,6 +45,10 @@ public class Sbot_equilibrio : S_Equilibrio
     IEnumerator mover(Vector3 final)
     {
         movendo = true;
+
+        int objeto = Random.Range(0, blocos.Count);
+        Vector3 alvo = blocos[objeto].transform.position;
+
         while (Vector3.Distance(pCentral.transform.position, final) > 0.01f)
         {
             pCentral.transform.position = Vector3.Lerp

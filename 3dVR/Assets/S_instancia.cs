@@ -19,6 +19,6 @@ public class S_instancia : MonoBehaviour
             return;
         }
 
-        texto = GetComponent<TextMesh>();
+        texto = GetComponentInChildren<TextMesh>();
     }
 }

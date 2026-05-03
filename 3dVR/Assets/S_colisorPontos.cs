@@ -12,11 +12,10 @@ public class S_colisorPontos : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("ch") && contaVitoria)
+        if (collision.gameObject.CompareTag("ch") && contaVitoria && S_verificaGolpe.timeSlow)
         {
-            jogador.jogPontos = 2;
-            S_verificaGolpe.resetaCena = true;
             contaVitoria = false;
+            S_verificaGolpe.resetaCena = true;
         }
     }
 }
