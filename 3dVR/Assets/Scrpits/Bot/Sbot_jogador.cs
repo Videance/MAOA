@@ -11,13 +11,22 @@ public class Sbot_jogador : S_jogador
     public Sbot_IK maoE;
 
     float t;
+    float t2 = 0;
     int n = 0;
     public int dificuldade = 1; // 1 a 5
 
+    Sbot_equilibrio equilibrio;
+    public List<GameObject> vectorPlacas = new List<GameObject>();
+
     private void Start()
     {
+        equilibrio = GetComponent<Sbot_equilibrio>();
+        foreach (Transform t in GetComponentsInChildren<Transform>()) if (t.CompareTag("e")) vectorPlacas.Add(t.gameObject);
+
         golpeP = new List<bool>();
         for (int i = 0; i < 4; i++) golpeP.Add(false);
+
+        t2 = Random.Range(3, 7) / dificuldade;
 
         ProcuraGolpe(dificuldade, out golpe);
 
@@ -26,13 +35,15 @@ public class Sbot_jogador : S_jogador
 
     private void Update()
     {
-        return;
-
-        t += Time.unscaledDeltaTime;
-        if (t >= (5 / dificuldade))
+        if (!equilibrio.movendo)
         {
-            t = 0;
-            VerificaVar();          
+            t += Time.unscaledDeltaTime;
+            if (t >= t2)
+            {
+                t = 0;
+                t2 = Random.Range(2.5f, 6.5f) / dificuldade;
+                StartCoroutine(equilibrio.mover(Vector3.zero));
+            }
         }
     }
 
@@ -56,12 +67,10 @@ public class Sbot_jogador : S_jogador
 
     public void VerificaVar()
     {
-        for (int i = 0; i < golpeP.Count; i++) { golpeP[i] = false; }
-
-        if (dirEqui == golpe.JdirEqui) golpeP[0] = true;
-        if (pernaAberta == golpe.pernaAberta) golpeP[1] = true;
-        if (imaoDir == golpe.conectorImaoDir) golpeP[2] = true;
-        if (imaoEsq == golpe.conectorImaoEsq) golpeP[3] = true;
+        golpeP[0] = (dirEqui == golpe.JdirEqui) ? true : false;
+        golpeP[1] = (pernaAberta == golpe.pernaAberta) ? true : false;
+        golpeP[2] = (imaoDir == golpe.conectorImaoDir) ? true : false;
+        golpeP[3] = (imaoEsq == golpe.conectorImaoEsq) ? true : false;
 
         int q = 0;
         foreach (bool b in golpeP)
@@ -83,13 +92,18 @@ public class Sbot_jogador : S_jogador
     {
         int q = Random.Range(0, 4);
 
-        q = 2; // momentaneo
+        q = 0; // momentaneo
 
         switch (q)
         {
             case 0:
                 if (golpeP[0]) goto case 1;
                 golpeP[0] = true;
+                if (golpe.JdirEqui == "c") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+                if (golpe.JdirEqui == "t") StartCoroutine(equilibrio.mover(vectorPlacas[1].transform.position));
+                if (golpe.JdirEqui == "d") StartCoroutine(equilibrio.mover(vectorPlacas[2].transform.position));
+                if (golpe.JdirEqui == "f") StartCoroutine(equilibrio.mover(vectorPlacas[3].transform.position));
+                if (golpe.JdirEqui == "e") StartCoroutine(equilibrio.mover(vectorPlacas[4].transform.position));
                 return;
             case 1:
                 if (golpeP[1]) goto case 2;

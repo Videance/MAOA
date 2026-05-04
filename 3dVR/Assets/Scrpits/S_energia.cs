@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
@@ -25,14 +26,10 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     private void Start()
     {
         energia = energiaMax;
-        Renderer = new SpriteRenderer[2];
-        Renderer = GetComponentsInChildren<SpriteRenderer>();
-        IK = new S_IK[2];
-        IK = GetComponentsInChildren<S_IK>();
-        texto = new TextMesh[2];
+        Renderer = GetComponentsInChildren<SpriteRenderer>().Take(2).ToArray();
+        IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
         texto = GetComponentsInChildren<TextMesh>();
-        maos = new XRBaseInteractor[4];
-        maos = GetComponentsInChildren<XRBaseInteractor>();
+        maos = GetComponentsInChildren<XRBaseInteractor>().Take(4).ToArray();
     }
 
     private void Update()

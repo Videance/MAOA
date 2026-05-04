@@ -93,7 +93,11 @@ public class S_verificaGolpe : MonoBehaviour
         advEner.DesativaEnergia();
 
         //jog - Troca layer dos IK
-        for (int i = 0; i < jog.iks.Length; i++) { jog.iks[i].gameObject.layer = LayerMask.NameToLayer("xG"); }
+        for (int i = 0; i < jog.IKs.Length; i++)
+        {
+            jog.IKs[i].gameObject.layer = LayerMask.NameToLayer("xG");
+            jog.PEs[i].gameObject.layer = LayerMask.NameToLayer("xG");
+        }
 
         //tempo lento:
         Time.timeScale = 0.1f;

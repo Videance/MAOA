@@ -7,6 +7,9 @@ public class S_Postura : MonoBehaviour
     public GameObject pDireita;
     public GameObject pEsquerda;
 
+    public Sprite[] sprites = new Sprite[2];
+    public SpriteRenderer render;
+
     public float distZ;
 
     public float distEquilibrio;
@@ -27,7 +30,11 @@ public class S_Postura : MonoBehaviour
         Vector3 pEsq = new Vector3(0f, 0f, pEsquerda.transform.position.z);
         distZ = Vector3.Distance(pDir, pEsq);
 
-        if (distZ > 0.15f) TrocaPostura(true);
+        if (distZ > 0.15f)
+        {
+            TrocaPostura(true);
+            energia.energia -= Time.deltaTime;
+        }
         else TrocaPostura(false);
     }
 
@@ -35,7 +42,8 @@ public class S_Postura : MonoBehaviour
     {
         if (jogador.pernaAberta == aberta) return;
         jogador.pernaAberta = aberta;
+        if (aberta) render.sprite = sprites[1];
+        else render.sprite = sprites[0];
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
-        energia.energia -= 3;
     }
 }

@@ -15,6 +15,7 @@ public class S_jogador : MonoBehaviour
     public List<S_Conector> conectores;
     public S_dis_boneGrab[] pernas;
     public S_IK[] IKs;
+    public S_dis_pe[] PEs;
 
     [Header("ragdoll")]
     public bool emRagdoll = false;
@@ -27,10 +28,8 @@ public class S_jogador : MonoBehaviour
 
     protected virtual void Awake()
     {
-        pernas = new S_dis_boneGrab[2];
-        iks = GetComponentsInChildren<S_dis_boneGrab>();
+        pernas = GetComponentsInChildren<S_dis_pe>();
 
-        IKs = new S_IK[2];
         IKs = GetComponentsInChildren<S_IK>();
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
