@@ -35,7 +35,7 @@ public class S_Postura : MonoBehaviour
             TrocaPostura(true);
             energia.energia -= Time.deltaTime;
         }
-        else TrocaPostura(false);
+        else if (distZ < 0.1f) TrocaPostura(false);
     }
 
     void TrocaPostura(bool aberta)

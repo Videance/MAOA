@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sbot_jogador : S_jogador
 {
+    [Header("GOLPES")]
     public C_golpes golpe;
     public List<bool> golpeP; //0 - equi | 1 - perna | 2 - mao D | 3 - mao E
 
@@ -11,12 +12,16 @@ public class Sbot_jogador : S_jogador
     public Sbot_IK maoE;
 
     float t;
-    float t2 = 0;
+    float tt = 0;
+    float t1;
+    float tt1 = 0;
     int n = 0;
     public int dificuldade = 1; // 1 a 5
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
+
+    Sbot_energia Senergia;
 
     private void Start()
     {
@@ -26,11 +31,14 @@ public class Sbot_jogador : S_jogador
         golpeP = new List<bool>();
         for (int i = 0; i < 4; i++) golpeP.Add(false);
 
-        t2 = Random.Range(3, 7) / dificuldade;
+        Senergia = GetComponent<Sbot_energia>();
 
-        ProcuraGolpe(dificuldade, out golpe);
+        tt = Random.Range(3, 7) / dificuldade;
+        tt1 = Random.Range(1.5f, 3f) / dificuldade;
 
-        VerificaVar();
+        golpe = S_verificaGolpe.Vgolpe.golpes[Random.Range(0, S_verificaGolpe.Vgolpe.golpes.Count)];
+
+        ProcuraGolpe(dificuldade);
     }
 
     private void Update()
@@ -38,31 +46,43 @@ public class Sbot_jogador : S_jogador
         if (!equilibrio.movendo)
         {
             t += Time.unscaledDeltaTime;
-            if (t >= t2)
+
+            if (Senergia.energia <= 0) return;
+            if (t >= tt)
             {
                 t = 0;
-                t2 = Random.Range(2.5f, 6.5f) / dificuldade;
+                tt = Random.Range(2.5f, 6.5f) / dificuldade;
                 StartCoroutine(equilibrio.mover(Vector3.zero));
             }
         }
+
+        t1 += Time.unscaledDeltaTime;
+        if (Senergia.energia <= 0) return;
+        if (t1 >= tt1)
+        {
+            if (equilibrio.movendo || Senergia.energia <= 0 || maoD.movendo || maoE.movendo || PEs[0].movendo || PEs[1].movendo) return;
+
+            Debug.Log("moveu 1");
+            tt = 0;
+            tt1 = Random.Range(4f, 6.5f) / Mathf.Sqrt(dificuldade);
+            VerificaVar();
+        }
     }
 
-    public void ProcuraGolpe(int lv, out C_golpes golpe)
+    public void ProcuraGolpe(int lv)
     {
         int T = S_verificaGolpe.Vgolpe.golpes.Count;
         int nT = Random.Range(0, T);
-        if (nT == n) nT++;
-        if (nT > T) nT = 0;
 
-        C_golpes golpeT = S_verificaGolpe.Vgolpe.golpes[nT];
-        
-        if (dificuldade >= 3)
+        if (nT == n)
         {
-            //ve a distancia dos golpes do braços, e dependendo se não de pra alcancar, rola;
+            nT++;
+            if (nT > T) nT = 0;
         }
 
+        golpe = S_verificaGolpe.Vgolpe.golpes[nT];
         n = nT;
-        golpe = golpeT;
+        VerificaVar();
     }
 
     public void VerificaVar()
@@ -79,8 +99,7 @@ public class Sbot_jogador : S_jogador
             if (q == 4)
             {
                 S_verificaGolpe.Vgolpe.AcharGolpe(this, adversario);
-                ProcuraGolpe(dificuldade, out golpe);
-                VerificaVar();
+                ProcuraGolpe(dificuldade);
                 return;
             }
         }
@@ -91,8 +110,6 @@ public class Sbot_jogador : S_jogador
     void EscolheQuemMove()
     {
         int q = Random.Range(0, 4);
-
-        q = 0; // momentaneo
 
         switch (q)
         {
@@ -108,6 +125,7 @@ public class Sbot_jogador : S_jogador
             case 1:
                 if (golpeP[1]) goto case 2;
                 golpeP[1] = true;
+                foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(true));
                 return;
             case 2:
                 if (golpeP[2]) goto case 3;

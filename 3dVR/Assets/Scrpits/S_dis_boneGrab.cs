@@ -9,9 +9,9 @@ public class S_dis_boneGrab : MonoBehaviour
     public GameObject GOinicial;
     public GameObject GOponta;
     public GameObject maos;
-    protected float dis;
+    public float dis;
 
-    protected void Awake()
+    private void Awake()
     {
         ik = GetComponent<S_IK>();
         dis = Vector3.Distance(GOponta.transform.position, GOinicial.transform.position);

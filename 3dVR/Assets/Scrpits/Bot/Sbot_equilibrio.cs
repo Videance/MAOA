@@ -41,10 +41,12 @@ public class Sbot_equilibrio : S_Equilibrio
             float pcX = inicialPos.x;
             float pcZ = inicialPos.z;
 
-            float distancia = dist * 0.9f;
+            float distancia = dist;
 
-            float x = Random.Range(pcX - distancia, pcX + distancia);
-            float z = Random.Range(pcZ - distancia, pcZ + distancia);
+            Vector2 rand = Random.insideUnitCircle * distancia;
+
+            float x = pcX + rand.x;
+            float z = pcZ + rand.y;
 
             final = new Vector3(x, 0, z);
         }
@@ -53,6 +55,7 @@ public class Sbot_equilibrio : S_Equilibrio
 
         while (Vector3.Distance(pCentral.transform.position, final) > 0.0005f)
         {
+            if (energia.energia <= 0) yield break;
             pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, final, Time.deltaTime * speed);
             yield return null;
         }

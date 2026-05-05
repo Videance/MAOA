@@ -7,15 +7,20 @@ public class S_dis_pe : S_dis_boneGrab
     float altura = 0.09f;
     float largura = 0.07f;
     public bool ladoEsq;
+    public bool movendo;
     Vector3 posInical;
     S_jogador postura;
     XRGrabInteractable grab;
+    Rigidbody rb;
 
-    private void Start()
+    private void Awake()
     {
+        ik = GetComponent<S_IK>();
+        dis = Vector3.Distance(GOponta.transform.position, GOinicial.transform.position);
         posInical = transform.position;
         postura = GetComponentInParent<S_jogador>();
         grab = GetComponent<XRGrabInteractable>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -23,7 +28,7 @@ public class S_dis_pe : S_dis_boneGrab
         // recolar o parent que o nearfar tira
         if (transform.parent == null) transform.SetParent(pai.transform);
 
-        if (postura.pernaAberta && !grab.isSelected) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 400);
+        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 400);
 
         if (ik != null && ik.conectado)
         {
@@ -33,12 +38,67 @@ public class S_dis_pe : S_dis_boneGrab
         }
 
         // MOVIMENTO COM LIMITE MÁXIMO
-        Vector3 current = transform.position;
+        Vector3 pos = transform.position;
+        Vector3 original = pos;
 
-        float y = Mathf.Clamp(current.y, posInical.y, posInical.y + altura);
-        float x = Mathf.Clamp(current.x, posInical.x - largura, posInical.x + largura);
-        float z = Mathf.Clamp(current.z, posInical.z - dis, posInical.z + dis);
+        // Y
+        if (pos.y > posInical.y + altura)
+            pos.y = posInical.y + altura;
+        else if (pos.y < posInical.y)
+            pos.y = posInical.y;
 
-        transform.position = new Vector3(x, y, z);
+        // X
+        if (pos.x > posInical.x + largura)
+            pos.x = posInical.x + largura;
+        else if (pos.x < posInical.x - largura)
+            pos.x = posInical.x - largura;
+
+        // Z
+        if (pos.z > posInical.z + dis)
+            pos.z = posInical.z + dis;
+        else if (pos.z < posInical.z - dis)
+            pos.z = posInical.z - dis;
+
+        // Só aplica se realmente mudou
+        if (pos != original)
+        {
+            transform.position = pos;
+        }
+    }
+
+    public IEnumerator Mover(bool praFrente)
+    {
+        movendo = true;
+        Debug.Log("foi");
+
+        if (!praFrente)
+        {
+            while (Vector3.Distance(transform.position, posInical) > 0.0005f)
+            {
+                transform.position = Vector3.Lerp(transform.position, posInical, Time.deltaTime / 10);
+                yield return null;
+            }
+            transform.position = posInical;
+        }
+        else
+        {
+            float targetZ;
+
+            if (ladoEsq) targetZ = posInical.z - (dis * 0.9f);
+            else targetZ = posInical.z + (dis * 0.9f);
+
+            while (Mathf.Abs(transform.position.z - targetZ) > 0.001f)
+            {
+                Vector3 pos = transform.position;
+
+                pos.z = Mathf.MoveTowards(pos.z, targetZ, 0.2f * Time.deltaTime);
+
+                transform.position = pos;
+
+                yield return null;
+            }
+        }
+
+        movendo = false;
     }
 }

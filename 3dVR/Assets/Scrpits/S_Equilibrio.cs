@@ -72,7 +72,7 @@ public class S_Equilibrio : MonoBehaviour
         jogador.dirEqui = letra;
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
         if (primeira) primeira = false;
-        else energia.energia -= 3;
+        else energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
         for (int i = 0; i < blocos.Count; i++)
         {

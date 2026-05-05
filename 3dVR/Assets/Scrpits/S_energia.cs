@@ -14,7 +14,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     public TextMesh[] texto;
 
     [Header("STAMINA")]
-    private int n = 0;
+    protected int n = 0;
     public int energiaMax = 100;
     public float energia;
     public bool rodandoSS;
@@ -67,7 +67,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         }
     }
 
-    void TrocaSprite(int cargas) { foreach (var render in Renderer) { render.sprite = renBateria[cargas]; } }
+    protected void TrocaSprite(int cargas) { foreach (var render in Renderer) { render.sprite = renBateria[cargas]; } }
 
     IEnumerator SemStamina()
     {

@@ -5,30 +5,29 @@ public class S_jogador : MonoBehaviour
 {
     public S_jogador adversario;
 
-    [Header("Pos atual")]
+    [Header("POSICAO")]
     public string imaoEsq = null;
     public string imaoDir = null;
     public string dirEqui = "c";
     public bool pernaAberta = false;
 
-    [Header("Partes do corpo")]
+    [Header("PARTES DO CORPO")]
     public List<S_Conector> conectores;
-    public S_dis_boneGrab[] pernas;
     public S_IK[] IKs;
     public S_dis_pe[] PEs;
 
-    [Header("ragdoll")]
+    [Header("RAGDOLL")]
     public bool emRagdoll = false;
     public Animator animator;
     public GameObject RIG;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
-    [Header("pontuacao")]
+    [Header("PONTOS")]
     public int jogPontos = 0;
 
     protected virtual void Awake()
     {
-        pernas = GetComponentsInChildren<S_dis_pe>();
+        PEs = GetComponentsInChildren<S_dis_pe>();
 
         IKs = GetComponentsInChildren<S_IK>();
 
