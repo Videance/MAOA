@@ -4,7 +4,7 @@ using System.Collections;
 public class Sbot_IK : S_IK
 {
     public string alvoC;
-    public float speed = 0.12f;
+    public float speed = 0.15f;
     Sbot_energia Senergia;
     public bool movendo = false;
     public S_dis_boneGrab DisGrab;
@@ -24,6 +24,8 @@ public class Sbot_IK : S_IK
     public IEnumerator Move(Transform conector)
     {
         movendo = true;
+        yield return new WaitUntil(() => saindo == false);
+
         if (conectado != null)
         {
             Desconecta();
@@ -31,7 +33,7 @@ public class Sbot_IK : S_IK
         }
 
         float te = 0f;
-        while (conectado == null && te < 3f)
+        while (conectado == null && te < 2.5f)
         {
             if (Senergia.energia <= 0) yield break;
             te += Time.unscaledDeltaTime;
@@ -40,27 +42,42 @@ public class Sbot_IK : S_IK
         }
 
         if (conectado == null) ((Sbot_jogador)jogador).ProcuraGolpe(((Sbot_jogador)jogador).dificuldade);
-
         movendo = false;
     }
 
     public override void Conecta()
     {
-        if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
-        else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;  
-
         conectado.GetComponent<S_Conector>().maoOcupando = this;
+
+        if (ladoEsq)
+        {
+            jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
+            ((Sbot_jogador)jogador).VerificaVar(3);
+        }
+        else
+        {
+            jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
+            ((Sbot_jogador)jogador).VerificaVar(2);
+        }
     }
 
     public override void Desconecta()
     {
-        if (ladoEsq) jogador.imaoEsq = null;
-        else jogador.imaoDir = null;
-
         if (conectado != null)
         {
             conectado.GetComponent<S_Conector>().maoOcupando = null;
             conectado = null;
+        }
+
+        if (ladoEsq)
+        {
+            jogador.imaoEsq = null;
+            ((Sbot_jogador)jogador).VerificaVar(3);
+        }
+        else
+        {
+            jogador.imaoDir = null;
+            ((Sbot_jogador)jogador).VerificaVar(3);
         }
 
         StartCoroutine(VoltarProPeito());
@@ -70,7 +87,7 @@ public class Sbot_IK : S_IK
     {
         saindo = true;
         Vector3 start = transform.position;
-        Vector3 target = Vector3.Lerp(start, peito.position, 0.3f);
+        Vector3 target = Vector3.Lerp(start, peito.position, 0.35f);
 
         float t = 0f;
         float duracao = 0.5f;

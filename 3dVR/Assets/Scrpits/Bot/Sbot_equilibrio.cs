@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sbot_equilibrio : S_Equilibrio
@@ -13,7 +12,7 @@ public class Sbot_equilibrio : S_Equilibrio
         energia = GetComponentInParent<S_energia>();
         inicialPos = pCentral.transform.position;
         TrocaEquilibrio("c", 0);
-        speed = speed + (Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade) / 2);
+        if (((Sbot_jogador)jogador).dificuldade != 1) speed = speed + Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade);
     }
 
     // Update is called once per frame
@@ -32,10 +31,27 @@ public class Sbot_equilibrio : S_Equilibrio
         }
     }
 
+    void TrocaEquilibrio(string letra, int index)
+    {
+        if (jogador.dirEqui == letra) return;
+        direcaoEquilibrio = letra;
+        jogador.dirEqui = letra;
+        if (primeira) primeira = false;
+        else energia.energia -= 5;
+        energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
+        for (int i = 0; i < blocos.Count; i++)
+        {
+            if (i != index) blocos[i].material.color = corNormal;
+            else blocos[i].material.color = corAtiva;
+        }
+        ((Sbot_jogador)jogador).VerificaVar(0);
+    }
+
     public IEnumerator mover(Vector3 final)
     {
         movendo = true;
 
+        // POSSIVELMENTE SERA RETIRADO
         if (final == Vector3.zero)
         {
             float pcX = inicialPos.x;
@@ -50,6 +66,7 @@ public class Sbot_equilibrio : S_Equilibrio
 
             final = new Vector3(x, 0, z);
         }
+        //
 
         final.y = pCentral.transform.position.y;
 

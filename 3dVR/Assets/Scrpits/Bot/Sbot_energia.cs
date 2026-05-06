@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -5,9 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class Sbot_energia : S_energia
 {
+    Sbot_jogador jogador;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        jogador = GetComponent<Sbot_jogador>();
+        energiaMax = 100 + Mathf.RoundToInt(MathF.Sqrt(jogador.dificuldade) * energiaMax);
         energia = energiaMax;
         Renderer = GetComponentsInChildren<SpriteRenderer>().Take(1).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
@@ -21,10 +26,10 @@ public class Sbot_energia : S_energia
         if (S_verificaGolpe.timeSlow) return;
 
         // troca imagem da bateria
-        if (energia > 80) TrocaSprite(0);
-        else if (energia > 60) TrocaSprite(n + 1);
-        else if (energia > 40) TrocaSprite(n + 2);
-        else if (energia > 20) TrocaSprite(n + 3);
+        if (energia > (energiaMax * 0.80f)) TrocaSprite(0);
+        else if (energia > (energiaMax * 0.60f)) TrocaSprite(n + 1);
+        else if (energia > (energiaMax * 0.40f)) TrocaSprite(n + 2);
+        else if (energia > (energiaMax * 0.20f)) TrocaSprite(n + 3);
         else if (energia > 0) TrocaSprite(n + 4);
         else if (energia == 0) TrocaSprite(5);
 
@@ -64,7 +69,7 @@ public class Sbot_energia : S_energia
 
         while (energia < energiaMax)
         {
-            energia += 20;
+            energia += (energiaMax * 0.20f);
             if (energia < energiaMax) yield return new WaitForSeconds(0.25f);
         }
 

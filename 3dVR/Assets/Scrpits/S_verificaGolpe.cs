@@ -56,8 +56,6 @@ public class S_verificaGolpe : MonoBehaviour
             if (golpe.IdirEqui == adv.dirEqui) pontos++;
             if (golpe.pernaAberta == jog.pernaAberta) pontos++;
 
-            Debug.Log(pontos);
-
             if (pontos == 5)
             {
                 ataque = golpe;
@@ -146,6 +144,8 @@ public class S_verificaGolpe : MonoBehaviour
         Time.fixedDeltaTime = 0.02f;
 
         timeSlow = false;
+        resetaCena = false;
+        tempo = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);      
     }
 }

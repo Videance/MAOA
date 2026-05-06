@@ -65,7 +65,7 @@ public class S_Equilibrio : MonoBehaviour
         }
     }
 
-    public void TrocaEquilibrio(string letra, int index)
+    void TrocaEquilibrio(string letra, int index)
     {
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;

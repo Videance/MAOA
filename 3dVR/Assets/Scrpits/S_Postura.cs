@@ -3,7 +3,7 @@ using UnityEngine;
 public class S_Postura : MonoBehaviour
 {
     private S_energia energia;
-    private S_jogador jogador;
+    public S_jogador jogador;
     public GameObject pDireita;
     public GameObject pEsquerda;
 
@@ -44,6 +44,8 @@ public class S_Postura : MonoBehaviour
         jogador.pernaAberta = aberta;
         if (aberta) render.sprite = sprites[1];
         else render.sprite = sprites[0];
-        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
+
+        if (jogador is Sbot_jogador) ((Sbot_jogador)jogador).VerificaVar(1);
+        else S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
     }
 }

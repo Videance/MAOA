@@ -28,7 +28,7 @@ public class S_dis_pe : S_dis_boneGrab
         // recolar o parent que o nearfar tira
         if (transform.parent == null) transform.SetParent(pai.transform);
 
-        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 400);
+        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 330);
 
         if (ik != null && ik.conectado)
         {
@@ -84,8 +84,8 @@ public class S_dis_pe : S_dis_boneGrab
         {
             float targetZ;
 
-            if (ladoEsq) targetZ = posInical.z - (dis * 0.9f);
-            else targetZ = posInical.z + (dis * 0.9f);
+            if (ladoEsq) targetZ = posInical.z - (dis * 0.95f);
+            else targetZ = posInical.z + (dis * 0.95f);
 
             while (Mathf.Abs(transform.position.z - targetZ) > 0.001f)
             {

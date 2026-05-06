@@ -32,27 +32,31 @@ public class S_jogador : MonoBehaviour
         IKs = GetComponentsInChildren<S_IK>();
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
-        Collider[] advC = adversario.GetComponentsInChildren<Collider>();
-        // 1. Ignorar colisão interna
+        if (adversario != null)
+        {
+            Collider[] advC = adversario.GetComponentsInChildren<Collider>();
+
+            // 1. Regras com adversário
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].CompareTag("IK")) // só mãos
+                {
+                    for (int j = 0; j < advC.Length; j++)
+                    {
+                        if (!advC[j].CompareTag("c")) // ignora tudo menos "c"
+                        {
+                            Physics.IgnoreCollision(colliders[i], advC[j]);
+                        }
+                    }
+                }
+            }
+        }
+        // 2. Ignorar colisão interna
         for (int i = 0; i < colliders.Length; i++)
         {
             for (int j = i + 1; j < colliders.Length; j++)
             {
                 Physics.IgnoreCollision(colliders[i], colliders[j]);
-            }
-        }
-        // 2. Regras com adversário
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("IK")) // só mãos
-            {
-                for (int j = 0; j < advC.Length; j++)
-                {
-                    if (!advC[j].CompareTag("c")) // ignora tudo menos "c"
-                    {
-                        Physics.IgnoreCollision(colliders[i], advC[j]);
-                    }
-                }
             }
         }
 
