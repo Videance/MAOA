@@ -6,7 +6,7 @@ public class Sbot_equilibrio : S_Equilibrio
     public bool movendo = false;
     float speed = 1f;
 
-    private void Start()
+    private void Awake()
     {
         jogador = GetComponentInParent<S_jogador>();
         energia = GetComponentInParent<S_energia>();
@@ -36,14 +36,23 @@ public class Sbot_equilibrio : S_Equilibrio
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
+
+        if (dirFulga != null)
+        {
+            if (letra != dirFulga) return;
+            else dirFulga = null;
+        }
+
         if (primeira) primeira = false;
         else energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
+
         for (int i = 0; i < blocos.Count; i++)
         {
             if (i != index) blocos[i].material.color = corNormal;
             else blocos[i].material.color = corAtiva;
         }
+
         ((Sbot_jogador)jogador).VerificaVar(0);
     }
 

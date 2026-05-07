@@ -13,17 +13,20 @@ public class S_Equilibrio : MonoBehaviour
     public float dist = 0.0768f;
     public float XYdir = 0.74f;
     public float multiplicador = 1f;
+    private float speedi = 20f;
 
     [Header("Direcao do equilibrio")]
     public string direcaoEquilibrio;
     protected bool primeira = true;
+    protected string dirFulga = null;
 
     [Header("Cores")]
     public Color corNormal = Color.white;
     public Color corAtiva = Color.blue;
+    public Color corFuga = Color.red;
     public List<Renderer> blocos = new List<Renderer>();
 
-    private void Start()
+    private void Awake()
     {
         jogador = GetComponentInParent<S_jogador>();
         energia = GetComponentInParent<S_energia>();
@@ -37,6 +40,8 @@ public class S_Equilibrio : MonoBehaviour
     {
         if (pCentral == null || energia.rodandoSS) return;
 
+        speedi = 20 * (energia.energia / 80);
+
         Vector3 offset = transform.position - JinicialPos;
         offset.y = 0;
 
@@ -48,11 +53,7 @@ public class S_Equilibrio : MonoBehaviour
 
         Vector3 alvo = inicialPos + offset.normalized * distancia;
 
-        pCentral.transform.position = Vector3.Lerp(
-            pCentral.transform.position,
-            alvo,
-            Time.deltaTime * 20f
-        );
+        pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, alvo, Time.deltaTime * speedi);
 
         if (Vector3.Distance(pCentral.transform.position, inicialPos) <= (dist * 0.52f) && direcaoEquilibrio != "c") TrocaEquilibrio("c", 0);
         else if (Vector3.Distance(pCentral.transform.position, inicialPos) >= (dist * 0.6f))
@@ -70,14 +71,34 @@ public class S_Equilibrio : MonoBehaviour
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
+
+        if (dirFulga != null)
+        {
+            if (letra != dirFulga) return;
+            else dirFulga = null;
+        }
+
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
+
         if (primeira) primeira = false;
         else energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
+
         for (int i = 0; i < blocos.Count; i++)
         {
             if (i != index) blocos[i].material.color = corNormal;
             else blocos[i].material.color = corAtiva;
         }
+    }
+
+    public void PlacaFuga(string letra)
+    {
+        dirFulga = letra;
+
+        blocos[0].material.color = letra == "c" ? corFuga : corNormal;
+        blocos[1].material.color = letra == "t" ? corFuga : corNormal;
+        blocos[2].material.color = letra == "d" ? corFuga : corNormal;
+        blocos[3].material.color = letra == "f" ? corFuga : corNormal;
+        blocos[4].material.color = letra == "e" ? corFuga : corNormal;
     }
 }

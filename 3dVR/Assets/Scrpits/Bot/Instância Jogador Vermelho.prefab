@@ -381,7 +381,7 @@ MonoBehaviour:
   adversario: {fileID: 0}
   imaoEsq: 
   imaoDir: 
-  dirEqui: c
+  dirEqui: 
   pernaAberta: 0
   conectores: []
   IKs: []
@@ -403,7 +403,7 @@ MonoBehaviour:
   golpeP: 
   maoD: {fileID: 8944748507559310850}
   maoE: {fileID: 3604607773640033556}
-  dificuldade: 5
+  dificuldade: 2
   vectorPlacas: []
 --- !u!114 &1846121386075190506
 MonoBehaviour:
@@ -425,6 +425,7 @@ MonoBehaviour:
   direcaoEquilibrio: c
   corNormal: {r: 0.6392157, g: 0.7372549, b: 0.78823537, a: 1}
   corAtiva: {r: 0, g: 0.75294125, b: 1, a: 1}
+  corFuga: {r: 1, g: 0, b: 0, a: 1}
   blocos:
   - {fileID: 2605640557714897841}
   - {fileID: 3746294937781796469}
@@ -734,6 +735,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -3429141879968731858, guid: bfa7cae1789bb5042b4c277a7e1e13b8, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 9113579819303117956}
   coll: {fileID: 0}
   peito: {fileID: 8489189911392554091}
@@ -1045,6 +1047,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 5807315963479206055}
   coll: {fileID: 0}
   peito: {fileID: 8489189911392554091}
@@ -2814,6 +2817,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 0}
   coll: {fileID: 0}
   peito: {fileID: 0}
@@ -3090,6 +3094,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 0}
   coll: {fileID: 0}
   peito: {fileID: 0}
@@ -3546,6 +3551,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 1
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1 &7858249093239493020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4394,6 +4400,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 0
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1 &9158541288944466353
 GameObject:
   m_ObjectHideFlags: 0
@@ -5396,6 +5403,7 @@ MonoBehaviour:
   direcaoEquilibrio: c
   corNormal: {r: 0.6392157, g: 0.7372549, b: 0.78823537, a: 1}
   corAtiva: {r: 0, g: 0.75356793, b: 1, a: 1}
+  corFuga: {r: 1, g: 0, b: 0, a: 1}
   blocos: []
 --- !u!1 &584099495984734281 stripped
 GameObject:

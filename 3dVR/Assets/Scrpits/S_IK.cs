@@ -16,7 +16,7 @@ public class S_IK : MonoBehaviour
     public GameObject conectado; // S_dis_boneGrab = mão que tem que pegar
     public InputActionReference botao;
     public Rigidbody rb;
-    protected XRGrabInteractable grab;
+    public XRGrabInteractable grab;
     protected List<S_Conector> cNoAlcance;
     public Renderer rend;
     public SphereCollider coll;
@@ -47,12 +47,14 @@ public class S_IK : MonoBehaviour
         ColorUtility.TryParseHtmlString("#1AA9BA", out corAtivada);
         ColorUtility.TryParseHtmlString("#111011", out corDesligado);
 
-        estado = estadoMao.livre;
+        trocaEstado(estadoMao.livre);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (S_verificaGolpe.timeSlow) trocaEstado(estadoMao.desativada);
+
         if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
         {
             Debug.Log("cliclou");
@@ -121,6 +123,8 @@ public class S_IK : MonoBehaviour
 
     public virtual void Conecta()
     {
+        if (estado == estadoMao.desativada) return;
+
         if (grab.isSelected)
         {
             var interactor = grab.firstInteractorSelecting;

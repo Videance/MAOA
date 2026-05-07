@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class S_verificaGolpe : MonoBehaviour
 {
     public GameObject pDesequil;
+    GameObject pDes;
     public TextMesh textTempo;
 
     [Header("Lista de golpes")]
@@ -14,6 +15,7 @@ public class S_verificaGolpe : MonoBehaviour
 
     public static bool resetaCena = false;
     public static bool timeSlow = false;
+    public static bool derrotou = false;
     private Light luz;
     public static S_verificaGolpe Vgolpe;
 
@@ -53,77 +55,115 @@ public class S_verificaGolpe : MonoBehaviour
             if (golpe.conectorImaoDir == jog.imaoDir) pontos++;
             if (golpe.conectorImaoEsq == jog.imaoEsq) pontos++;
             if (golpe.JdirEqui == jog.dirEqui) pontos++;
-            if (golpe.IdirEqui == adv.dirEqui) pontos++;
             if (golpe.pernaAberta == jog.pernaAberta) pontos++;
 
-            if (pontos == 5)
+            if (pontos == 4)
             {
                 ataque = golpe;
                 Vgolpe.StartCoroutine(Vgolpe.TimeSlow(golpe, jog, adv));
                 break;
             }
-            else if (pontos == 4 && golpe.IdirEqui != adv.dirEqui) jog.GetComponent<S_energia>().energia -= golpe.custoEnergia;
         }
     }
 
     public IEnumerator TimeSlow(C_golpes move, S_jogador jog, S_jogador adv)
     {
         if (timeSlow) yield break;
-        timeSlow = true;
 
-        //cria o ponto
-        Vector3 meio = (jog.IKs[0].transform.position + jog.IKs[1].transform.position) / 2f;
-        Vector3 meio2 = (jog.transform.position - adv.transform.position) / 2f;
+        if (jog is Sbot_jogador) ataque = ((Sbot_jogador)jog).golpe;
 
-        GameObject pde = Instantiate(pDesequil, new Vector3(meio.x, meio.y, meio2.z), pDesequil.transform.rotation);
-        adv.GetComponentInChildren<S_segueC>().pDes = pde.GetComponent<S_rb>().rb;
-        adv.GetComponentInChildren<S_segueC>().SpontoDes = pde.GetComponent<S_pontoDes>();
-        S_pontoDes Spde = pde.GetComponent<S_pontoDes>();
-
-        GameObject caminho = Instantiate(ataque.dirPdes, new Vector3(meio.x, meio.y, meio2.z), ataque.dirPdes.transform.rotation);
-
-        //pega energia
-        S_energia jogEner = jog.GetComponent<S_energia>();
-        S_energia advEner = adv.GetComponent<S_energia>();
-
-        //adv - Ragdoll e desativa mão
-        adv.Ragdoll(true);
-        advEner.DesativaEnergia();
-
-        //jog - Troca layer dos IK
-        for (int i = 0; i < jog.IKs.Length; i++)
+        if (adv.dirEqui == ataque.IdirEqui)
         {
-            jog.IKs[i].gameObject.layer = LayerMask.NameToLayer("xG");
-            jog.PEs[i].gameObject.layer = LayerMask.NameToLayer("xG");
+            jog.GetComponent<S_energia>().energia -= ataque.custoEnergia;
+            for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].Desconecta();
+
+            yield break;
         }
 
+        timeSlow = true;
+
+        //ativa a fuga do adv
+        adv.gameObject.GetComponentInChildren<S_Equilibrio>().PlacaFuga(ataque.IdirEqui);
+
+        //cria o ponto e caminho
+        Vector3 meio = (jog.IKs[0].transform.position + jog.IKs[1].transform.position) / 2f;
+        Vector3 meio2 = (jog.transform.position + adv.transform.position) / 2f;
+        Vector3 meio3 = new Vector3(meio.x, meio.y, meio2.z);
+
+        GameObject pde = Instantiate(pDesequil, meio3, pDesequil.transform.rotation);
+        pDes = pde;
+        S_pontoDes Spde = pde.GetComponent<S_pontoDes>();
+
+        GameObject caminho = Instantiate(ataque.dirPdes, meio3, ataque.dirPdes.transform.rotation);
+
+        //jog - Troca layer dos IK
+        for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].trocaEstado(S_IK.estadoMao.desativada);
+
+        ConfigurarGrab(jog, false);
+        ConfigurarGrab(adv, false);
+
         //tempo lento:
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.3f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         //controla luz
         luz.enabled = false;
 
         //controla o tempo máximo
-        float t = 3.5f;
-        S_IK ik = jog.GetComponentInChildren<S_IK>();
-        while (t > 0.5f && !Spde.jogado && Spde.noCaminho)
+        tempo = 3.5f;
+        while (tempo > 0.5f && !Spde.jogado && Spde.noCaminho && adv.dirEqui != ataque.IdirEqui)
         {
-            t -= Time.unscaledDeltaTime;
-            if(textTempo != null) textTempo.text = Mathf.RoundToInt(tempo).ToString();
+            tempo -= Time.unscaledDeltaTime;
+            textTempo.text = Mathf.RoundToInt(tempo).ToString();
             yield return null;
         }
+        textTempo.text = "";
 
-        if (textTempo != null) textTempo.text = "";
+        //destroi o ponto e caminho
         Destroy(pde);
         Destroy(caminho);
-        adv.Gravidade(true);
 
-        luz.enabled = true;
+        //tempo lento:
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        tempo = 10f;
+        //controla luz
+        luz.enabled = true;
+
+        if (adv.dirEqui != ataque.IdirEqui) Vgolpe.StartCoroutine(Vgolpe.Derrota(jog, adv));
+        else
+        {
+            jog.GetComponent<S_energia>().energia -= ataque.custoEnergia;
+
+            //jog - Troca layer dos IK
+            for (int i = 0; i < jog.IKs.Length; i++)
+            {
+                jog.IKs[i].Desconecta();
+                jog.IKs[i].trocaEstado(S_IK.estadoMao.livre);
+            }
+
+            ConfigurarGrab(jog, true);
+            ConfigurarGrab(adv, true);
+
+            timeSlow = false;
+        }
+    }
+
+    public IEnumerator Derrota(S_jogador jog, S_jogador adv)
+    {
+        derrotou = true;
+
+        jog.GetComponent<S_energia>().DesativaEnergia();
+        adv.GetComponent<S_energia>().DesativaEnergia();
+
+        adv.Ragdoll(true);
+        adv.Gravidade(true);
+
+        S_segueC segue = adv.GetComponentInChildren<S_segueC>();
+        segue.pDes = pDes.GetComponent<S_rb>().rb;
+        segue.SpontoDes = pDes.GetComponent<S_pontoDes>();
+
+        tempo = 8f;
         while (tempo > 0f)
         {
             tempo -= Time.unscaledDeltaTime;
@@ -137,15 +177,33 @@ public class S_verificaGolpe : MonoBehaviour
 
         jog.jogPontos += 1;
 
-        Time.timeScale = 0.4f;
+        Time.timeScale = 0.1f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        yield return new WaitForSecondsRealtime(5f);
+
+        yield return new WaitForSecondsRealtime(3f);
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
         timeSlow = false;
         resetaCena = false;
         tempo = 0;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);      
+        derrotou = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void ConfigurarGrab(S_jogador jog, bool ativo)
+    {
+        for (int i = 0; i < jog.IKs.Length; i++)
+        {
+            jog.IKs[i].grab.trackPosition = ativo;
+            jog.IKs[i].grab.trackRotation = ativo;
+            jog.IKs[i].grab.enabled = ativo;
+
+            jog.PEs[i].grab.trackPosition = ativo;
+            jog.PEs[i].grab.trackRotation = ativo;
+            jog.PEs[i].grab.enabled = ativo;
+        }
     }
 }

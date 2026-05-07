@@ -15,7 +15,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
     [Header("STAMINA")]
     protected int n = 0;
-    public int energiaMax = 100;
+    public float energiaMax = 100;
     public float energia;
     public bool rodandoSS;
 

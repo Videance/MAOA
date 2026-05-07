@@ -10,7 +10,7 @@ public class S_dis_pe : S_dis_boneGrab
     public bool movendo;
     Vector3 posInical;
     S_jogador postura;
-    XRGrabInteractable grab;
+    public XRGrabInteractable grab;
     Rigidbody rb;
 
     private void Awake()

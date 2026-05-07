@@ -77,7 +77,7 @@ public class Sbot_IK : S_IK
         else
         {
             jogador.imaoDir = null;
-            ((Sbot_jogador)jogador).VerificaVar(3);
+            ((Sbot_jogador)jogador).VerificaVar(2);
         }
 
         StartCoroutine(VoltarProPeito());

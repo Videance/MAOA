@@ -359,6 +359,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 0
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1 &1005498077744363545
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +968,7 @@ MonoBehaviour:
   direcaoEquilibrio: c
   corNormal: {r: 0.6392157, g: 0.7372549, b: 0.78823537, a: 1}
   corAtiva: {r: 0, g: 0.75356793, b: 1, a: 1}
+  corFuga: {r: 1, g: 0, b: 0, a: 1}
   blocos:
   - {fileID: 7227002417785874130}
   - {fileID: 8418368333245485269}
@@ -1872,6 +1874,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 0
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1 &4054213881709977835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,6 +2147,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -3429141879968731858, guid: bfa7cae1789bb5042b4c277a7e1e13b8, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 4606295068831944779}
   coll: {fileID: 0}
   peito: {fileID: 3772469774559590564}
@@ -3136,6 +3140,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 1225704103087545448}
   coll: {fileID: 0}
   peito: {fileID: 3772469774559590564}

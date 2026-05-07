@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Sbot_jogador : S_jogador
@@ -92,7 +92,6 @@ public class Sbot_jogador : S_jogador
             VerificaVar(6);
         }
 
-        ProcuraGolpe(dificuldade);
         fazendoGolpe = false;
     }
 
@@ -113,6 +112,7 @@ public class Sbot_jogador : S_jogador
 
             // evita repetir golpe anterior
             if (nT == n) invalido = true;
+            else if (dificuldade >= 3 && golpinho.IdirEqui == adversario.dirEqui) invalido = true;
             else
             {
                 foreach (S_Conector v in adversario.conectores)
@@ -164,6 +164,8 @@ public class Sbot_jogador : S_jogador
 
     public void VerificaVar(int qual)
     {
+        if (S_verificaGolpe.timeSlow) return;
+
         if (qual == 0) golpeP[0] = (dirEqui == golpe.JdirEqui) ? true : false;
         if (qual == 1) golpeP[1] = (pernaAberta == golpe.pernaAberta) ? true : false;
         if (qual == 2) golpeP[2] = (imaoDir == golpe.conectorImaoDir) ? true : false;
@@ -181,8 +183,11 @@ public class Sbot_jogador : S_jogador
         if (q == 4 && qual <= 5)
         {
             Debug.Log("sereheeEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-            S_verificaGolpe.Vgolpe.AcharGolpe(this, adversario);
-            return;
+            StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(golpe, this, adversario));
+
+            if (S_verificaGolpe.timeSlow) return;
+
+            ProcuraGolpe(dificuldade);
         }
     }
 

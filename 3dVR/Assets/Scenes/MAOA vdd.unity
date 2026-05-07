@@ -630,6 +630,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jogador Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 4738956912552405185, guid: f5de7bb9c91238a4796f67abcef334a3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -826,6 +830,14 @@ MonoBehaviour:
     IdirEqui: c
     pernaAberta: 1
     dirPdes: {fileID: 5402653329503761121, guid: 7b53366e1a9af764283d44933f14dc45, type: 3}
+  - nome: agarramento
+    custoEnergia: 15
+    conectorImaoEsq: P
+    conectorImaoDir: P
+    JdirEqui: d
+    IdirEqui: t
+    pernaAberta: 1
+    dirPdes: {fileID: 5402653329503761121, guid: 7b53366e1a9af764283d44933f14dc45, type: 3}
 --- !u!4 &601401875
 Transform:
   m_ObjectHideFlags: 0
@@ -848,7 +860,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601401873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4262ef5929c0504192892dd178b7228, type: 3}
   m_Name: 
@@ -1444,6 +1456,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911884579}
   m_CullTransparentMesh: 1
+--- !u!1001 &1022242603
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398957372782323409, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_Name
+      value: "Inst\xE2ncia Jogador Azul"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398957372782323409, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447336286737003123, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: adversario
+      value: 
+      objectReference: {fileID: 7120556766142469293}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+--- !u!114 &1022242604 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8447336286737003123, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 1022242603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb23eb1aaee48ff409a40b4cb05a4064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_jogador
 --- !u!1 &1114555583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,7 +2564,9 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920508429}
-  m_Text: 
+  m_Text: '
+
+'
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
@@ -2503,7 +2593,7 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
@@ -2512,10 +2602,10 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 2
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4c5fb1d704b705a4fa55876dd10215e9, type: 3}
+  - {fileID: -8309319643020345216, guid: 7ab6f3b0fd1a6ba41b2a47766c16613f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2813,14 +2903,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 933861068652788301, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: m_InteractionManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128583404179843556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: maos
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1520701998357044010, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2861,37 +2943,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: jogador
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2468046026328720897, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: m_InteractionManager
+    - target: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: dirEqui
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: adversario
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2760604933031848277, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: maos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829278207761926295, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: maos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5073506410850983114, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: m_InteractionManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5156209172918332487, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: m_InteractionManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145256130987545049, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
-      propertyPath: maos
-      value: 
+      objectReference: {fileID: 1022242604}
+    - target: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: dificuldade
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7365045252270315645, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: pDireita
@@ -2906,6 +2968,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+--- !u!114 &7120556766142469293 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+  m_PrefabInstance: {fileID: 7120556766142469292}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562351ac252d1084ba67194116f3ff97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sbot_jogador
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2920,3 +2993,4 @@ SceneRoots:
   - {fileID: 7120556766142469292}
   - {fileID: 601401875}
   - {fileID: 483528476}
+  - {fileID: 1022242603}

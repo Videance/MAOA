@@ -4,7 +4,7 @@ public class S_off : MonoBehaviour
 {
     private void Update()
     {
-        if (S_verificaGolpe.timeSlow) gameObject.SetActive(false);
+        if (S_verificaGolpe.derrotou) gameObject.SetActive(false);
         else gameObject.SetActive(true);
     }
 }
