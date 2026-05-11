@@ -22,9 +22,11 @@ public class S_IK : MonoBehaviour
     public SphereCollider coll;
     public Transform peito;
 
-    private Color corBase;
-    private Color corAtivada;
-    private Color corDesligado;
+    [Header("MATERIAIS E CORES")]
+    protected Color corBase;
+    protected Color corAtivada;
+    protected Color corDesligado;
+    public Material[] materials; // 0 Base | 1 Conectada
 
     public enum estadoMao
     {
@@ -44,7 +46,7 @@ public class S_IK : MonoBehaviour
         cNoAlcance = new List<S_Conector>();
 
         ColorUtility.TryParseHtmlString("#BA1AB8", out corBase);
-        ColorUtility.TryParseHtmlString("#1AA9BA", out corAtivada);
+        ColorUtility.TryParseHtmlString("#00B3FF", out corAtivada);
         ColorUtility.TryParseHtmlString("#111011", out corDesligado);
 
         trocaEstado(estadoMao.livre);
@@ -90,32 +92,41 @@ public class S_IK : MonoBehaviour
     {
         estado = es;
 
-        Material mat = rend.material;
-
         if (es == estadoMao.conectada)
         {
-            mat.SetColor("_Cor", corAtivada);
+            rend.material = materials[1];
+            rend.material.SetColor("_Cor", corAtivada);
+
             grab.trackPosition = false;
             grab.trackRotation = false;
             grab.enabled = false;
         }
         if (es == estadoMao.desativada)
         {
-            mat.SetColor("_Cor", corDesligado);
+            rend.material = materials[0];
+            rend.material.SetColor("_Cor", corDesligado);
+            rend.material.SetFloat("_transparencia", 1f);
+
             grab.trackPosition = false;
             grab.trackRotation = false;
             grab.enabled = false;
         }
         if (es == estadoMao.livre)
         {
-            mat.SetColor("_Cor", corBase);
+            rend.material = materials[0];
+            rend.material.SetColor("_Cor", corBase);
+            rend.material.SetFloat("_transparencia", 0.6f);
+
             grab.trackPosition = true;
             grab.trackRotation = true;
             grab.enabled = true;
         }
         if (es == estadoMao.segurando)
         {
-            mat.SetColor("_Cor", corBase);
+            rend.material = materials[0];
+            rend.material.SetColor("_Cor", corBase);
+            rend.material.SetFloat("_transparencia", 0.6f);
+
             segurando = true;
         }
         else segurando = false;
@@ -136,20 +147,28 @@ public class S_IK : MonoBehaviour
 
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
 
-        conectado.GetComponent<S_Conector>().maoOcupando = this;
-        conectado.GetComponent<S_Conector>().rend.material.SetColor("_Cor", corAtivada);
+        S_Conector Scone = conectado.GetComponent<S_Conector>();
+
+        Scone.maoOcupando = this;
+        Scone.rend.material = materials[1];
+        Scone.rend.material.SetColor("_Cor", corAtivada);
 
         trocaEstado(estadoMao.conectada);
     }
 
     public virtual void Desconecta()
     {
+        if (conectado == null) return; 
+
         if (ladoEsq) jogador.imaoEsq = null;
         else jogador.imaoDir = null;
 
-        conectado.GetComponent<S_Conector>().rend.material.SetColor("_Cor", corBase);
+        S_Conector Scone = conectado.GetComponent<S_Conector>();
 
-        conectado.GetComponent<S_Conector>().maoOcupando = null;
+        Scone.rend.material = materials[0];
+        Scone.rend.material.SetColor("_Cor", corBase);
+        Scone.maoOcupando = null;
+
         conectado = null;
 
         trocaEstado(estadoMao.livre);

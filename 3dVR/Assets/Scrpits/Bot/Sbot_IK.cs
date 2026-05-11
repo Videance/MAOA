@@ -35,7 +35,11 @@ public class Sbot_IK : S_IK
         float te = 0f;
         while (conectado == null && te < 2.5f)
         {
-            if (Senergia.energia <= 0) yield break;
+            if (Senergia.energia <= 0)
+            {
+                movendo = false;
+                yield break;
+            }
             te += Time.unscaledDeltaTime;
             transform.position = Vector3.MoveTowards(transform.position, conector.position, speed * Time.deltaTime);
             yield return null;
@@ -47,7 +51,9 @@ public class Sbot_IK : S_IK
 
     public override void Conecta()
     {
-        conectado.GetComponent<S_Conector>().maoOcupando = this;
+        S_Conector Scone = conectado.GetComponent<S_Conector>();
+
+        Scone.maoOcupando = this;
 
         if (ladoEsq)
         {
@@ -59,13 +65,23 @@ public class Sbot_IK : S_IK
             jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
             ((Sbot_jogador)jogador).VerificaVar(2);
         }
+
+        Scone.rend.material = materials[1];
+        Scone.rend.material.SetColor("_Cor", corAtivada);
+
+        trocaEstado(estadoMao.conectada);
     }
 
     public override void Desconecta()
     {
+        S_Conector Scone = conectado.GetComponent<S_Conector>();
+
+        Scone.rend.material = materials[1];
+        Scone.rend.material.SetColor("_Cor", corAtivada);
+
         if (conectado != null)
         {
-            conectado.GetComponent<S_Conector>().maoOcupando = null;
+            Scone.maoOcupando = null;
             conectado = null;
         }
 
@@ -79,6 +95,8 @@ public class Sbot_IK : S_IK
             jogador.imaoDir = null;
             ((Sbot_jogador)jogador).VerificaVar(2);
         }
+
+        trocaEstado(estadoMao.livre);
 
         StartCoroutine(VoltarProPeito());
     }

@@ -1,19 +1,16 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class S_pontoDes : MonoBehaviour
 {
     public bool tocouClimax = false;
-    public bool jogado = false;
     public bool noCaminho = true;
-    XRGrabInteractable grab;
-    private bool primera = false;
 
-    private void Start() { grab = GetComponent<XRGrabInteractable>(); }
-    private void Update()
+    private Vector3 posInicial;
+    public Vector3 dirFinal;
+
+    void Start()
     {
-        if (grab.isSelected) primera = true;
-        else if (primera == true) jogado = true;
+        posInicial = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +18,9 @@ public class S_pontoDes : MonoBehaviour
         if (other.CompareTag("tt"))
         {
             tocouClimax = true;
-            jogado = true;
+
+            // direção do início até a posição atual
+            dirFinal = (transform.position - posInicial).normalized;
         }
     }
 

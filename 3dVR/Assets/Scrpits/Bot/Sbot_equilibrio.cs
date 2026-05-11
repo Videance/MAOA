@@ -4,21 +4,24 @@ using UnityEngine;
 public class Sbot_equilibrio : S_Equilibrio
 {
     public bool movendo = false;
-    float speed = 1f;
+    public string fugaQualPlaca = null;
+    public float speed = 1f;
+    public float speedMax = 1f;
 
-    private void Awake()
+    protected override void Start()
     {
-        jogador = GetComponentInParent<S_jogador>();
-        energia = GetComponentInParent<S_energia>();
-        inicialPos = pCentral.transform.position;
-        TrocaEquilibrio("c", 0);
-        if (((Sbot_jogador)jogador).dificuldade != 1) speed = speed + Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade);
+        base.Start();
+
+        if (((Sbot_jogador)jogador).dificuldade != 1)
+            speedMax += Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade);
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         if (pCentral == null || energia.rodandoSS) return;
+
+        speed = speedMax * (0.1f + (energia.energia / energia.energiaMax));
 
         if (Vector3.Distance(pCentral.transform.position, inicialPos) <= (dist * 0.52f) && direcaoEquilibrio != "c") TrocaEquilibrio("c", 0);
         else if (Vector3.Distance(pCentral.transform.position, inicialPos) >= (dist * 0.6f))
@@ -31,7 +34,7 @@ public class Sbot_equilibrio : S_Equilibrio
         }
     }
 
-    void TrocaEquilibrio(string letra, int index)
+    public override void TrocaEquilibrio(string letra, int index)
     {
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;
@@ -44,7 +47,7 @@ public class Sbot_equilibrio : S_Equilibrio
         }
 
         if (primeira) primeira = false;
-        else energia.energia -= 5;
+        else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
 
         for (int i = 0; i < blocos.Count; i++)
@@ -81,12 +84,22 @@ public class Sbot_equilibrio : S_Equilibrio
 
         while (Vector3.Distance(pCentral.transform.position, final) > 0.0005f)
         {
-            if (energia.energia <= 0) yield break;
+            if (energia.energia <= 0)
+            {
+                movendo = false;
+                yield break;
+            }
             pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, final, Time.deltaTime * speed);
             yield return null;
         }
         pCentral.transform.position = final;
 
         movendo = false;
+    }
+
+    public override void PlacaFuga(string letra)
+    {
+        base.PlacaFuga(letra);
+        fugaQualPlaca = letra;
     }
 }

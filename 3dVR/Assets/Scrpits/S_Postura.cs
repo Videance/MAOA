@@ -30,11 +30,7 @@ public class S_Postura : MonoBehaviour
         Vector3 pEsq = new Vector3(0f, 0f, pEsquerda.transform.position.z);
         distZ = Vector3.Distance(pDir, pEsq);
 
-        if (distZ > 0.15f)
-        {
-            TrocaPostura(true);
-            energia.energia -= Time.deltaTime;
-        }
+        if (distZ > 0.15f) TrocaPostura(true);
         else if (distZ < 0.1f) TrocaPostura(false);
     }
 

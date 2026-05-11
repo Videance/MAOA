@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using static S_IK;
 
 public class S_dis_pe : S_dis_boneGrab
 {
@@ -11,7 +13,7 @@ public class S_dis_pe : S_dis_boneGrab
     Vector3 posInical;
     S_jogador postura;
     public XRGrabInteractable grab;
-    Rigidbody rb;
+    public bool segurando = false;
 
     private void Awake()
     {
@@ -20,7 +22,6 @@ public class S_dis_pe : S_dis_boneGrab
         posInical = transform.position;
         postura = GetComponentInParent<S_jogador>();
         grab = GetComponent<XRGrabInteractable>();
-        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -73,7 +74,7 @@ public class S_dis_pe : S_dis_boneGrab
 
         if (!praFrente)
         {
-            while (Vector3.Distance(transform.position, posInical) > 0.0005f)
+            while (Vector3.Distance(transform.position, posInical) > 0.0005f && segurando == false)
             {
                 transform.position = Vector3.Lerp(transform.position, posInical, Time.deltaTime / 10);
                 yield return null;
@@ -87,7 +88,7 @@ public class S_dis_pe : S_dis_boneGrab
             if (ladoEsq) targetZ = posInical.z - (dis * 0.95f);
             else targetZ = posInical.z + (dis * 0.95f);
 
-            while (Mathf.Abs(transform.position.z - targetZ) > 0.001f)
+            while (Mathf.Abs(transform.position.z - targetZ) > 0.001f && segurando == false)
             {
                 Vector3 pos = transform.position;
 
@@ -101,4 +102,23 @@ public class S_dis_pe : S_dis_boneGrab
 
         movendo = false;
     }
+
+    // ---------- CONTROLE DE VARIÁVEL QUANDO SEGURANDO OU NÃO ----------
+    private void OnEnable()
+    {
+        grab.selectEntered.AddListener(OnGrab);
+        grab.selectExited.AddListener(OnRelease);
+    }
+
+    private void OnDisable()
+    {
+        grab.selectEntered.RemoveListener(OnGrab);
+        grab.selectExited.RemoveListener(OnRelease);
+    }
+
+    private void OnGrab(SelectEnterEventArgs args)
+    { segurando = true; }
+
+    private void OnRelease(SelectExitEventArgs args)
+    { segurando = false; }
 }

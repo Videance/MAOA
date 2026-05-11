@@ -3,17 +3,14 @@ using UnityEngine;
 public class S_segueC : MonoBehaviour
 {
     public S_pontoDes SpontoDes;
-    private S_jogador jogador;
-    public Rigidbody pDes;
     private Rigidbody rb;
     private S_colisorPontos Scp;
-    private float gravidadeExtra = 1.7f;
+    private float gravidadeExtra = 1.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>(); 
-        jogador = GetComponentInParent<S_jogador>();
         Scp = GetComponentInChildren<S_colisorPontos>();
     }
 
@@ -22,11 +19,14 @@ public class S_segueC : MonoBehaviour
     {
         if (SpontoDes == null) return;
 
-        if (jogador.emRagdoll && SpontoDes.noCaminho) rb.linearVelocity += pDes.linearVelocity / 7f;
         if (SpontoDes.tocouClimax)
         {
             Scp.contaVitoria = true;
-            rb.linearVelocity += rb.linearVelocity * 4f;
+
+            Debug.Log("TA ME CHAMANDO MEN´´O?");
+            rb.linearVelocity = SpontoDes.dirFinal * 30f;
+
+            SpontoDes.tocouClimax = false;
         }
     }
 

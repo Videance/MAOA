@@ -2,23 +2,14 @@ using UnityEngine;
 
 public class S_instancia : MonoBehaviour
 {
-    public static S_instancia StextNum;
-    public TextMesh texto;
+    public GameObject luzes;
+    public GameObject chao;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (StextNum == null)
-        {
-            StextNum = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        texto = GetComponentInChildren<TextMesh>();
+        DontDestroyOnLoad(luzes);
+        DontDestroyOnLoad(chao);
+        DontDestroyOnLoad(gameObject);
     }
 }

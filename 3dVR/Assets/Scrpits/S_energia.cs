@@ -6,6 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis_BoneGrab
 {
+    S_jogador Jogador;
+
     [Header("SPRITES")]
     public SpriteRenderer[] Renderer;
     public List<Sprite> renBateria = new List<Sprite>();
@@ -26,6 +28,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     private void Start()
     {
         energia = energiaMax;
+        Jogador = GetComponent<S_jogador>();
         Renderer = GetComponentsInChildren<SpriteRenderer>().Take(2).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
         texto = GetComponentsInChildren<TextMesh>();
@@ -52,6 +55,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
             int q = 0;
             foreach (var i in IK) if (i.conectado) { q+=2; }
+            if (Jogador.pernaAberta) q += 1;
             if (q > 0) energia -= Time.deltaTime * q;
         }
         else StartCoroutine(SemStamina());
@@ -98,9 +102,9 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         rodandoSS = false;
     }
 
-    public void DesativaEnergia()
+    public void DesativaEnergia(bool ativada)
     {
         foreach (var i in IK) if (i.conectado) i.Desconecta();
-        foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = false;
+        foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = ativada;
     }
 }

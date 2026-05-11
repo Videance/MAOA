@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class S_verificaGolpe : MonoBehaviour
 {
-    public GameObject pDesequil;
-    GameObject pDes;
+    public GameObject pDesequil; //objeto de prfab
+    public GameObject caminho;
+    public GameObject pDes;
     public TextMesh textTempo;
+    public static S_pontoDes Spde;
+    public GameObject[] luzesNormal;
+    public GameObject[] luzesDesequil;
 
     [Header("Lista de golpes")]
     [SerializeField] public List<C_golpes> golpes = new List<C_golpes>();
@@ -16,10 +20,11 @@ public class S_verificaGolpe : MonoBehaviour
     public static bool resetaCena = false;
     public static bool timeSlow = false;
     public static bool derrotou = false;
-    private Light luz;
     public static S_verificaGolpe Vgolpe;
 
     public static float tempo = 0;
+
+    public static bool emTutorial = false;
 
     private void Awake()
     {
@@ -34,19 +39,11 @@ public class S_verificaGolpe : MonoBehaviour
             return;
         }
         if (textTempo != null)  textTempo.text = "";
-        luz = FindAnyObjectByType<Light>();
-    }
-
-    void OnEnable() { SceneManager.sceneLoaded += AoCarregarCena; }
-    void OnDisable() { SceneManager.sceneLoaded -= AoCarregarCena; }
-    void AoCarregarCena(Scene scene, LoadSceneMode mode)
-    {
-        luz = FindAnyObjectByType<Light>();
     }
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
-        if (timeSlow) return;
+        if (timeSlow || derrotou) return;
 
         foreach (var golpe in Vgolpe.golpes)
         {
@@ -66,9 +63,25 @@ public class S_verificaGolpe : MonoBehaviour
         }
     }
 
-    public IEnumerator TimeSlow(C_golpes move, S_jogador jog, S_jogador adv)
+    public void CriarPonto(int os2, S_jogador jog, S_jogador adv)
     {
-        if (timeSlow) yield break;
+        //cria o ponto e caminho
+        Vector3 meio = (jog.IKs[0].transform.position + jog.IKs[1].transform.position) / 2f;
+        Vector3 meio2 = (jog.transform.position + adv.transform.position) / 2f;
+        Vector3 meio3 = new Vector3(meio.x, meio.y, meio2.z);
+
+        if (os2 == 2)
+        {
+            caminho = Instantiate(ataque.dirPdes, meio3, ataque.dirPdes.transform.rotation);
+        }
+
+        pDes = Instantiate(pDesequil, meio3, pDesequil.transform.rotation);
+        Spde = pDes.GetComponent<S_pontoDes>();
+    }
+
+    public IEnumerator TimeSlow(C_golpes golpe, S_jogador jog, S_jogador adv)
+    {
+        if (timeSlow || derrotou) yield break;
 
         if (jog is Sbot_jogador) ataque = ((Sbot_jogador)jog).golpe;
 
@@ -86,82 +99,108 @@ public class S_verificaGolpe : MonoBehaviour
         adv.gameObject.GetComponentInChildren<S_Equilibrio>().PlacaFuga(ataque.IdirEqui);
 
         //cria o ponto e caminho
-        Vector3 meio = (jog.IKs[0].transform.position + jog.IKs[1].transform.position) / 2f;
-        Vector3 meio2 = (jog.transform.position + adv.transform.position) / 2f;
-        Vector3 meio3 = new Vector3(meio.x, meio.y, meio2.z);
+        CriarPonto(2, jog, adv);
 
-        GameObject pde = Instantiate(pDesequil, meio3, pDesequil.transform.rotation);
-        pDes = pde;
-        S_pontoDes Spde = pde.GetComponent<S_pontoDes>();
-
-        GameObject caminho = Instantiate(ataque.dirPdes, meio3, ataque.dirPdes.transform.rotation);
+        if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
 
         //jog - Troca layer dos IK
         for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].trocaEstado(S_IK.estadoMao.desativada);
 
         ConfigurarGrab(jog, false);
         ConfigurarGrab(adv, false);
+        adv.GetComponent<S_energia>().DesativaEnergia(false);
 
         //tempo lento:
         Time.timeScale = 0.3f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         //controla luz
-        luz.enabled = false;
+        foreach (GameObject luz in luzesNormal) luz.SetActive(false);
+        foreach (GameObject luz in luzesDesequil) luz.SetActive(true);
 
-        //controla o tempo máximo
-        tempo = 3.5f;
-        while (tempo > 0.5f && !Spde.jogado && Spde.noCaminho && adv.dirEqui != ataque.IdirEqui)
+        if (emTutorial) yield return new WaitUntil(() => emTutorial == false);
+        else
         {
-            tempo -= Time.unscaledDeltaTime;
-            textTempo.text = Mathf.RoundToInt(tempo).ToString();
-            yield return null;
+            //controla o tempo máximo
+            tempo = 5.5f;
+            while (tempo > 0.5f && Spde.noCaminho && !Spde.tocouClimax && adv.dirEqui != ataque.IdirEqui)
+            {
+                tempo -= Time.unscaledDeltaTime;
+                textTempo.text = Mathf.RoundToInt(tempo).ToString();
+                yield return null;
+            }
+            textTempo.text = "";
         }
-        textTempo.text = "";
-
-        //destroi o ponto e caminho
-        Destroy(pde);
-        Destroy(caminho);
 
         //tempo lento:
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
         //controla luz
-        luz.enabled = true;
+        foreach (GameObject luz in luzesNormal) luz.SetActive(true);
+        foreach (GameObject luz in luzesDesequil) luz.SetActive(false);
 
-        if (adv.dirEqui != ataque.IdirEqui) Vgolpe.StartCoroutine(Vgolpe.Derrota(jog, adv));
-        else
+        adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(adv.dirEqui);
+
+        if (Spde.tocouClimax)
+        {
+            //destroi o ponto e caminho
+            Destroy(pDes);
+            Destroy(caminho);
+            pDes = null;
+            caminho = null;
+            derrotou = true;
+            Vgolpe.StartCoroutine(Vgolpe.Derrota(jog, adv));
+            yield break;
+        }
+        else if (adv.dirEqui == ataque.IdirEqui)
         {
             jog.GetComponent<S_energia>().energia -= ataque.custoEnergia;
 
             //jog - Troca layer dos IK
+            for (int i = 0; i < jog.PEs.Length; i++)
+            {
+                jog.IKs[i].Desconecta();
+                jog.PEs[i].Mover(false);
+            }
+        }
+        else
+        {
+            adv.GetComponent<S_energia>().energia -= ataque.custoEnergia / 2;
+            jog.GetComponent<S_energia>().energia -= ataque.custoEnergia / 2;
+
             for (int i = 0; i < jog.IKs.Length; i++)
             {
                 jog.IKs[i].Desconecta();
-                jog.IKs[i].trocaEstado(S_IK.estadoMao.livre);
+                jog.PEs[i].Mover(false);
+                adv.IKs[i].Desconecta();
+                adv.PEs[i].Mover(false);
             }
-
-            ConfigurarGrab(jog, true);
-            ConfigurarGrab(adv, true);
-
-            timeSlow = false;
         }
+
+        //destroi o ponto e caminho
+        Destroy(pDes);
+        Destroy(caminho);
+        pDes = null;
+        caminho = null;
+
+        ConfigurarGrab(jog, true);
+        ConfigurarGrab(adv, true);
+        adv.GetComponent<S_energia>().DesativaEnergia(true);
+
+        timeSlow = false;
     }
 
     public IEnumerator Derrota(S_jogador jog, S_jogador adv)
     {
-        derrotou = true;
-
-        jog.GetComponent<S_energia>().DesativaEnergia();
-        adv.GetComponent<S_energia>().DesativaEnergia();
+        jog.GetComponent<S_energia>().DesativaEnergia(false);
+        adv.GetComponent<S_energia>().DesativaEnergia(false);
 
         adv.Ragdoll(true);
         adv.Gravidade(true);
 
         S_segueC segue = adv.GetComponentInChildren<S_segueC>();
-        segue.pDes = pDes.GetComponent<S_rb>().rb;
-        segue.SpontoDes = pDes.GetComponent<S_pontoDes>();
+        segue.SpontoDes = Spde;
 
         tempo = 8f;
         while (tempo > 0f)
@@ -184,6 +223,9 @@ public class S_verificaGolpe : MonoBehaviour
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+
+        ConfigurarGrab(jog, true);
+        ConfigurarGrab(adv, true);
 
         timeSlow = false;
         resetaCena = false;

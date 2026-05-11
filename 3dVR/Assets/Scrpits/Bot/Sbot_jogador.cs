@@ -24,11 +24,15 @@ public class Sbot_jogador : S_jogador
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
+    public GameObject pDesequilibrio;
+    public Collider[] colliderSeta;
 
     Sbot_energia Senergia;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         equilibrio = GetComponent<Sbot_equilibrio>();
         foreach (Transform t in GetComponentsInChildren<Transform>()) if (t.CompareTag("e")) vectorPlacas.Add(t.gameObject);
 
@@ -36,7 +40,10 @@ public class Sbot_jogador : S_jogador
         for (int i = 0; i < 4; i++) golpeP.Add(false);
 
         Senergia = GetComponent<Sbot_energia>();
+    }
 
+    private void Start()
+    {
         tt = Random.Range(3, 7) / dificuldade;
         tt1 = Random.Range(1.5f, 3f) / dificuldade;
 
@@ -50,7 +57,7 @@ public class Sbot_jogador : S_jogador
         if (!equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
 
-        if (Senergia.energia <= 0) return;
+        if (Senergia.rodandoSS) return;
 
         if (t >= tt)
         {
@@ -58,6 +65,16 @@ public class Sbot_jogador : S_jogador
             tt = Random.Range(2f, 7f) / (dificuldade * 1.35f);
             int lado = Random.Range(0, 5);
             StartCoroutine(equilibrio.mover(vectorPlacas[lado].transform.position));
+        }
+        else if (equilibrio.fugaQualPlaca != null)
+        {
+            if (equilibrio.fugaQualPlaca == "c") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+            if (equilibrio.fugaQualPlaca == "t") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+            if (equilibrio.fugaQualPlaca == "d") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+            if (equilibrio.fugaQualPlaca == "f") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+            if (equilibrio.fugaQualPlaca == "e") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
+
+            equilibrio.fugaQualPlaca = null;
         }
 
         if (t1 >= tt1)
@@ -225,6 +242,27 @@ public class Sbot_jogador : S_jogador
                 maoE.alvoC = golpe.conectorImaoEsq;
                 StartCoroutine(maoE.Move(conME.GetComponent<Transform>()));
                 return;
+        }
+    }
+
+    public IEnumerator MoverPdesequilibrio(GameObject pDese, GameObject seta)
+    {
+        colliderSeta = seta.GetComponentsInChildren<Collider>();
+
+        for (int i = 0; i < colliderSeta.Length; i++)
+        {
+            Collider box = colliderSeta[i];
+            if (box == null) break;
+            Vector3 centroMundo = box.bounds.center;
+
+            float vel = equilibrio.speed / Random.Range(12, 18);
+            if (S_verificaGolpe.emTutorial) vel = vel / 20;
+
+            while (pDese != null && Vector3.Distance(pDese.transform.position, centroMundo) > 0.0001f)
+            {
+                pDese.transform.position = Vector3.MoveTowards(pDese.transform.position, centroMundo, vel * Time.unscaledDeltaTime);
+                yield return null;
+            }
         }
     }
 }

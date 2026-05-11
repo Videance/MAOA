@@ -12,7 +12,7 @@ public class Sbot_energia : S_energia
     void Start()
     {
         jogador = GetComponent<Sbot_jogador>();
-        energiaMax = 100 + Mathf.RoundToInt(MathF.Sqrt(jogador.dificuldade) * energiaMax);
+        energiaMax = 110 + (Mathf.Pow(jogador.dificuldade, 1.5f) * 9);
         energia = energiaMax;
         Renderer = GetComponentsInChildren<SpriteRenderer>().Take(1).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
@@ -41,6 +41,7 @@ public class Sbot_energia : S_energia
 
             int q = 0;
             foreach (var i in IK) if (i.conectado) { q += 2; }
+            if (jogador.pernaAberta) q += 1;
             if (q > 0) energia -= Time.deltaTime * q;
         }
         else StartCoroutine(SemStamina());

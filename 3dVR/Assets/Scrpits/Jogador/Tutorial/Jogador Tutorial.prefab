@@ -286,6 +286,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 0
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1 &727382871990215696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1300,7 @@ MonoBehaviour:
   direcaoEquilibrio: c
   corNormal: {r: 0.6392157, g: 0.7372549, b: 0.78823537, a: 1}
   corAtiva: {r: 0, g: 0.75356793, b: 1, a: 1}
+  corFuga: {r: 1, g: 0, b: 0, a: 1}
   blocos:
   - {fileID: 8152425951340600204}
   - {fileID: 1822726182195977818}
@@ -1576,13 +1578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2727f75e27a354b81e38013aeded1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_controleTutorial
-  RIGperna:
-  - {fileID: 1430778608287419199}
-  - {fileID: 4442289517452714891}
-  pngPostura: {fileID: 1876428959042032172}
-  RIGimao:
-  - {fileID: 3796290246808694775}
-  - {fileID: 8024208635834277396}
+  Pparte: 0
   discoEquilibrio:
   - {fileID: 7607835153080400919}
   - {fileID: 7648167997508074073}
@@ -1591,6 +1587,17 @@ MonoBehaviour:
   - {fileID: 4510263363188023431}
   - {fileID: 2310001996501586598}
   Sequilibrio: {fileID: 6163015440680394740}
+  Sparte: 0
+  RIGimao:
+  - {fileID: 3796290246808694775}
+  - {fileID: 8024208635834277396}
+  Tparte: 0
+  tocou: 
+  RIGperna:
+  - {fileID: 1430778608287419199}
+  - {fileID: 4442289517452714891}
+  pngPostura: {fileID: 1876428959042032172}
+  Qparte: 0
   energia: {fileID: 1060632792327956881}
 --- !u!1 &5046754842954564387
 GameObject:
@@ -2207,6 +2214,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -3429141879968731858, guid: bfa7cae1789bb5042b4c277a7e1e13b8, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 6404102732261083201}
   coll: {fileID: 0}
   peito: {fileID: 6010520107575337134}
@@ -2838,6 +2846,7 @@ MonoBehaviour:
   conectado: {fileID: 0}
   botao: {fileID: -4678008144468924402, guid: f012712ab7fb5d349b05122a15c72acd, type: 3}
   rb: {fileID: 0}
+  grab: {fileID: 0}
   rend: {fileID: 8516792981798175842}
   coll: {fileID: 0}
   peito: {fileID: 6010520107575337134}
@@ -3259,6 +3268,7 @@ MonoBehaviour:
   dis: 0
   ladoEsq: 0
   movendo: 0
+  grab: {fileID: 0}
 --- !u!1001 &54674727102359036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7045,13 +7055,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6155685613660862250, guid: aaaf560152a76ad479bde47cee492a3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5204931165611837728}
   m_SourcePrefab: {fileID: 100100000, guid: aaaf560152a76ad479bde47cee492a3e, type: 3}
 --- !u!1 &661261789014059734 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6155685613660862250, guid: aaaf560152a76ad479bde47cee492a3e, type: 3}
   m_PrefabInstance: {fileID: 6647354163481288188}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5204931165611837728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661261789014059734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2767690133a6444b3a7ef086701791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_maoTutorial
+  ladoDir: 0
 --- !u!4 &1822508807347956884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4975069658630254952, guid: aaaf560152a76ad479bde47cee492a3e, type: 3}
@@ -7357,13 +7383,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7058861506653606979, guid: 7180d7d08c20e554ea084116300f3d06, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2181560059361265226}
   m_SourcePrefab: {fileID: 100100000, guid: 7180d7d08c20e554ea084116300f3d06, type: 3}
 --- !u!1 &744212217130186683 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7058861506653606979, guid: 7180d7d08c20e554ea084116300f3d06, type: 3}
   m_PrefabInstance: {fileID: 7756856851803186168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2181560059361265226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744212217130186683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2767690133a6444b3a7ef086701791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_maoTutorial
+  ladoDir: 1
 --- !u!4 &2553726456058242777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5248185173460567329, guid: 7180d7d08c20e554ea084116300f3d06, type: 3}
