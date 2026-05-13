@@ -5,15 +5,15 @@ public class Sbot_equilibrio : S_Equilibrio
 {
     public bool movendo = false;
     public string fugaQualPlaca = null;
-    public float speed = 1f;
-    public float speedMax = 1f;
+    public float speed = 2f;
+    public float speedMax = 2f;
 
     protected override void Start()
     {
         base.Start();
 
-        if (((Sbot_jogador)jogador).dificuldade != 1)
-            speedMax += Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade);
+        if (Sbot_jogador.dificuldade != 1)
+            speedMax += Mathf.Sqrt(Sbot_jogador.dificuldade);
     }
 
     // Update is called once per frame
@@ -21,16 +21,58 @@ public class Sbot_equilibrio : S_Equilibrio
     {
         if (pCentral == null || energia.rodandoSS) return;
 
-        speed = speedMax * (0.1f + (energia.energia / energia.energiaMax));
+        float porcentagemEnergia = energia.energia / energia.energiaMax;
+        tempoTroca = Mathf.Lerp(1f, 0.25f, porcentagemEnergia);
 
-        if (Vector3.Distance(pCentral.transform.position, inicialPos) <= (dist * 0.52f) && direcaoEquilibrio != "c") TrocaEquilibrio("c", 0);
-        else if (Vector3.Distance(pCentral.transform.position, inicialPos) >= (dist * 0.6f))
+        string novoEquilibrio = null;
+        float distanciaCentro = Vector3.Distance(pCentral.transform.position, inicialPos);
+
+        if (distanciaCentro <= (dist * 0.52f))
+        {
+            novoEquilibrio = "c";
+        }
+        else if (distanciaCentro >= (dist * 0.6f))
         {
             Vector3 dir = (pCentral.transform.position - inicialPos).normalized;
-            if (dir.x > XYdir && direcaoEquilibrio != "d") TrocaEquilibrio("e", 4);
-            else if (dir.x < -XYdir && direcaoEquilibrio != "e") TrocaEquilibrio("d", 2);
-            else if (dir.z > XYdir && direcaoEquilibrio != "f") TrocaEquilibrio("t", 1);
-            else if (dir.z < -XYdir && direcaoEquilibrio != "t") TrocaEquilibrio("f", 3);
+
+            if (dir.x > XYdir) novoEquilibrio = "d";
+            else if (dir.x < -XYdir) novoEquilibrio = "e";
+            else if (dir.z > XYdir) novoEquilibrio = "f";
+            else if (dir.z < -XYdir) novoEquilibrio = "t";
+        }
+
+        // se não encontrou equilíbrio válido ou é igual
+        if (novoEquilibrio == null || novoEquilibrio == direcaoEquilibrio)
+        {
+            equilibrioCandidato = null;
+            contadorTroca = 0f;
+            return;
+        }
+
+        // começou novo candidato
+        if (equilibrioCandidato != novoEquilibrio)
+        {
+            equilibrioCandidato = novoEquilibrio;
+            contadorTroca = tempoTroca;
+        }
+        else
+        {
+            contadorTroca -= Time.deltaTime;
+
+            if (contadorTroca <= 0f)
+            {
+                int index = 0;
+
+                if (novoEquilibrio == "c") index = 0;
+                if (novoEquilibrio == "t") index = 1;
+                if (novoEquilibrio == "d") index = 2;
+                if (novoEquilibrio == "f") index = 3;
+                if (novoEquilibrio == "e") index = 4;
+
+                TrocaEquilibrio(novoEquilibrio, index);
+
+                equilibrioCandidato = null;
+            }
         }
     }
 

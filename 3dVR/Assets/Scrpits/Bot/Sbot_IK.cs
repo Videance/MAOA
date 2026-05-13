@@ -4,11 +4,10 @@ using System.Collections;
 public class Sbot_IK : S_IK
 {
     public string alvoC;
-    public float speed = 0.15f;
+    float speed = 0.7f;
     Sbot_energia Senergia;
     public bool movendo = false;
     public S_dis_boneGrab DisGrab;
-    bool saindo = false;
 
     protected override void Awake()
     {
@@ -18,7 +17,7 @@ public class Sbot_IK : S_IK
         Senergia = GetComponentInParent<Sbot_energia>();
         DisGrab = GetComponent<S_dis_boneGrab>();
 
-        speed = Mathf.Sqrt(((Sbot_jogador)jogador).dificuldade * speed) + speed;
+        speed = Mathf.Sqrt(Sbot_jogador.dificuldade * speed) + speed;
     }
 
     public IEnumerator Move(Transform conector)
@@ -45,7 +44,7 @@ public class Sbot_IK : S_IK
             yield return null;
         }
 
-        if (conectado == null) ((Sbot_jogador)jogador).ProcuraGolpe(((Sbot_jogador)jogador).dificuldade);
+        if (conectado == null) ((Sbot_jogador)jogador).ProcuraGolpe(Sbot_jogador.dificuldade);
         movendo = false;
     }
 
@@ -74,10 +73,14 @@ public class Sbot_IK : S_IK
 
     public override void Desconecta()
     {
+        if (conectado == null) return;
+
         S_Conector Scone = conectado.GetComponent<S_Conector>();
 
-        Scone.rend.material = materials[1];
-        Scone.rend.material.SetColor("_Cor", corAtivada);
+        Scone.rend.material = materials[0];
+        Scone.rend.material.SetColor("_Cor", corBase);
+
+        if (S_verificaGolpe.derrotou) return;
 
         if (conectado != null)
         {
@@ -101,7 +104,7 @@ public class Sbot_IK : S_IK
         StartCoroutine(VoltarProPeito());
     }
 
-    public IEnumerator VoltarProPeito()
+    public override IEnumerator VoltarProPeito()
     {
         saindo = true;
         Vector3 start = transform.position;

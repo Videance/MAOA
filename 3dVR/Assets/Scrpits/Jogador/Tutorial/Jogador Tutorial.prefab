@@ -287,6 +287,7 @@ MonoBehaviour:
   ladoEsq: 0
   movendo: 0
   grab: {fileID: 0}
+  segurando: 0
 --- !u!1 &727382871990215696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,8 +1295,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Equilibrio
   pCentral: {fileID: 7607835153080400919}
   jogador: {fileID: 7800996779941795514}
-  dist: 0.0576
-  XYdir: 0.74
   multiplicador: 0.75
   direcaoEquilibrio: c
   corNormal: {r: 0.6392157, g: 0.7372549, b: 0.78823537, a: 1}
@@ -1503,7 +1502,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 524817939264553495}
@@ -1518,7 +1517,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4738956912552405185}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4ae75f1b43b0924caae36c2e7b1fb97, type: 3}
   m_Name: 
@@ -1578,6 +1577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2727f75e27a354b81e38013aeded1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_controleTutorial
+  quadroDfala: {fileID: 0}
+  SVgolpe: {fileID: 0}
   Pparte: 0
   discoEquilibrio:
   - {fileID: 7607835153080400919}
@@ -1591,14 +1592,19 @@ MonoBehaviour:
   RIGimao:
   - {fileID: 3796290246808694775}
   - {fileID: 8024208635834277396}
+  bot: {fileID: 0}
   Tparte: 0
   tocou: 
   RIGperna:
   - {fileID: 1430778608287419199}
   - {fileID: 4442289517452714891}
   pngPostura: {fileID: 1876428959042032172}
+  Spostura: {fileID: 0}
   Qparte: 0
-  energia: {fileID: 1060632792327956881}
+  QIparte: 0
+  SEparte: 0
+  Senergia: {fileID: 0}
+  pngEnergia: []
 --- !u!1 &5046754842954564387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,6 +2224,7 @@ MonoBehaviour:
   rend: {fileID: 6404102732261083201}
   coll: {fileID: 0}
   peito: {fileID: 6010520107575337134}
+  materials: []
   estado: 0
 --- !u!1 &6874536453544582384
 GameObject:
@@ -2850,6 +2857,7 @@ MonoBehaviour:
   rend: {fileID: 8516792981798175842}
   coll: {fileID: 0}
   peito: {fileID: 6010520107575337134}
+  materials: []
   estado: 0
 --- !u!1 &8024208635834277396
 GameObject:
@@ -3269,6 +3277,7 @@ MonoBehaviour:
   ladoEsq: 0
   movendo: 0
   grab: {fileID: 0}
+  segurando: 0
 --- !u!1001 &54674727102359036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4065,6 +4074,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4820653289747416678, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6310901272852288484}
+    - targetCorrespondingSourceObject: {fileID: 4820653289747416678, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2489300517943901790}
     - targetCorrespondingSourceObject: {fileID: 2463829614048244762, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4356071672884452462}
@@ -4074,6 +4086,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2463829614048244762, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 828454011426043813}
+    - targetCorrespondingSourceObject: {fileID: 2463829614048244762, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3756019526999128065}
     - targetCorrespondingSourceObject: {fileID: 8578481301269690567, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5698292843271359147}
@@ -4095,6 +4110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 251699019141356071, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1549918698498549798}
+    - targetCorrespondingSourceObject: {fileID: 251699019141356071, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666487087136921743}
     - targetCorrespondingSourceObject: {fileID: -5682754184847539998, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1604430711231272740}
@@ -4104,6 +4122,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5682754184847539998, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3457996014391768097}
+    - targetCorrespondingSourceObject: {fileID: -5682754184847539998, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5844425899192234339}
     - targetCorrespondingSourceObject: {fileID: 401126244429749846, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5888213105041888600}
@@ -4125,6 +4146,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8140945954067422636, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1563939594015285922}
+    - targetCorrespondingSourceObject: {fileID: 8140945954067422636, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3417923629781602201}
     - targetCorrespondingSourceObject: {fileID: 5886256411386813797, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8851826773511405800}
@@ -4143,6 +4167,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7726907263275036207, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5233549102799978168}
+    - targetCorrespondingSourceObject: {fileID: -7726907263275036207, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3339731622446063201}
     - targetCorrespondingSourceObject: {fileID: -7823849972062968896, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2784976967886161721}
@@ -4158,6 +4185,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8962915286328254709, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6820260034722524283}
+    - targetCorrespondingSourceObject: {fileID: 8962915286328254709, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4526730181110480531}
     - targetCorrespondingSourceObject: {fileID: -9010244089026542754, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7779719778140129603}
@@ -4167,6 +4197,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -9010244089026542754, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4393835150249024135}
+    - targetCorrespondingSourceObject: {fileID: -9010244089026542754, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6673240075347158442}
     - targetCorrespondingSourceObject: {fileID: -3044519383416707637, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9192574127141197483}
@@ -4182,6 +4215,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -877452344059094371, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 603502855796271585}
+    - targetCorrespondingSourceObject: {fileID: -877452344059094371, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4269069777693610405}
     - targetCorrespondingSourceObject: {fileID: -6989200210213799732, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9093024221765156008}
@@ -4191,6 +4227,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6989200210213799732, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 190715467271815860}
+    - targetCorrespondingSourceObject: {fileID: -6989200210213799732, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9019090991582120937}
     - targetCorrespondingSourceObject: {fileID: -4167828126735475302, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4016212492924130873}
@@ -4299,6 +4338,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &6673240075347158442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159614877346965154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &215601697326846072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 162066665599923588, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -4410,6 +4461,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &1666487087136921743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269099643787067355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!1 &383694847417187242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 401126244429749846, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -4709,6 +4772,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3339731622446063201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443048089882178605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &1528157547081149371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7640597085519475129, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -4830,6 +4905,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &9019090991582120937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288779892428266800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &2453611745990549074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2508158362804206510, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -4936,6 +5023,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &3756019526999128065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518490366262268390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &2721973109141349577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2667356114087674165, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5124,6 +5223,18 @@ CapsuleCollider:
   m_Height: 0.00818966
   m_Direction: 1
   m_Center: {x: 0, y: 0.0045, z: 0}
+--- !u!114 &5844425899192234339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594140175966201118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &4085457804470792793 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4066830065826305957, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5240,6 +5351,18 @@ CapsuleCollider:
   m_Height: 0.005
   m_Direction: 1
   m_Center: {x: 0, y: 0.004, z: 0}
+--- !u!114 &2489300517943901790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766032160850584474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &4839631865379903902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4894266921911975010, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5607,6 +5730,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &3417923629781602201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8086298246608533584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &8088439940511353013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1081471827112202935, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5660,7 +5795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d2eec988e8c64e87eda9a7445b39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  contaVitoria: 0
 --- !u!1 &8291293911212015457 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -877452344059094371, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5762,6 +5896,18 @@ CapsuleCollider:
   m_Height: 0.0045042
   m_Direction: 1
   m_Center: {x: 0, y: 0.002521, z: 0}
+--- !u!114 &4269069777693610405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291293911212015457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &8460469628071121119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -744327509074922205, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -5937,8 +6083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc32a1ab7d0e715488f99fa276c6aa97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_segueC
-  SpontoDes: {fileID: 0}
-  pDes: {fileID: 0}
 --- !u!114 &6179144592219956055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5951,7 +6095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
-  contaVitoria: 0
 --- !u!1 &8980342209096385801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8962915286328254709, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}
@@ -6053,6 +6196,18 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &4526730181110480531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980342209096385801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cee28ba829118246b5ccd579226f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_colisorPontinhos
 --- !u!4 &8986551644549467285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8967963475539290473, guid: da8c9943f86956a4cafdcd9183396c19, type: 3}

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class S_Postura : MonoBehaviour
 {
-    private S_energia energia;
     public S_jogador jogador;
     public GameObject pDireita;
     public GameObject pEsquerda;
@@ -18,7 +17,6 @@ public class S_Postura : MonoBehaviour
     private void Start()
     {
         jogador = GetComponentInParent<S_jogador>();
-        energia = GetComponentInParent<S_energia>();
     }
 
     // Update is called once per frame
@@ -30,8 +28,8 @@ public class S_Postura : MonoBehaviour
         Vector3 pEsq = new Vector3(0f, 0f, pEsquerda.transform.position.z);
         distZ = Vector3.Distance(pDir, pEsq);
 
-        if (distZ > 0.15f) TrocaPostura(true);
-        else if (distZ < 0.1f) TrocaPostura(false);
+        if (distZ > 1.5f) TrocaPostura(true);
+        else if (distZ < 1f) TrocaPostura(false);
     }
 
     void TrocaPostura(bool aberta)

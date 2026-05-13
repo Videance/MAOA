@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,14 @@ public class S_verificaGolpe : MonoBehaviour
     public GameObject pDesequil; //objeto de prfab
     public GameObject caminho;
     public GameObject pDes;
-    public TextMesh textTempo;
+    public TextMeshPro textTempo;
     public static S_pontoDes Spde;
     public GameObject[] luzesNormal;
     public GameObject[] luzesDesequil;
+    public GameObject[] luzesDerrota;
+    public TextMeshPro[] textInfo;
+
+    Vector3 dir;
 
     [Header("Lista de golpes")]
     [SerializeField] public List<C_golpes> golpes = new List<C_golpes>();
@@ -24,7 +29,9 @@ public class S_verificaGolpe : MonoBehaviour
 
     public static float tempo = 0;
 
+    [Header("Pro tutorial")]
     public static bool emTutorial = false;
+    public GameObject Botiprefab;
 
     private void Awake()
     {
@@ -43,7 +50,7 @@ public class S_verificaGolpe : MonoBehaviour
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
-        if (timeSlow || derrotou) return;
+        if (timeSlow || derrotou || !adv.seMovendo) return;
 
         foreach (var golpe in Vgolpe.golpes)
         {
@@ -83,7 +90,7 @@ public class S_verificaGolpe : MonoBehaviour
     {
         if (timeSlow || derrotou) yield break;
 
-        if (jog is Sbot_jogador) ataque = ((Sbot_jogador)jog).golpe;
+        ataque = golpe;
 
         if (adv.dirEqui == ataque.IdirEqui)
         {
@@ -101,7 +108,10 @@ public class S_verificaGolpe : MonoBehaviour
         //cria o ponto e caminho
         CriarPonto(2, jog, adv);
 
-        if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
+        foreach (GameObject luz in luzesNormal) luz.SetActive(false);
+        foreach (GameObject luz in luzesDesequil) luz.SetActive(true);
+
+        if (!emTutorial) if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
 
         //jog - Troca layer dos IK
         for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].trocaEstado(S_IK.estadoMao.desativada);
@@ -136,20 +146,22 @@ public class S_verificaGolpe : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        //controla luz
-        foreach (GameObject luz in luzesNormal) luz.SetActive(true);
-        foreach (GameObject luz in luzesDesequil) luz.SetActive(false);
-
         adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(adv.dirEqui);
 
         if (Spde.tocouClimax)
         {
+            derrotou = true;
+
+            dir = Spde.dirFinal;
             //destroi o ponto e caminho
             Destroy(pDes);
             Destroy(caminho);
             pDes = null;
             caminho = null;
-            derrotou = true;
+
+            //controla luz
+            //foreach (GameObject luz in luzesNormal) luz.SetActive(true);
+
             Vgolpe.StartCoroutine(Vgolpe.Derrota(jog, adv));
             yield break;
         }
@@ -178,6 +190,10 @@ public class S_verificaGolpe : MonoBehaviour
             }
         }
 
+        //controla luz
+        foreach (GameObject luz in luzesNormal) luz.SetActive(true);
+        foreach (GameObject luz in luzesDesequil) luz.SetActive(false);
+
         //destroi o ponto e caminho
         Destroy(pDes);
         Destroy(caminho);
@@ -193,31 +209,44 @@ public class S_verificaGolpe : MonoBehaviour
 
     public IEnumerator Derrota(S_jogador jog, S_jogador adv)
     {
+        foreach (GameObject luz in luzesDerrota)
+        {
+            luz.SetActive(true);
+            luz.GetComponent<S_holofotes>().seguirAlvo = true;
+            luz.GetComponent<S_holofotes>().alvo = adv.GetComponentInChildren<S_segueC>().transform;
+        }
+
         jog.GetComponent<S_energia>().DesativaEnergia(false);
         adv.GetComponent<S_energia>().DesativaEnergia(false);
 
         adv.Ragdoll(true);
         adv.Gravidade(true);
 
-        S_segueC segue = adv.GetComponentInChildren<S_segueC>();
-        segue.SpontoDes = Spde;
+        adv.GetComponentInChildren<S_segueC>().Joga(dir);
 
-        tempo = 8f;
-        while (tempo > 0f)
+        tempo = 7f;
+        while (tempo > 0f && !resetaCena)
         {
             tempo -= Time.unscaledDeltaTime;
-            if (resetaCena)
-            {
-                jog.jogPontos = 1;
-                continue;
-            }
             yield return null;
         }
 
-        jog.jogPontos += 1;
+        if (jog == S_pontos.Spontos.jogadores[0])
+        {
+            if (resetaCena) S_pontos.Spontos.pontos1 = 2;
+            else S_pontos.Spontos.pontos1 += 1;
+        }
+        else
+        {
+            if (resetaCena) S_pontos.Spontos.pontos2 = 2;
+            else S_pontos.Spontos.pontos2 += 1;
+        }
 
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.05f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        foreach (GameObject luz in luzesDerrota) luz.GetComponent<S_holofotes>().seguirAlvo = false;
+        foreach (GameObject luz in luzesNormal) luz.SetActive(false);
 
         yield return new WaitForSecondsRealtime(3f);
 
@@ -231,6 +260,30 @@ public class S_verificaGolpe : MonoBehaviour
         resetaCena = false;
         tempo = 0;
         derrotou = false;
+
+        foreach (GameObject luz in luzesDerrota)
+        {
+            luz.SetActive(false);
+            luz.GetComponent<S_holofotes>().seguirAlvo = false;
+            luz.GetComponent<S_holofotes>().alvo = null;
+        }
+
+        if (textInfo.Length > 0)
+        {
+            textInfo[0].text =
+            "-- P L A C A R --\n" +
+            "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
+            "BOT: " + S_pontos.Spontos.pontos2;
+
+            textInfo[1].text = "Dificulade =" + Sbot_jogador.dificuldade;
+        }
+
+        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) Sbot_jogador.dificuldade++;
+        if (S_pontos.Spontos.pontos2 >= 2)
+        {
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
+        }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

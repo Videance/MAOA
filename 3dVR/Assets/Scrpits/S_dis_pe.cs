@@ -6,8 +6,8 @@ using static S_IK;
 
 public class S_dis_pe : S_dis_boneGrab
 {
-    float altura = 0.09f;
-    float largura = 0.07f;
+    float altura = 0.9f;
+    float largura = 0.7f;
     public bool ladoEsq;
     public bool movendo;
     Vector3 posInical;
@@ -29,7 +29,7 @@ public class S_dis_pe : S_dis_boneGrab
         // recolar o parent que o nearfar tira
         if (transform.parent == null) transform.SetParent(pai.transform);
 
-        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 330);
+        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 25);
 
         if (ik != null && ik.conectado)
         {
@@ -70,13 +70,12 @@ public class S_dis_pe : S_dis_boneGrab
     public IEnumerator Mover(bool praFrente)
     {
         movendo = true;
-        Debug.Log("foi");
 
         if (!praFrente)
         {
             while (Vector3.Distance(transform.position, posInical) > 0.0005f && segurando == false)
             {
-                transform.position = Vector3.Lerp(transform.position, posInical, Time.deltaTime / 10);
+                transform.position = Vector3.Lerp(transform.position, posInical, Time.deltaTime);
                 yield return null;
             }
             transform.position = posInical;
@@ -92,7 +91,7 @@ public class S_dis_pe : S_dis_boneGrab
             {
                 Vector3 pos = transform.position;
 
-                pos.z = Mathf.MoveTowards(pos.z, targetZ, 0.2f * Time.deltaTime);
+                pos.z = Mathf.MoveTowards(pos.z, targetZ, 2.5f * Time.deltaTime);
 
                 transform.position = pos;
 

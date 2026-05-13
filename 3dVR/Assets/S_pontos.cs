@@ -1,40 +1,59 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class S_pontos : MonoBehaviour
 {
     public static S_pontos Spontos;
 
-    S_jogador[] jogadores = new S_jogador[2];
+    public S_jogador[] jogadores;
 
     public int pontos1;
     public int pontos2;
 
-    void Awake()
+    void OnEnable()
     {
-        if (Spontos == null)
-        {
-            Spontos = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else Destroy(gameObject);
-
-        var objs = FindObjectsByType<S_jogador>(FindObjectsSortMode.None);
-
-        foreach (var obj in objs)
-        {
-            if (jogadores[0] == null)
-                jogadores[0] = obj;
-            else if (obj != jogadores[0])
-            {
-                jogadores[1] = obj;
-                break;
-            }
-        }
+        SceneManager.sceneLoaded += AoCarregarCena;
     }
 
-    private void Update()
+    void OnDisable()
     {
-        pontos1 = jogadores[0].jogPontos;
-        pontos2 = jogadores[1].jogPontos;
+        SceneManager.sceneLoaded -= AoCarregarCena;
+    }
+
+    void AoCarregarCena(Scene scene, LoadSceneMode mode)
+    {
+        var encontrados = FindObjectsByType<S_jogador>(FindObjectsSortMode.None);
+
+        jogadores = new S_jogador[2];
+
+        foreach (var jog in encontrados)
+        {
+            if (jog.transform.position.z < 0)
+                jogadores[0] = jog;
+            else
+                jogadores[1] = jog;
+        }
+
+        S_colisorPontinhos.podecolidir = true;
+        S_colisorPontos.contaVitoria = true;
+    }
+
+    void Awake()
+    {
+        if (Spontos == null) Spontos = this;
+        var encontrados = FindObjectsByType<S_jogador>(FindObjectsSortMode.None);
+
+        jogadores = new S_jogador[2];
+
+        foreach (var jog in encontrados)
+        {
+            if (jog.transform.position.z < 0)
+                jogadores[0] = jog;
+            else
+                jogadores[1] = jog; //bot
+        }
+
+        S_colisorPontinhos.podecolidir = true;
+        S_colisorPontos.contaVitoria = true;
     }
 }

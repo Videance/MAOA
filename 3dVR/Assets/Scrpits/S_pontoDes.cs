@@ -20,7 +20,7 @@ public class S_pontoDes : MonoBehaviour
             tocouClimax = true;
 
             // direção do início até a posição atual
-            dirFinal = (transform.position - posInicial).normalized;
+            dirFinal = transform.position - posInicial;
         }
     }
 

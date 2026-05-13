@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +22,7 @@ public class S_IK : MonoBehaviour
     public Renderer rend;
     public SphereCollider coll;
     public Transform peito;
+    public bool saindo = false;
 
     [Header("MATERIAIS E CORES")]
     protected Color corBase;
@@ -169,12 +171,40 @@ public class S_IK : MonoBehaviour
         Scone.rend.material.SetColor("_Cor", corBase);
         Scone.maoOcupando = null;
 
+        if (S_verificaGolpe.derrotou) return;
+
         conectado = null;
 
         trocaEstado(estadoMao.livre);
 
         Vector3 dir = (transform.position - peito.position).normalized;
         rb.linearVelocity = dir * 2;
+    }
+
+    public virtual IEnumerator VoltarProPeito()
+    {
+        saindo = true;
+        Vector3 start = transform.position;
+        Vector3 target = Vector3.Lerp(start, peito.position, 0.35f);
+
+        float t = 0f;
+        float duracao = 0.5f;
+
+        while (t < 1f)
+        {
+            if (estado == estadoMao.segurando)
+            {
+                saindo = false;
+                yield break;
+            }
+
+            t += Time.deltaTime / duracao;
+            transform.position = Vector3.Lerp(start, target, t);
+            yield return null;
+        }
+
+        transform.position = target;
+        saindo = false;
     }
 
     //---------- CONTROLE DE COLISÕES ----------

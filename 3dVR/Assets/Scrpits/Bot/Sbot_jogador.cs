@@ -20,7 +20,7 @@ public class Sbot_jogador : S_jogador
     float t1;
     float tt1 = 0;
     int n = 0;
-    public int dificuldade = 1; // 1 a 5
+    public static int dificuldade = 1; // 1 a 5
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
@@ -199,9 +199,7 @@ public class Sbot_jogador : S_jogador
         foreach (bool b in golpeP) if (b) q++;
         if (q == 4 && qual <= 5)
         {
-            Debug.Log("sereheeEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-            StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(golpe, this, adversario));
-
+            if (adversario.seMovendo) StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(golpe, this, adversario));
             if (S_verificaGolpe.timeSlow) return;
 
             ProcuraGolpe(dificuldade);
@@ -220,7 +218,7 @@ public class Sbot_jogador : S_jogador
         switch (q)
         {
             case 0:
-                if (golpeP[0] || equilibrio.movendo) goto case 1;
+                if (golpeP[0] || equilibrio.movendo || equilibrio.equilibrioCandidato != null) goto case 1;
                 if (golpe.JdirEqui == "c") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
                 if (golpe.JdirEqui == "t") StartCoroutine(equilibrio.mover(vectorPlacas[1].transform.position));
                 if (golpe.JdirEqui == "d") StartCoroutine(equilibrio.mover(vectorPlacas[2].transform.position));
@@ -255,7 +253,7 @@ public class Sbot_jogador : S_jogador
             if (box == null) break;
             Vector3 centroMundo = box.bounds.center;
 
-            float vel = equilibrio.speed / Random.Range(12, 18);
+            float vel = equilibrio.speedMax * Random.Range(0.33f, 0.5f);
             if (S_verificaGolpe.emTutorial) vel = vel / 20;
 
             while (pDese != null && Vector3.Distance(pDese.transform.position, centroMundo) > 0.0001f)

@@ -2,19 +2,14 @@ using UnityEngine;
 
 public class S_colisorPontos : MonoBehaviour
 {
-    public bool contaVitoria = false;
-    protected S_jogador jogador;
+    public static bool contaVitoria = false;
 
-    private void Start()
+    private void OnTriggerEnter(Collider collision)
     {
-        jogador = GetComponentInParent<S_jogador>();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("ch") && contaVitoria && S_verificaGolpe.timeSlow)
+        if (collision.gameObject.CompareTag("ch") && contaVitoria && S_verificaGolpe.derrotou)
         {
             contaVitoria = false;
+            S_colisorPontinhos.podecolidir = false;
             S_verificaGolpe.resetaCena = true;
         }
     }

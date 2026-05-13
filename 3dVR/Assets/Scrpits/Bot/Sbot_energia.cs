@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +12,7 @@ public class Sbot_energia : S_energia
     void Start()
     {
         jogador = GetComponent<Sbot_jogador>();
-        energiaMax = 110 + (Mathf.Pow(jogador.dificuldade, 1.5f) * 9);
+        energiaMax = 110 + (Mathf.Pow(Sbot_jogador.dificuldade, 1.5f) * 9);
         energia = energiaMax;
         Renderer = GetComponentsInChildren<SpriteRenderer>().Take(1).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();

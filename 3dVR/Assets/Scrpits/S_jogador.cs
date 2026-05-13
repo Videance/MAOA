@@ -10,11 +10,13 @@ public class S_jogador : MonoBehaviour
     public string imaoDir = null;
     public string dirEqui = "c";
     public bool pernaAberta = false;
+    public bool seMovendo = false;
 
     [Header("PARTES DO CORPO")]
     public List<S_Conector> conectores;
     public S_IK[] IKs;
     public S_dis_pe[] PEs;
+    public S_Equilibrio Sequilibrio;
 
     [Header("RAGDOLL")]
     public bool emRagdoll = false;
@@ -22,14 +24,13 @@ public class S_jogador : MonoBehaviour
     public GameObject RIG;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
-    [Header("PONTOS")]
-    public int jogPontos = 0;
-
     protected virtual void Awake()
     {
         PEs = GetComponentsInChildren<S_dis_pe>();
 
         IKs = GetComponentsInChildren<S_IK>();
+
+        Sequilibrio = GetComponentInChildren<S_Equilibrio>();
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         if (adversario != null)
@@ -68,6 +69,12 @@ public class S_jogador : MonoBehaviour
             if (t.CompareTag("p") && t.gameObject.GetComponent<Rigidbody>() == true) ragdollBodies.Add(t.gameObject.GetComponent<Rigidbody>());
         }
         Ragdoll(false);
+    }
+
+    private void Update()
+    {
+        seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
+            PEs[0].segurando || IKs[1].segurando || Sequilibrio.equilibrioCandidato != null) ? true : false;
     }
 
     public void Ragdoll(bool forma) //true vira ragdoll

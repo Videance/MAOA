@@ -11,8 +11,8 @@ public class S_Equilibrio : MonoBehaviour
     protected S_energia energia;
 
     [Header("Valor do equilibrio")]
-    public float dist = 0.0768f;
-    public float XYdir = 0.74f;
+    protected float dist = 0.576f;
+    protected float XYdir = 0.74f;
     public float multiplicador = 1f;
     private float speedi = 15f;
 
@@ -20,6 +20,9 @@ public class S_Equilibrio : MonoBehaviour
     public string direcaoEquilibrio;
     protected bool primeira = true;
     protected string dirFulga = null;
+    protected float tempoTroca = 0.75f;
+    public string equilibrioCandidato = null;
+    protected float contadorTroca = 0f;
 
     [Header("Cores")]
     public Color corNormal = Color.white;
@@ -41,8 +44,6 @@ public class S_Equilibrio : MonoBehaviour
     {
         if (pCentral == null || energia.rodandoSS) return;
 
-        speedi = 10 * (0.1f + (energia.energia / energia.energiaMax));
-
         Vector3 offset = transform.position - JinicialPos;
         offset.y = 0;
 
@@ -54,14 +55,59 @@ public class S_Equilibrio : MonoBehaviour
 
         pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, alvo, Time.deltaTime * speedi);
 
-        if (Vector3.Distance(pCentral.transform.position, inicialPos) <= (dist * 0.52f) && direcaoEquilibrio != "c") TrocaEquilibrio("c", 0);
-        else if (Vector3.Distance(pCentral.transform.position, inicialPos) >= (dist * 0.6f))
+        // --------------------------------------------------------------
+        float porcentagemEnergia = energia.energia / energia.energiaMax;
+        tempoTroca = Mathf.Lerp(1f, 0.25f, porcentagemEnergia);
+
+        string novoEquilibrio = null;
+        float distanciaCentro = Vector3.Distance(pCentral.transform.position, inicialPos);
+
+        if (distanciaCentro <= (dist * 0.52f))
+        {
+            novoEquilibrio = "c";
+        }
+        else if (distanciaCentro >= (dist * 0.6f))
         {
             Vector3 dir = (pCentral.transform.position - inicialPos).normalized;
-            if (dir.x > XYdir && direcaoEquilibrio != "d") TrocaEquilibrio("d", 2);
-            else if (dir.x < -XYdir && direcaoEquilibrio != "e") TrocaEquilibrio("e", 4);
-            else if (dir.z > XYdir && direcaoEquilibrio != "f") TrocaEquilibrio("f", 3);
-            else if (dir.z < -XYdir && direcaoEquilibrio != "t") TrocaEquilibrio("t", 1);
+
+            if (dir.x > XYdir) novoEquilibrio = "d";
+            else if (dir.x < -XYdir) novoEquilibrio = "e";
+            else if (dir.z > XYdir) novoEquilibrio = "f";
+            else if (dir.z < -XYdir) novoEquilibrio = "t";
+        }
+
+        // se não encontrou equilíbrio válido ou é igual
+        if (novoEquilibrio == null || novoEquilibrio == direcaoEquilibrio)
+        {
+            equilibrioCandidato = null;
+            contadorTroca = 0f;
+            return;
+        }
+
+        // começou novo candidato
+        if (equilibrioCandidato != novoEquilibrio)
+        {
+            equilibrioCandidato = novoEquilibrio;
+            contadorTroca = tempoTroca;
+        }
+        else
+        {
+            contadorTroca -= Time.deltaTime;
+
+            if (contadorTroca <= 0f)
+            {
+                int index = 0;
+
+                if (novoEquilibrio == "c") index = 0;
+                if (novoEquilibrio == "t") index = 1;
+                if (novoEquilibrio == "d") index = 2;
+                if (novoEquilibrio == "f") index = 3;
+                if (novoEquilibrio == "e") index = 4;
+
+                TrocaEquilibrio(novoEquilibrio, index);
+
+                equilibrioCandidato = null;
+            }
         }
     }
 

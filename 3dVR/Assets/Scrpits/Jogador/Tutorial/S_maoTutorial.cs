@@ -12,7 +12,7 @@ public class S_maoTutorial : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Stutorial.Sparte == true && other.gameObject.CompareTag("IK"))
+        if (S_controleTutorial.Sparte == true && other.gameObject.CompareTag("IK"))
         {
             if (ladoDir) Stutorial.tocou[0] = true;
             else if (!ladoDir) Stutorial.tocou[1] = true;
