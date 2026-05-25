@@ -54,8 +54,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
             energia -= Time.deltaTime / 3;
 
             int q = 0;
-            foreach (var i in IK) if (i.conectado) { q+=2; }
-            if (Jogador.pernaAberta) q += 1;
+            foreach (var i in IK) if (i.aberto) { q+=1; }
+            if (Jogador.posPerna.Contains("A")) q += 1;
             if (q > 0) energia -= Time.deltaTime * q;
         }
         else StartCoroutine(SemStamina());
@@ -87,7 +87,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         
         n = 5;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         while (energia < energiaMax)
         {

@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 188215289}
   - component: {fileID: 188215288}
   - component: {fileID: 188215290}
+  - component: {fileID: 188215291}
   m_Layer: 0
   m_Name: Controle de partida
   m_TagString: Untagged
@@ -526,6 +527,18 @@ MonoBehaviour:
   - {fileID: 2548978598840056701}
   pontos1: 0
   pontos2: 0
+--- !u!114 &188215291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188215287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b356cb9f28b43a4b99b783310f55ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &310184824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,9 +1135,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 474512230}
+  - component: {fileID: 474512231}
   m_Layer: 0
   m_Name: "Ch\xE3o e flutuante"
-  m_TagString: ch
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1146,6 +1160,18 @@ Transform:
   - {fileID: 1312783401}
   m_Father: {fileID: 188215289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &474512231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474512229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!1 &481958154
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,6 +2190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1186859246}
+  - component: {fileID: 1186859247}
   m_Layer: 0
   m_Name: "Luz gin\xE1iso"
   m_TagString: Untagged
@@ -2189,6 +2216,18 @@ Transform:
   - {fileID: 435339277}
   m_Father: {fileID: 188215289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1186859247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186859245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!1 &1230820309
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,6 +3134,7 @@ GameObject:
   - component: {fileID: 1636686662}
   - component: {fileID: 1636686661}
   - component: {fileID: 1636686660}
+  - component: {fileID: 1636686663}
   m_Layer: 0
   m_Name: Textinho
   m_TagString: Untagged
@@ -3265,6 +3305,18 @@ RectTransform:
   m_AnchoredPosition: {x: -0.432, y: 0.671}
   m_SizeDelta: {x: 10, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1636686663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636686659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!1 &1656209624
 GameObject:
   m_ObjectHideFlags: 0

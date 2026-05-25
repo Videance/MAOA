@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,6 @@ public class S_controleTutorial : MonoBehaviour
     S_jogador jogador;
     public TextMeshPro quadroDfala;
     public S_verificaGolpe SVgolpe;
-    static bool primeiravez = true;
 
     [Header("PRIMEIRA PARTE")]
     public static bool Pparte = true;
@@ -65,34 +65,6 @@ public class S_controleTutorial : MonoBehaviour
         if (Qparte) StartCoroutine(QuartaParte());
         if (QIparte) StartCoroutine(QuintaParte());
         if (SEparte) StartCoroutine(SextaParte());
-    }
-
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += AoCarregarCena;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= AoCarregarCena;
-    }
-
-    void AoCarregarCena(Scene scene, LoadSceneMode mode)
-    {
-        if (primeiravez)
-        {
-            primeiravez = false;
-            return;
-        }
-
-        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
-        Sequilibrio.enabled = true;
-        foreach (GameObject rig in RIGimao) rig.SetActive(true);
-        foreach (GameObject rig in RIGperna) rig.SetActive(true);
-        Spostura.enabled = true;
-        pngPostura.SetActive(true);
-        discoEquilibrioBOT.SetActive(true);
-        bot.SetActive(true);
     }
 
     private void Update()
@@ -195,7 +167,7 @@ public class S_controleTutorial : MonoBehaviour
 
         Spostura.enabled = true;
         yield return new WaitForSeconds(0.1f);
-        yield return new WaitUntil(() => jogador.pernaAberta == false &&
+        yield return new WaitUntil(() => jogador.posPerna.Contains("F") &&
         RIGperna[0].GetComponent<S_dis_pe>().segurando == false &&
         RIGperna[1].GetComponent<S_dis_pe>().segurando == false);
         for (int i = 0; i < RIGperna.Length; i++) StartCoroutine(RIGperna[i].GetComponent<S_dis_pe>().Mover(false));
@@ -207,14 +179,15 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Existem duas posturas: Fechada, quando suas pernas estão juntas, e Aberta, quando elas estão afastadas.", 7));
         yield return StartCoroutine(Escreve("No momento você esta na fechada. Vamos trocar para a aberta. Segure cada perna e mova uma para frente e outra para trás.", 1));
 
-        yield return new WaitUntil(() => jogador.pernaAberta == true);
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
 
         yield return StartCoroutine(Escreve("Isso! Agora sua postura é Aberta!", 5));
-        yield return StartCoroutine(Escreve("Porém fique atento, manter a postura aberta exige muito do seu MAOÁ, então ele tentará fechar ela constântemente.", 7));
-        yield return StartCoroutine(Escreve("Espere ela fechar ou traga elas de volta e então abra novamente.", 0));
+        yield return StartCoroutine(Escreve("Enquanto aberta, mover seu equilíbrio movimenta você e seu adversário pelo mapa!", 5));
+        yield return StartCoroutine(Escreve("Equilíbrio para frente ou para trás, move para frente ou para trás. Enquanto esquerda e direita roda você para esquerda ou direita!", 5));
+        yield return StartCoroutine(Escreve("Mas exploramos disso mais tarde. Por agora, feche sua postura e então abra novamente.", 0));
 
-        yield return new WaitUntil(() => jogador.pernaAberta == false);
-        yield return new WaitUntil(() => jogador.pernaAberta == true);
+        yield return new WaitUntil(() => jogador.posPerna.Contains("F"));
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
 
         yield return StartCoroutine(Escreve("Perfeito!!! Você ja sabe sobre todas as bases do judo. Que tal avançarmos um pouco e botarmos em prática realizando um golpe?", 7));
 
@@ -234,11 +207,11 @@ public class S_controleTutorial : MonoBehaviour
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Q" &&
         maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
         yield return StartCoroutine(Escreve("Isso! fizemos as imãos. Agora troque sua postura para Aberta!", 1));
-        yield return new WaitUntil(() => jogador.pernaAberta == true);
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
         yield return StartCoroutine(Escreve("Para finalizar, vamos ativar esse golpe colocando no equilíbrio correto! Ponha seu equilíbrio para a esquerda.", 1));
         yield return new WaitUntil(() => jogador.dirEqui == "e");
 
-        yield return new WaitUntil(() => jogador.dirEqui == "e" && jogador.pernaAberta == true &&
+        yield return new WaitUntil(() => jogador.dirEqui == "e" && jogador.posPerna.Contains("A") &&
         maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Q" &&
         maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
@@ -253,9 +226,9 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Ponha e mantenha seu equilíbrio para a trás.", 1));
         yield return new WaitUntil(() => jogador.dirEqui == "t");
         yield return StartCoroutine(Escreve("Isso! para finalizar dessa vez troque sua postura para Aberta!", 1));
-        yield return new WaitUntil(() => jogador.pernaAberta == true);
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
 
-        yield return new WaitUntil(() => jogador.dirEqui == "t" && jogador.pernaAberta == true &&
+        yield return new WaitUntil(() => jogador.dirEqui == "t" && jogador.posPerna.Contains("A") &&
         maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
         maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "P");
@@ -266,13 +239,13 @@ public class S_controleTutorial : MonoBehaviour
 
         yield return new WaitUntil(() => jogador.dirEqui == "f");
         yield return StartCoroutine(Escreve("troque sua postura para Aberta!", 1));
-        yield return new WaitUntil(() => jogador.pernaAberta == true);
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
         yield return StartCoroutine(Escreve("E para finalizar dessa vez, conecte a Imão esquerda no Cotovelo esquerdo e a Imão direita do Cotovelo direito", 1));
         yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Ce" &&
         maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Cd");
 
-        yield return new WaitUntil(() => jogador.dirEqui == "f" && jogador.pernaAberta == true &&
+        yield return new WaitUntil(() => jogador.dirEqui == "f" && jogador.posPerna.Contains("A") &&
         maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Ce" &&
         maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Cd");
@@ -301,11 +274,11 @@ public class S_controleTutorial : MonoBehaviour
             maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
             maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
             yield return StartCoroutine(Escreve("Troque sua postura para Aberta!", 1));
-            yield return new WaitUntil(() => jogador.pernaAberta == true);
+            yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
             yield return StartCoroutine(Escreve("Ponha seu equilíbrio no centro.", 1));
             yield return new WaitUntil(() => jogador.dirEqui == "c");
 
-            yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.pernaAberta == true &&
+            yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("A") &&
             maoD.conectado != null && maoE.conectado != null &&
             maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
             maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
@@ -334,44 +307,68 @@ public class S_controleTutorial : MonoBehaviour
 
             S_verificaGolpe.emTutorial = false;
 
+            yield return null;
+            yield return new WaitForEndOfFrame();
+
+            S_verificaGolpe.emTutorial = true;
+
             yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 5));
             yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 8));
 
             metade1 = false;
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            yield break;
         }
         else if (!metade1)
         {
-            yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga! Coloque seu equilíbrio no centro para começar", 8));
+            yield return null;
+            yield return new WaitForEndOfFrame();
 
-            yield return new WaitUntil(() => jogador.dirEqui == "c");
+            Spostura.enabled = true;
+            pngPostura.SetActive(true);
+            discoEquilibrioBOT.SetActive(true);
+            bot.SetActive(true);
+            adversario.enabled = false;
+
+            yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga!", 6));
 
             adversario.enabled = true;
             adversario.golpe = S_verificaGolpe.Vgolpe.golpes[4];
             Sbot_jogador.dificuldade = 4;
 
-            S_verificaGolpe.emTutorial = true;
             yield return new WaitUntil(() => S_verificaGolpe.timeSlow == true);
 
             yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 8));
             yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 8));
 
+            foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
+            Sequilibrio.enabled = true;
             yield return new WaitUntil(() => jogador.dirEqui == adversario.golpe.IdirEqui);
+
+            adversario.enabled = false;
 
             yield return StartCoroutine(Escreve("Isso ai! Você se defendeu do golpe trocando seu equilíbrio antes do tempo! Quando fizer isso, seu oponente ficará desestabilizado e soltará tudo.", 8));
             yield return StartCoroutine(Escreve("Mas lembre-se, seu oponente também pode fazer isso! Então quando você for o atacante, mova seu orbe até a ponta da seta o quanto antes.", 8));
             yield return StartCoroutine(Escreve("Agora você ja sabe sobre quase tudo! só falta uma coisinha: energia!", 5));
 
             QIparte = false;
+            SEparte = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             StartCoroutine(SextaParte());
         }
     }
 
     IEnumerator SextaParte()
     {
-        SEparte = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
+        Sequilibrio.enabled = true;
+        foreach (GameObject rig in RIGimao) rig.SetActive(true);
+        foreach (GameObject rig in RIGperna) rig.SetActive(true);
+        Spostura.enabled = true;
+        pngPostura.SetActive(true);
+        discoEquilibrioBOT.SetActive(true);
+        bot.SetActive(true);
 
         yield return StartCoroutine(Escreve("Igual a outras máquinas, o seu MAOÁ também precisa de energia para funcionar", 5));
 
@@ -384,6 +381,7 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Agora, vamos realizar seu último teste, uma batalha final de verdade (agora com energia)!", 6));
 
         SEparte = false;
+        S_verificaGolpe.emTutorial = false;
 
         Sbot_jogador.dificuldade = 1;
         SceneManager.LoadScene("MAOA vdd");

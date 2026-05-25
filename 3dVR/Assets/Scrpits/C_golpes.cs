@@ -13,7 +13,7 @@ public class C_golpes
     public string JdirEqui;
     public string IdirEqui;
 
-    public bool pernaAberta;
+    public string pernaAberta;
 
     public GameObject dirPdes;
 }

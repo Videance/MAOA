@@ -3,6 +3,7 @@ using UnityEngine;
 public class S_Postura : MonoBehaviour
 {
     public S_jogador jogador;
+
     public GameObject pDireita;
     public GameObject pEsquerda;
 
@@ -11,33 +12,46 @@ public class S_Postura : MonoBehaviour
 
     public float distZ;
 
-    public float distEquilibrio;
-    public float XYdirEquilibrio;
+    public string posPerna;
 
-    private void Start()
+    void Start()
     {
         jogador = GetComponentInParent<S_jogador>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (pDireita == null || pEsquerda == null || pEsquerda.transform.position == pDireita.transform.position) return;
+        if (pDireita == null || pEsquerda == null || pEsquerda.transform.position == pDireita.transform.position)
+            return;
 
         Vector3 pDir = new Vector3(0f, 0f, pDireita.transform.position.z);
         Vector3 pEsq = new Vector3(0f, 0f, pEsquerda.transform.position.z);
+
         distZ = Vector3.Distance(pDir, pEsq);
 
-        if (distZ > 1.5f) TrocaPostura(true);
-        else if (distZ < 1f) TrocaPostura(false);
+        if (distZ < 0.9f) TrocaPostura("F");
+
+        else if (distZ > 1.5f)
+        {
+            if (jogador.transform.position.z < 0)
+            {
+                if (pDireita.transform.position.z > jogador.transform.position.z) TrocaPostura("Ad");
+                if (pEsquerda.transform.position.z > jogador.transform.position.z) TrocaPostura("Ae");
+            }
+            else
+            {
+                if (pDireita.transform.position.z > jogador.transform.position.z) TrocaPostura("Ae");
+                if (pEsquerda.transform.position.z > jogador.transform.position.z) TrocaPostura("Ad");
+            }
+        }
     }
 
-    void TrocaPostura(bool aberta)
+    void TrocaPostura(string postura)
     {
-        if (jogador.pernaAberta == aberta) return;
-        jogador.pernaAberta = aberta;
-        if (aberta) render.sprite = sprites[1];
-        else render.sprite = sprites[0];
+        if (jogador.posPerna == postura) return;
+        jogador.posPerna = postura;
+
+        render.sprite = postura.Contains("A") ? sprites[1] : sprites[0];
 
         if (jogador is Sbot_jogador) ((Sbot_jogador)jogador).VerificaVar(1);
         else S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);

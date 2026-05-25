@@ -52,6 +52,19 @@ public class S_verificaGolpe : MonoBehaviour
     {
         if (timeSlow || derrotou || !adv.seMovendo) return;
 
+        if (!adv.seMovendo)
+        {
+            jog.Fragil();
+
+            for (int i = 0; i < jog.IKs.Length; i++)
+            {
+                jog.IKs[i].Desconecta();
+                jog.PEs[i].Mover(false);
+            }
+
+            return;
+        }
+
         foreach (var golpe in Vgolpe.golpes)
         {
             int pontos = 0;
@@ -59,7 +72,7 @@ public class S_verificaGolpe : MonoBehaviour
             if (golpe.conectorImaoDir == jog.imaoDir) pontos++;
             if (golpe.conectorImaoEsq == jog.imaoEsq) pontos++;
             if (golpe.JdirEqui == jog.dirEqui) pontos++;
-            if (golpe.pernaAberta == jog.pernaAberta) pontos++;
+            if (golpe.pernaAberta == jog.posPerna) pontos++;
 
             if (pontos == 4)
             {
@@ -150,17 +163,13 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (Spde.tocouClimax)
         {
-            derrotou = true;
-
             dir = Spde.dirFinal;
+
             //destroi o ponto e caminho
             Destroy(pDes);
             Destroy(caminho);
             pDes = null;
             caminho = null;
-
-            //controla luz
-            //foreach (GameObject luz in luzesNormal) luz.SetActive(true);
 
             Vgolpe.StartCoroutine(Vgolpe.Derrota(jog, adv));
             yield break;
@@ -209,6 +218,8 @@ public class S_verificaGolpe : MonoBehaviour
 
     public IEnumerator Derrota(S_jogador jog, S_jogador adv)
     {
+        derrotou = true;
+
         foreach (GameObject luz in luzesDerrota)
         {
             luz.SetActive(true);
@@ -277,6 +288,8 @@ public class S_verificaGolpe : MonoBehaviour
 
             textInfo[1].text = "Dificulade =" + Sbot_jogador.dificuldade;
         }
+
+        if (emTutorial) yield break;
 
         if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) Sbot_jogador.dificuldade++;
         if (S_pontos.Spontos.pontos2 >= 2)

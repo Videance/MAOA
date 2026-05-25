@@ -64,10 +64,10 @@ public class Sbot_equilibrio : S_Equilibrio
                 int index = 0;
 
                 if (novoEquilibrio == "c") index = 0;
-                if (novoEquilibrio == "t") index = 1;
-                if (novoEquilibrio == "d") index = 2;
-                if (novoEquilibrio == "f") index = 3;
-                if (novoEquilibrio == "e") index = 4;
+                if (novoEquilibrio == "t") index = 3;
+                if (novoEquilibrio == "d") index = 4;
+                if (novoEquilibrio == "f") index = 1;
+                if (novoEquilibrio == "e") index = 2;
 
                 TrocaEquilibrio(novoEquilibrio, index);
 

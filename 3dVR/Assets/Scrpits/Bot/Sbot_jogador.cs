@@ -20,14 +20,12 @@ public class Sbot_jogador : S_jogador
     float t1;
     float tt1 = 0;
     int n = 0;
-    public static int dificuldade = 1; // 1 a 5
+    public static int dificuldade = 3; // 1 a 5
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
     public GameObject pDesequilibrio;
     public Collider[] colliderSeta;
-
-    Sbot_energia Senergia;
 
     protected override void Awake()
     {
@@ -38,8 +36,6 @@ public class Sbot_jogador : S_jogador
 
         golpeP = new List<bool>();
         for (int i = 0; i < 4; i++) golpeP.Add(false);
-
-        Senergia = GetComponent<Sbot_energia>();
     }
 
     private void Start()
@@ -84,6 +80,26 @@ public class Sbot_jogador : S_jogador
             int vel = Random.Range(2, 7);
             if (vel <= dificuldade) StartCoroutine(FazendoGolpe(true));
             else StartCoroutine(FazendoGolpe(false));
+        }
+
+        seMovendo = (maoD.movendo || maoE.movendo ||
+            PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
+            ? true : false;
+
+        if (dirEqui == "c")
+        {
+            S_moveTudo.J2dirX = 0f;
+            S_moveTudo.J2dirY = 0f;
+        }
+        else if (posPerna.Contains("A"))
+        {
+            if (dirEqui == "f") S_moveTudo.J2dirX = -0.8f;
+            if (dirEqui == "t") S_moveTudo.J2dirX = 0.8f;
+            if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
+            if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+
+            if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
+            if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
         }
     }
 
@@ -184,13 +200,13 @@ public class Sbot_jogador : S_jogador
         if (S_verificaGolpe.timeSlow) return;
 
         if (qual == 0) golpeP[0] = (dirEqui == golpe.JdirEqui) ? true : false;
-        if (qual == 1) golpeP[1] = (pernaAberta == golpe.pernaAberta) ? true : false;
+        if (qual == 1) golpeP[1] = (posPerna == golpe.pernaAberta) ? true : false;
         if (qual == 2) golpeP[2] = (imaoDir == golpe.conectorImaoDir) ? true : false;
         if (qual == 3) golpeP[3] = (imaoEsq == golpe.conectorImaoEsq) ? true : false;
         if (qual == 5)
         {
             golpeP[0] = (dirEqui == golpe.JdirEqui) ? true : false;
-            golpeP[1] = (pernaAberta == golpe.pernaAberta) ? true : false;
+            golpeP[1] = (posPerna == golpe.pernaAberta) ? true : false;
             golpeP[2] = (imaoDir == golpe.conectorImaoDir) ? true : false;
             golpeP[3] = (imaoEsq == golpe.conectorImaoEsq) ? true : false;
         }
@@ -199,7 +215,7 @@ public class Sbot_jogador : S_jogador
         foreach (bool b in golpeP) if (b) q++;
         if (q == 4 && qual <= 5)
         {
-            if (adversario.seMovendo) StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(golpe, this, adversario));
+            StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(golpe, this, adversario));
             if (S_verificaGolpe.timeSlow) return;
 
             ProcuraGolpe(dificuldade);
@@ -227,7 +243,7 @@ public class Sbot_jogador : S_jogador
                 return;
             case 1:
                 if (golpeP[1] || PEs[0].movendo || PEs[1].movendo) goto case 2;
-                if (golpe.pernaAberta) foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(true));
+                if (golpe.pernaAberta.Contains("A")) foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(true));
                 else foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(false));
                 return;
             case 2:

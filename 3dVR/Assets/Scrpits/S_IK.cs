@@ -23,12 +23,17 @@ public class S_IK : MonoBehaviour
     public SphereCollider coll;
     public Transform peito;
     public bool saindo = false;
+    public bool aberto;
 
     [Header("MATERIAIS E CORES")]
     protected Color corBase;
     protected Color corAtivada;
     protected Color corDesligado;
     public Material[] materials; // 0 Base | 1 Conectada
+
+    [Header("CALCULO SE MOVEU")]
+    protected Vector3 estavaAli;
+    public bool meMovi = false;
 
     public enum estadoMao
     {
@@ -51,12 +56,20 @@ public class S_IK : MonoBehaviour
         ColorUtility.TryParseHtmlString("#00B3FF", out corAtivada);
         ColorUtility.TryParseHtmlString("#111011", out corDesligado);
 
+        estavaAli = transform.position;
+
         trocaEstado(estadoMao.livre);
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
+        if (transform.position != estavaAli)
+        {
+            estavaAli = transform.position;
+            Espera();
+        }
+
         if (S_verificaGolpe.timeSlow) trocaEstado(estadoMao.desativada);
 
         if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
@@ -177,8 +190,7 @@ public class S_IK : MonoBehaviour
 
         trocaEstado(estadoMao.livre);
 
-        Vector3 dir = (transform.position - peito.position).normalized;
-        rb.linearVelocity = dir * 2;
+        StartCoroutine(VoltarProPeito());
     }
 
     public virtual IEnumerator VoltarProPeito()
@@ -205,6 +217,19 @@ public class S_IK : MonoBehaviour
 
         transform.position = target;
         saindo = false;
+    }
+
+    protected IEnumerator Espera()
+    {
+        if (meMovi) yield break;
+        meMovi = true;
+
+        while (meMovi)
+        {
+            yield return new WaitForSecondsRealtime(0.05f);
+
+            if (estavaAli == transform.position) meMovi = false;
+        }
     }
 
     //---------- CONTROLE DE COLISÕES ----------

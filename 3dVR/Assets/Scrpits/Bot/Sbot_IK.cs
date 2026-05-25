@@ -20,6 +20,15 @@ public class Sbot_IK : S_IK
         speed = Mathf.Sqrt(Sbot_jogador.dificuldade * speed) + speed;
     }
 
+    protected override void Update()
+    {
+        if (transform.position != estavaAli)
+        {
+            estavaAli = transform.position;
+            Espera();
+        }
+    }
+
     public IEnumerator Move(Transform conector)
     {
         movendo = true;

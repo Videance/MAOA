@@ -1,22 +1,26 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class S_jogador : MonoBehaviour
 {
     public S_jogador adversario;
+    public bool jog1;
 
     [Header("POSICAO")]
     public string imaoEsq = null;
     public string imaoDir = null;
     public string dirEqui = "c";
-    public bool pernaAberta = false;
+    public string posPerna = null;
     public bool seMovendo = false;
+    public bool vulneravel = false;
 
     [Header("PARTES DO CORPO")]
     public List<S_Conector> conectores;
     public S_IK[] IKs;
     public S_dis_pe[] PEs;
     public S_Equilibrio Sequilibrio;
+    public S_energia Senergia;
 
     [Header("RAGDOLL")]
     public bool emRagdoll = false;
@@ -31,6 +35,7 @@ public class S_jogador : MonoBehaviour
         IKs = GetComponentsInChildren<S_IK>();
 
         Sequilibrio = GetComponentInChildren<S_Equilibrio>();
+        Senergia = GetComponent<S_energia>();
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         if (adversario != null)
@@ -68,13 +73,54 @@ public class S_jogador : MonoBehaviour
             if (t.CompareTag("c")) conectores.Add(t.GetComponent<S_Conector>());
             if (t.CompareTag("p") && t.gameObject.GetComponent<Rigidbody>() == true) ragdollBodies.Add(t.gameObject.GetComponent<Rigidbody>());
         }
+
+        if (transform.position.z < 0) jog1 = true;
+
         Ragdoll(false);
     }
 
     private void Update()
     {
         seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
-            PEs[0].segurando || IKs[1].segurando || Sequilibrio.equilibrioCandidato != null) ? true : false;
+            PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
+            ? true : false;
+
+        if (dirEqui == "c")
+        {
+            if (jog1)
+            {
+                S_moveTudo.J1dirX = 0f;
+                S_moveTudo.J1dirY = 0f;
+            }
+            else
+            {
+                S_moveTudo.J2dirX = 0f;
+                S_moveTudo.J2dirY = 0f;
+            }
+        }
+        else if (posPerna.Contains("A"))
+        {
+            if (jog1)
+            {
+                if (dirEqui == "f") S_moveTudo.J1dirX = 0.8f;
+                if (dirEqui == "t") S_moveTudo.J1dirX = -0.8f;
+                if (dirEqui == "d") S_moveTudo.J1dirY = -1f;
+                if (dirEqui == "e") S_moveTudo.J1dirY = 1f;
+
+                if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J1dirX = 0;
+                if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J1dirY = 0;
+            }
+            else
+            {
+                if (dirEqui == "f") S_moveTudo.J2dirX = -0.8f;
+                if (dirEqui == "t") S_moveTudo.J2dirX = 0.8f;
+                if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
+                if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+
+                if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
+                if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
+            }
+        }
     }
 
     public void Ragdoll(bool forma) //true vira ragdoll
@@ -97,5 +143,18 @@ public class S_jogador : MonoBehaviour
             if (rb.name == "B Peitoral") rb.useGravity = ativada;
             else rb.useGravity = false;
         }
+    }
+
+    public IEnumerator Fragil()
+    {
+        vulneravel = true;
+        Senergia.energia -= 15f;
+        yield return new WaitForSecondsRealtime(3f);
+        vulneravel = false;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!S_verificaGolpe.timeSlow && other.CompareTag("ch")) StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(adversario, this));
     }
 }

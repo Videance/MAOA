@@ -11,7 +11,6 @@ public class S_dis_pe : S_dis_boneGrab
     public bool ladoEsq;
     public bool movendo;
     Vector3 posInical;
-    S_jogador postura;
     public XRGrabInteractable grab;
     public bool segurando = false;
 
@@ -20,7 +19,6 @@ public class S_dis_pe : S_dis_boneGrab
         ik = GetComponent<S_IK>();
         dis = Vector3.Distance(GOponta.transform.position, GOinicial.transform.position);
         posInical = transform.position;
-        postura = GetComponentInParent<S_jogador>();
         grab = GetComponent<XRGrabInteractable>();
     }
 
@@ -28,8 +26,6 @@ public class S_dis_pe : S_dis_boneGrab
     {
         // recolar o parent que o nearfar tira
         if (transform.parent == null) transform.SetParent(pai.transform);
-
-        if (postura.pernaAberta && !grab.isSelected && !movendo) transform.position = Vector3.MoveTowards(transform.position, posInical, Time.deltaTime / 25);
 
         if (ik != null && ik.conectado)
         {

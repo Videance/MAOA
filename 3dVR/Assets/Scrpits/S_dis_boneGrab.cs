@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class S_dis_boneGrab : MonoBehaviour
@@ -33,7 +34,12 @@ public class S_dis_boneGrab : MonoBehaviour
         // MOVIMENTO COM LIMITE MÁXIMO
         Vector3 dir = (transform.position - GOinicial.transform.position).normalized;
 
-        if (Vector3.Distance(transform.position, GOinicial.transform.position) >= dis)
+        float distancia = Vector3.Distance(transform.position, GOinicial.transform.position);
+
+        if (distancia >= dis)
             transform.position = GOinicial.transform.position + dir * dis;
+
+        if (distancia >= 0.7f) ik.aberto = true;
+        else if (distancia <= 0.6f) ik.aberto = false;
     }
 }

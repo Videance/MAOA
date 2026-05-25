@@ -24,6 +24,14 @@ public class S_Equilibrio : MonoBehaviour
     public string equilibrioCandidato = null;
     protected float contadorTroca = 0f;
 
+    [Header("Instabilidade")]
+    public float forcaBalanco = 0.04f;
+    public float crescimentoBalanco = 0.03f;
+    public float velocidadeBalanco = 3f;
+
+    private Vector3 dirBalanco;
+    private float tempoMesmoEquilibrio = 0f;
+
     [Header("Cores")]
     public Color corNormal = Color.white;
     public Color corAtiva = Color.blue;
@@ -36,6 +44,11 @@ public class S_Equilibrio : MonoBehaviour
         energia = GetComponentInParent<S_energia>();
         inicialPos = pCentral.transform.position;
         JinicialPos = transform.position;
+
+        dirBalanco = UnityEngine.Random.insideUnitSphere;
+        dirBalanco.y = 0;
+        dirBalanco.Normalize();
+
         TrocaEquilibrio("c", 0);
     }
 
@@ -44,14 +57,24 @@ public class S_Equilibrio : MonoBehaviour
     {
         if (pCentral == null || energia.rodandoSS) return;
 
+        tempoMesmoEquilibrio += Time.deltaTime;
+
         Vector3 offset = transform.position - JinicialPos;
         offset.y = 0;
 
         float mag = offset.magnitude;
-        if (mag < 0.0001f) return;
+        if (mag < 0.0001f) offset = Vector3.zero;
 
         float distancia = Mathf.Min(mag * multiplicador, dist);
-        Vector3 alvo = inicialPos + offset.normalized * distancia;
+        float intensidade = forcaBalanco + (tempoMesmoEquilibrio * crescimentoBalanco);
+
+        // movimento oscilando
+        float noiseX = Mathf.PerlinNoise(Time.time * velocidadeBalanco, 0f) - 0.5f;
+        float noiseZ = Mathf.PerlinNoise(0f, Time.time * velocidadeBalanco) - 0.5f;
+
+        Vector3 balanco = new Vector3(noiseX, 0, noiseZ) * intensidade;
+
+        Vector3 alvo = inicialPos + offset.normalized * distancia + balanco;
 
         pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, alvo, Time.deltaTime * speedi);
 
@@ -123,6 +146,12 @@ public class S_Equilibrio : MonoBehaviour
             else dirFulga = null;
         }
 
+        tempoMesmoEquilibrio = 0f;
+
+        dirBalanco = UnityEngine.Random.insideUnitSphere;
+        dirBalanco.y = 0;
+        dirBalanco.Normalize();
+
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
 
         if (primeira) primeira = false;
@@ -134,6 +163,12 @@ public class S_Equilibrio : MonoBehaviour
 
     public virtual void PlacaFuga(string letra)
     {
+        tempoMesmoEquilibrio = 0f;
+
+        dirBalanco = UnityEngine.Random.insideUnitSphere;
+        dirBalanco.y = 0;
+        dirBalanco.Normalize();
+
         dirFulga = letra;
 
         blocos[0].material.color = letra == "c" ? corFuga : corNormal;

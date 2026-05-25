@@ -41,7 +41,7 @@ public class Sbot_energia : S_energia
 
             int q = 0;
             foreach (var i in IK) if (i.conectado) { q += 2; }
-            if (jogador.pernaAberta) q += 1;
+            if (jogador.posPerna.Contains("A")) q += 1;
             if (q > 0) energia -= Time.deltaTime * q;
         }
         else StartCoroutine(SemStamina());
@@ -66,11 +66,11 @@ public class Sbot_energia : S_energia
 
         n = 5;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         while (energia < energiaMax)
         {
-            energia += (energiaMax * 0.20f);
+            energia += energiaMax * 0.21f;
             if (energia < energiaMax) yield return new WaitForSeconds(0.25f);
         }
 
