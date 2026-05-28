@@ -12,6 +12,7 @@ TagManager:
   - ch
   - e
   - chb
+  - ui
   layers:
   - Default
   - TransparentFX
