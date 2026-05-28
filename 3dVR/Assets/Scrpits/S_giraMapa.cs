@@ -1,30 +1,38 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class S_giraMapa : MonoBehaviour
 {
     private Vector3 offsetInicial;
+    private Quaternion rotacaoInicial;
 
     void Start()
     {
-        // Guarda a posição relativa inicial em relação à quadra
+        // Guarda posição relativa inicial
         offsetInicial = transform.position - S_moveTudo.quadra.transform.position;
+
+        // Guarda rotação original
+        rotacaoInicial = transform.rotation;
     }
 
     void Update()
     {
+        if (S_verificaGolpe.timeSlow || S_moveTudo.quadra == null || S_controleTutorial.emTutorial) return;
+
         float dirX = S_moveTudo.J1dirX + S_moveTudo.J2dirX;
 
-        // Movimento lateral normal
+        // Movimento lateral
         if (dirX != 0f)
             transform.position += new Vector3(dirX, 0, 0) * Time.deltaTime;
 
-        // Aplica a rotação da quadra ao offset
+        // Rotaciona o offset junto da quadra
         Vector3 novoOffset = S_moveTudo.quadra.transform.rotation * offsetInicial;
 
-        // Reposiciona ao redor da quadra
+        // Atualiza posição
         transform.position = S_moveTudo.quadra.transform.position + novoOffset;
 
-        // Opcional: também copia a rotação
-        transform.rotation = S_moveTudo.quadra.transform.rotation;
+        // Rotação da quadra + rotação original do objeto
+        transform.rotation = S_moveTudo.quadra.transform.rotation * rotacaoInicial;
     }
 }

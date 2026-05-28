@@ -20,7 +20,7 @@ public class Sbot_jogador : S_jogador
     float t1;
     float tt1 = 0;
     int n = 0;
-    public static int dificuldade = 3; // 1 a 5
+    public static int dificuldade = 5; // 1 a 5
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
@@ -86,17 +86,17 @@ public class Sbot_jogador : S_jogador
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        if (dirEqui == "c")
+        if (dirEqui == "c" || posPerna.Contains("F"))
         {
             S_moveTudo.J2dirX = 0f;
             S_moveTudo.J2dirY = 0f;
         }
         else if (posPerna.Contains("A"))
         {
-            if (dirEqui == "f") S_moveTudo.J2dirX = -0.8f;
-            if (dirEqui == "t") S_moveTudo.J2dirX = 0.8f;
-            if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
-            if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+            if (dirEqui == "f") S_moveTudo.J2dirX = 0.8f;
+            if (dirEqui == "t") S_moveTudo.J2dirX = -0.8f;
+            if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
+            if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
 
             if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
             if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
@@ -243,8 +243,10 @@ public class Sbot_jogador : S_jogador
                 return;
             case 1:
                 if (golpeP[1] || PEs[0].movendo || PEs[1].movendo) goto case 2;
-                if (golpe.pernaAberta.Contains("A")) foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(true));
-                else foreach (S_dis_pe v in PEs) StartCoroutine(v.Mover(false));
+                foreach (S_dis_pe v in PEs)
+                    if (golpe.pernaAberta == "Ae") StartCoroutine(v.Mover(true, true));
+                    else if (golpe.pernaAberta == "Ad") StartCoroutine(v.Mover(true, false));
+                    else StartCoroutine(v.Mover(false, false));
                 return;
             case 2:
                 if (golpeP[2] || maoD.movendo) goto case 3;
@@ -270,7 +272,7 @@ public class Sbot_jogador : S_jogador
             Vector3 centroMundo = box.bounds.center;
 
             float vel = equilibrio.speedMax * Random.Range(0.33f, 0.5f);
-            if (S_verificaGolpe.emTutorial) vel = vel / 20;
+            if (S_controleTutorial.emTutorial) vel = vel / 40;
 
             while (pDese != null && Vector3.Distance(pDese.transform.position, centroMundo) > 0.0001f)
             {

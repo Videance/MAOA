@@ -53,10 +53,13 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         {
             energia -= Time.deltaTime / 3;
 
-            int q = 0;
-            foreach (var i in IK) if (i.aberto) { q+=1; }
-            if (Jogador.posPerna.Contains("A")) q += 1;
-            if (q > 0) energia -= Time.deltaTime * q;
+            if (!S_controleTutorial.emTutorial)
+            {
+                int q = 0;
+                foreach (var i in IK) if (i.aberto) { q += 1; }
+                if (Jogador.posPerna.Contains("A")) q += 1;
+                if (q > 0) energia -= Time.deltaTime * q;
+            }
         }
         else StartCoroutine(SemStamina());
 

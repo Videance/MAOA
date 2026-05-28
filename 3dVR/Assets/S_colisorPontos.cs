@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class S_colisorPontos : MonoBehaviour
 {
-    public static bool contaVitoria = false;
+    public static bool contaVitoria = true;
 
     private void OnTriggerEnter(Collider collision)
     {

@@ -1,14 +1,15 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class S_controleTutorial : MonoBehaviour
 {
     S_jogador jogador;
     public TextMeshPro quadroDfala;
     public S_verificaGolpe SVgolpe;
+    public static bool emTutorial = false; // TROCAR DPS
 
     [Header("PRIMEIRA PARTE")]
     public static bool Pparte = true;
@@ -34,12 +35,14 @@ public class S_controleTutorial : MonoBehaviour
 
     [Header("QUINTA PARTE")]
     public static bool QIparte = false;
-    public static bool metade1 = true;
     public Sbot_jogador adversario;
     public GameObject discoEquilibrioBOT;
 
     [Header("SEXTA PARTE")]
     public static bool SEparte = false;
+
+    [Header("SETIMA PARTE")]
+    public static bool STparte = false;
     public S_energia Senergia;
     public GameObject[] pngEnergia;
 
@@ -48,16 +51,18 @@ public class S_controleTutorial : MonoBehaviour
         jogador = GetComponent<S_jogador>();
         maoD = RIGimao[0].gameObject.GetComponent<S_IK>();
         maoE = RIGimao[1].gameObject.GetComponent<S_IK>();
+        emTutorial = true;
     }
 
     private void Start()
     {
+        SVgolpe = S_verificaGolpe.Vgolpe;
+        quadroDfala = GameObject.Find("Textinho").GetComponent<TextMeshPro>();
+
         tocou = new bool[2] { false, false };
 
         foreach (GameObject rig in RIGimao) rig.SetActive(false);
         foreach (GameObject rig in RIGperna) rig.SetActive(false);
-
-        Pparte = true;
 
         if (Pparte) StartCoroutine(PrimeiraParte());
         if (Sparte) StartCoroutine(SegundaParte());
@@ -65,6 +70,7 @@ public class S_controleTutorial : MonoBehaviour
         if (Qparte) StartCoroutine(QuartaParte());
         if (QIparte) StartCoroutine(QuintaParte());
         if (SEparte) StartCoroutine(SextaParte());
+        if (STparte) StartCoroutine(SetimaParte());
     }
 
     private void Update()
@@ -170,7 +176,7 @@ public class S_controleTutorial : MonoBehaviour
         yield return new WaitUntil(() => jogador.posPerna.Contains("F") &&
         RIGperna[0].GetComponent<S_dis_pe>().segurando == false &&
         RIGperna[1].GetComponent<S_dis_pe>().segurando == false);
-        for (int i = 0; i < RIGperna.Length; i++) StartCoroutine(RIGperna[i].GetComponent<S_dis_pe>().Mover(false));
+        for (int i = 0; i < RIGperna.Length; i++) StartCoroutine(RIGperna[i].GetComponent<S_dis_pe>().Mover(false, false));
         yield return new WaitUntil(() => RIGperna[0].GetComponent<S_dis_pe>().movendo == false &&
         RIGperna[1].GetComponent<S_dis_pe>().movendo == false);
 
@@ -262,104 +268,110 @@ public class S_controleTutorial : MonoBehaviour
     {
         QIparte = true;
 
-        if (metade1)
+        yield return StartCoroutine(Escreve("Você deve ter percebido que ao realizar um golpe apenas um pequeno efeito aconteceu, mas isso é porque estavamos apenas testando.", 8));
+        yield return StartCoroutine(Escreve("Durante uma verdadeira luta de judô você deve acertar a posição do corpo e depois realizar uma projeção!", 7));
+        yield return StartCoroutine(Escreve("E agora que você ja sabe da posição, vamos aprender a projeção e como se defender de uma", 6));
+        yield return StartCoroutine(Escreve("Realize mais um golpe, o XXXXX, para ativarmos uma projeção", 5));
+
+        yield return StartCoroutine(Escreve("Conecte a Imão esquerda no Ombro esquerdo e a Imão direita do Ombro direito", 1));
+        yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
+        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
+        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
+        yield return StartCoroutine(Escreve("Troque sua postura para Aberta!", 1));
+        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
+        yield return StartCoroutine(Escreve("Ponha seu equilíbrio no centro.", 1));
+        yield return new WaitUntil(() => jogador.dirEqui == "c");
+
+        yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("A") &&
+        maoD.conectado != null && maoE.conectado != null &&
+        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
+        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
+
+        S_verificaGolpe.esperaTime = true;
+        StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(S_verificaGolpe.Vgolpe.golpes[4], jogador, jogador.adversario));
+
+        XRGrabInteractable pdesXR = SVgolpe.pDes.GetComponent<XRGrabInteractable>();
+
+        pdesXR.trackPosition = false;
+        pdesXR.trackRotation = false;
+        pdesXR.enabled = false;
+
+        yield return StartCoroutine(Escreve("Buuuuuummm~ Legal né? Entramos dentro da zona de projeção!", 5));
+        yield return StartCoroutine(Escreve("Aqui dentro tudo fica super lento e duas coisas importântes acontecem: Um jogador tenta realizar uma projeção e o outro fugir dela", 8));
+        yield return StartCoroutine(Escreve("Vamos primeiro falar do jogador realizando a projeção, que foi o que conseguiu realizar o golpe. No caso, você.", 7));
+        yield return StartCoroutine(Escreve("Entre as suas imãos se criou um orbe e uma grande seta brilhante. Seu objetivo como atacante é levar o orbe até o fim da seta.", 8));
+        yield return StartCoroutine(Escreve("Para fazer isso, aproxime uma de suas mãos dele e segure seu 'GRAB', igual você fez com as partes do seu MAOÁ.", 7));
+        yield return StartCoroutine(Escreve("Mas fique atento! O orbe NÃO PODE SAIR DA SETA, caso contrário ele seu MAOÁ perderá o impulso e sairá da zona de projeção.", 1));
+
+        pdesXR.trackPosition = true;
+        pdesXR.trackRotation = true;
+        pdesXR.enabled = true;
+
+        while (S_verificaGolpe.timeSlow)
         {
-            yield return StartCoroutine(Escreve("Você deve ter percebido que ao realizar um golpe apenas um pequeno efeito aconteceu, mas isso é porque estavamos apenas testando.", 8));
-            yield return StartCoroutine(Escreve("Durante uma verdadeira luta de judô você deve acertar a posição do corpo e depois realizar uma projeção!", 7));
-            yield return StartCoroutine(Escreve("E agora que você ja sabe da posição, vamos aprender a projeção e como se defender de uma", 6));
-            yield return StartCoroutine(Escreve("Realize mais um golpe, o XXXXX, para ativarmos uma projeção", 5));
-
-            yield return StartCoroutine(Escreve("Conecte a Imão esquerda no Ombro esquerdo e a Imão direita do Ombro direito", 1));
-            yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
-            maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
-            maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
-            yield return StartCoroutine(Escreve("Troque sua postura para Aberta!", 1));
-            yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
-            yield return StartCoroutine(Escreve("Ponha seu equilíbrio no centro.", 1));
-            yield return new WaitUntil(() => jogador.dirEqui == "c");
-
-            yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("A") &&
-            maoD.conectado != null && maoE.conectado != null &&
-            maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
-            maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
-
-            S_verificaGolpe.emTutorial = true;
-            StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(S_verificaGolpe.Vgolpe.golpes[4], jogador, jogador.adversario));
-            yield return StartCoroutine(Escreve("Buuuuuummm~ Legal né? Entramos dentro da zona de projeção!", 5));
-            yield return StartCoroutine(Escreve("Aqui dentro tudo fica super lento e duas coisas importântes acontecem: Um jogador tenta realizar uma projeção e o outro fugir dela", 8));
-            yield return StartCoroutine(Escreve("Vamos primeiro falar do jogador realizando a projeção, que foi o que conseguiu realizar o golpe. No caso, você.", 7));
-            yield return StartCoroutine(Escreve("Entre as suas imãos se criou um orbe e uma grande seta brilhante. Seu objetivo como atacante é levar o orbe até o fim da seta.", 8));
-            yield return StartCoroutine(Escreve("Para fazer isso, aproxime uma de suas mãos dele e segure seu 'GRAB', igual você fez com as partes do seu MAOÁ.", 7));
-            yield return StartCoroutine(Escreve("Mas fique atento! O orbe NÃO PODE SAIR DA SETA, caso contrário ele seu MAOÁ perderá o impulso e sairá da zona de projeção.", 8));
-
-            while (S_verificaGolpe.timeSlow)
+            if (S_verificaGolpe.Spde.noCaminho == false)
             {
-                if (S_verificaGolpe.Spde.noCaminho == false)
-                {
-                    Destroy(SVgolpe.pDes);
-                    SVgolpe.pDes = null;
-                    SVgolpe.CriarPonto(1, jogador, jogador.adversario);
-                }
-
-                if (S_verificaGolpe.Spde.tocouClimax == true) break;
-                yield return null;
+                Destroy(SVgolpe.pDes);
+                SVgolpe.pDes = null;
+                SVgolpe.CriarPonto(1, jogador, jogador.adversario);
             }
 
-            S_verificaGolpe.emTutorial = false;
-
+            if (S_verificaGolpe.Spde.tocouClimax == true) break;
             yield return null;
-            yield return new WaitForEndOfFrame();
-
-            S_verificaGolpe.emTutorial = true;
-
-            yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 5));
-            yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 8));
-
-            metade1 = false;
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            yield break;
         }
-        else if (!metade1)
-        {
-            yield return null;
-            yield return new WaitForEndOfFrame();
 
-            Spostura.enabled = true;
-            pngPostura.SetActive(true);
-            discoEquilibrioBOT.SetActive(true);
-            bot.SetActive(true);
-            adversario.enabled = false;
+        S_verificaGolpe.esperaTime = false;
+        S_verificaGolpe.esperaDerrota = true;
 
-            yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga!", 6));
+        yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 5));
+        yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 8));
 
-            adversario.enabled = true;
-            adversario.golpe = S_verificaGolpe.Vgolpe.golpes[4];
-            Sbot_jogador.dificuldade = 4;
+        QIparte = false;
+        SEparte = true;
 
-            yield return new WaitUntil(() => S_verificaGolpe.timeSlow == true);
-
-            yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 8));
-            yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 8));
-
-            foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
-            Sequilibrio.enabled = true;
-            yield return new WaitUntil(() => jogador.dirEqui == adversario.golpe.IdirEqui);
-
-            adversario.enabled = false;
-
-            yield return StartCoroutine(Escreve("Isso ai! Você se defendeu do golpe trocando seu equilíbrio antes do tempo! Quando fizer isso, seu oponente ficará desestabilizado e soltará tudo.", 8));
-            yield return StartCoroutine(Escreve("Mas lembre-se, seu oponente também pode fazer isso! Então quando você for o atacante, mova seu orbe até a ponta da seta o quanto antes.", 8));
-            yield return StartCoroutine(Escreve("Agora você ja sabe sobre quase tudo! só falta uma coisinha: energia!", 5));
-
-            QIparte = false;
-            SEparte = true;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            StartCoroutine(SextaParte());
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator SextaParte()
+    {
+        yield return null;
+
+        Spostura.enabled = true;
+        pngPostura.SetActive(true);
+        discoEquilibrioBOT.SetActive(true);
+        bot.SetActive(true);
+        S_verificaGolpe.esperaDerrota = false;
+
+        yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga!", 6));
+
+        Sbot_jogador.dificuldade = 5;
+        adversario.enabled = true;
+        adversario.golpe = S_verificaGolpe.Vgolpe.golpes[4];
+
+        S_verificaGolpe.esperaTime = true;
+
+        yield return new WaitUntil(() => S_verificaGolpe.timeSlow == true);
+
+        yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 8));
+        yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 8));
+
+        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
+        Sequilibrio.enabled = true;
+        yield return new WaitUntil(() => jogador.dirEqui == adversario.golpe.IdirEqui);
+
+        adversario.enabled = false;
+        S_verificaGolpe.esperaTime = false;
+
+        yield return StartCoroutine(Escreve("Isso ai! Você se defendeu do golpe trocando seu equilíbrio antes do tempo! Quando fizer isso, seu oponente ficará desestabilizado e soltará tudo.", 8));
+        yield return StartCoroutine(Escreve("Mas lembre-se, seu oponente também pode fazer isso! Então quando você for o atacante, mova seu orbe até a ponta da seta o quanto antes.", 8));
+        yield return StartCoroutine(Escreve("Agora você ja sabe sobre quase tudo! só falta uma coisinha: energia!", 5));
+
+        SEparte = false;
+        STparte = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator SetimaParte()
     {
         foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
         Sequilibrio.enabled = true;
@@ -380,16 +392,16 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Ela não pode ser recuperada por ações, e quando chegar a 0 seu MAOÁ irá parar de funcionar por um tempo enquanto ela se regenera.", 8));
         yield return StartCoroutine(Escreve("Agora, vamos realizar seu último teste, uma batalha final de verdade (agora com energia)!", 6));
 
-        SEparte = false;
-        S_verificaGolpe.emTutorial = false;
+        STparte = false;
 
         Sbot_jogador.dificuldade = 1;
+        Destroy(S_verificaGolpe.Vgolpe.gameObject);
         SceneManager.LoadScene("MAOA vdd");
     }
 
     IEnumerator Escreve(string fala, int t) //yield return StartCoroutine(Escreve("", 5));
     {
         quadroDfala.text = fala;
-        if (t > 0) yield return new WaitForSecondsRealtime(t);
+        if (t > 0) yield return new WaitForSecondsRealtime(t + 2);
     }
 }

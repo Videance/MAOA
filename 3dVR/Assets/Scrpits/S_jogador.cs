@@ -85,7 +85,7 @@ public class S_jogador : MonoBehaviour
             PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        if (dirEqui == "c")
+        if (dirEqui == "c" || posPerna.Contains("F"))
         {
             if (jog1)
             {
@@ -102,20 +102,20 @@ public class S_jogador : MonoBehaviour
         {
             if (jog1)
             {
-                if (dirEqui == "f") S_moveTudo.J1dirX = 0.8f;
-                if (dirEqui == "t") S_moveTudo.J1dirX = -0.8f;
-                if (dirEqui == "d") S_moveTudo.J1dirY = -1f;
-                if (dirEqui == "e") S_moveTudo.J1dirY = 1f;
+                if (dirEqui == "f") S_moveTudo.J1dirX = -0.8f;
+                if (dirEqui == "t") S_moveTudo.J1dirX = 0.8f;
+                if (dirEqui == "d") S_moveTudo.J1dirY = -2f;
+                if (dirEqui == "e") S_moveTudo.J1dirY = 2f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J1dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J1dirY = 0;
             }
             else
             {
-                if (dirEqui == "f") S_moveTudo.J2dirX = -0.8f;
-                if (dirEqui == "t") S_moveTudo.J2dirX = 0.8f;
-                if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
-                if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+                if (dirEqui == "f") S_moveTudo.J2dirX = 0.8f;
+                if (dirEqui == "t") S_moveTudo.J2dirX = -0.8f;
+                if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
+                if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;

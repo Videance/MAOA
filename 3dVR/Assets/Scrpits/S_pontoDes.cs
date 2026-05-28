@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class S_pontoDes : MonoBehaviour
 {
     public bool tocouClimax = false;
     public bool noCaminho = true;
+    public XRGrabInteractable grab;
 
     private Vector3 posInicial;
     public Vector3 dirFinal;

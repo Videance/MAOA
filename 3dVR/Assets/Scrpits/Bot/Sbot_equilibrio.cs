@@ -35,10 +35,10 @@ public class Sbot_equilibrio : S_Equilibrio
         {
             Vector3 dir = (pCentral.transform.position - inicialPos).normalized;
 
-            if (dir.x > XYdir) novoEquilibrio = "d";
-            else if (dir.x < -XYdir) novoEquilibrio = "e";
-            else if (dir.z > XYdir) novoEquilibrio = "f";
-            else if (dir.z < -XYdir) novoEquilibrio = "t";
+            if (dir.x > XYdir) novoEquilibrio = "e";
+            else if (dir.x < -XYdir) novoEquilibrio = "d";
+            else if (dir.z > XYdir) novoEquilibrio = "t";
+            else if (dir.z < -XYdir) novoEquilibrio = "f";
         }
 
         // se não encontrou equilíbrio válido ou é igual
@@ -64,10 +64,10 @@ public class Sbot_equilibrio : S_Equilibrio
                 int index = 0;
 
                 if (novoEquilibrio == "c") index = 0;
-                if (novoEquilibrio == "t") index = 3;
-                if (novoEquilibrio == "d") index = 4;
-                if (novoEquilibrio == "f") index = 1;
-                if (novoEquilibrio == "e") index = 2;
+                if (novoEquilibrio == "t") index = 1;
+                if (novoEquilibrio == "d") index = 2;
+                if (novoEquilibrio == "f") index = 3;
+                if (novoEquilibrio == "e") index = 4;
 
                 TrocaEquilibrio(novoEquilibrio, index);
 

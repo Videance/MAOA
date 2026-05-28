@@ -15,6 +15,7 @@ public class S_verificaGolpe : MonoBehaviour
     public GameObject[] luzesDesequil;
     public GameObject[] luzesDerrota;
     public TextMeshPro[] textInfo;
+    public static bool derrotaPorLimite = false;
 
     Vector3 dir;
 
@@ -30,7 +31,8 @@ public class S_verificaGolpe : MonoBehaviour
     public static float tempo = 0;
 
     [Header("Pro tutorial")]
-    public static bool emTutorial = false;
+    public static bool esperaDerrota = false;
+    public static bool esperaTime = false;
     public GameObject Botiprefab;
 
     private void Awake()
@@ -51,19 +53,6 @@ public class S_verificaGolpe : MonoBehaviour
     public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
         if (timeSlow || derrotou || !adv.seMovendo) return;
-
-        if (!adv.seMovendo)
-        {
-            jog.Fragil();
-
-            for (int i = 0; i < jog.IKs.Length; i++)
-            {
-                jog.IKs[i].Desconecta();
-                jog.PEs[i].Mover(false);
-            }
-
-            return;
-        }
 
         foreach (var golpe in Vgolpe.golpes)
         {
@@ -103,6 +92,19 @@ public class S_verificaGolpe : MonoBehaviour
     {
         if (timeSlow || derrotou) yield break;
 
+        if (!S_controleTutorial.emTutorial && !adv.seMovendo)
+        {
+            jog.Fragil();
+
+            for (int i = 0; i < jog.IKs.Length; i++)
+            {
+                jog.IKs[i].Desconecta();
+                jog.PEs[i].Mover(false, false);
+            }
+
+            yield break;
+        }
+
         ataque = golpe;
 
         if (adv.dirEqui == ataque.IdirEqui)
@@ -124,7 +126,7 @@ public class S_verificaGolpe : MonoBehaviour
         foreach (GameObject luz in luzesNormal) luz.SetActive(false);
         foreach (GameObject luz in luzesDesequil) luz.SetActive(true);
 
-        if (!emTutorial) if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
+        if (!esperaTime) if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
 
         //jog - Troca layer dos IK
         for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].trocaEstado(S_IK.estadoMao.desativada);
@@ -141,7 +143,7 @@ public class S_verificaGolpe : MonoBehaviour
         foreach (GameObject luz in luzesNormal) luz.SetActive(false);
         foreach (GameObject luz in luzesDesequil) luz.SetActive(true);
 
-        if (emTutorial) yield return new WaitUntil(() => emTutorial == false);
+        if (esperaTime) yield return new WaitUntil(() => esperaTime == false);
         else
         {
             //controla o tempo máximo
@@ -182,7 +184,7 @@ public class S_verificaGolpe : MonoBehaviour
             for (int i = 0; i < jog.PEs.Length; i++)
             {
                 jog.IKs[i].Desconecta();
-                jog.PEs[i].Mover(false);
+                jog.PEs[i].Mover(false, false);
             }
         }
         else
@@ -193,9 +195,9 @@ public class S_verificaGolpe : MonoBehaviour
             for (int i = 0; i < jog.IKs.Length; i++)
             {
                 jog.IKs[i].Desconecta();
-                jog.PEs[i].Mover(false);
+                jog.PEs[i].Mover(false, false);
                 adv.IKs[i].Desconecta();
-                adv.PEs[i].Mover(false);
+                adv.PEs[i].Mover(false, false);
             }
         }
 
@@ -218,8 +220,10 @@ public class S_verificaGolpe : MonoBehaviour
 
     public IEnumerator Derrota(S_jogador jog, S_jogador adv)
     {
+        if (derrotou) yield break;
         derrotou = true;
 
+        foreach (GameObject luz in luzesNormal) luz.SetActive(false);
         foreach (GameObject luz in luzesDerrota)
         {
             luz.SetActive(true);
@@ -236,7 +240,7 @@ public class S_verificaGolpe : MonoBehaviour
         adv.GetComponentInChildren<S_segueC>().Joga(dir);
 
         tempo = 7f;
-        while (tempo > 0f && !resetaCena)
+        while (tempo > 0f)
         {
             tempo -= Time.unscaledDeltaTime;
             yield return null;
@@ -258,6 +262,7 @@ public class S_verificaGolpe : MonoBehaviour
 
         foreach (GameObject luz in luzesDerrota) luz.GetComponent<S_holofotes>().seguirAlvo = false;
         foreach (GameObject luz in luzesNormal) luz.SetActive(false);
+        foreach (GameObject luz in luzesDesequil) luz.SetActive(false);
 
         yield return new WaitForSecondsRealtime(3f);
 
@@ -271,6 +276,7 @@ public class S_verificaGolpe : MonoBehaviour
         resetaCena = false;
         tempo = 0;
         derrotou = false;
+        derrotaPorLimite = false;
 
         foreach (GameObject luz in luzesDerrota)
         {
@@ -278,8 +284,18 @@ public class S_verificaGolpe : MonoBehaviour
             luz.GetComponent<S_holofotes>().seguirAlvo = false;
             luz.GetComponent<S_holofotes>().alvo = null;
         }
+        foreach (GameObject luz in luzesNormal) luz.SetActive(true);
 
-        if (textInfo.Length > 0)
+        if (S_controleTutorial.emTutorial) yield break;
+
+        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) Sbot_jogador.dificuldade++;
+        if (S_pontos.Spontos.pontos2 >= 2)
+        {
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
+        }
+
+        if (textInfo != null && textInfo.Length > 0)
         {
             textInfo[0].text =
             "-- P L A C A R --\n" +
@@ -287,15 +303,6 @@ public class S_verificaGolpe : MonoBehaviour
             "BOT: " + S_pontos.Spontos.pontos2;
 
             textInfo[1].text = "Dificulade =" + Sbot_jogador.dificuldade;
-        }
-
-        if (emTutorial) yield break;
-
-        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) Sbot_jogador.dificuldade++;
-        if (S_pontos.Spontos.pontos2 >= 2)
-        {
-            S_pontos.Spontos.pontos1 = 0;
-            S_pontos.Spontos.pontos2 = 0;
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

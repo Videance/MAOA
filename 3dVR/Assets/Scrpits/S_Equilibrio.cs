@@ -26,7 +26,7 @@ public class S_Equilibrio : MonoBehaviour
 
     [Header("Instabilidade")]
     public float forcaBalanco = 0.04f;
-    public float crescimentoBalanco = 0.03f;
+    public float crescimentoBalanco = 0.1f;
     public float velocidadeBalanco = 3f;
 
     private Vector3 dirBalanco;
@@ -73,6 +73,7 @@ public class S_Equilibrio : MonoBehaviour
         float noiseZ = Mathf.PerlinNoise(0f, Time.time * velocidadeBalanco) - 0.5f;
 
         Vector3 balanco = new Vector3(noiseX, 0, noiseZ) * intensidade;
+        if (S_controleTutorial.emTutorial) balanco = Vector3.zero;
 
         Vector3 alvo = inicialPos + offset.normalized * distancia + balanco;
 
@@ -115,7 +116,7 @@ public class S_Equilibrio : MonoBehaviour
         }
         else
         {
-            contadorTroca -= Time.deltaTime;
+            contadorTroca -= Time.unscaledDeltaTime;
 
             if (contadorTroca <= 0f)
             {
