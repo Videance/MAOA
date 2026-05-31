@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class S_Equilibrio : MonoBehaviour
 {
@@ -25,18 +24,60 @@ public class S_Equilibrio : MonoBehaviour
     protected float contadorTroca = 0f;
 
     [Header("Instabilidade")]
-    public float forcaBalanco = 0.04f;
-    public float crescimentoBalanco = 0.1f;
-    public float velocidadeBalanco = 3f;
+    public float forcaBalanco = 0.05f;
+    public float crescimentoBalanco = 0.03f;
+    public float velocidadeBalanco = 1.5f;
 
     private Vector3 dirBalanco;
     private float tempoMesmoEquilibrio = 0f;
 
     [Header("Cores")]
-    public Color corNormal = Color.white;
-    public Color corAtiva = Color.blue;
-    public Color corFuga = Color.red;
-    public List<Renderer> blocos = new List<Renderer>();
+    public List<GameObject> blocos = new List<GameObject>();
+    private Renderer[][] renderersBlocos;
+
+    private bool ultimoEstadoFuga = false;
+    private int blocoAtual = -1;
+
+    bool noEnergy = false;
+
+    [Header("Cores C")]
+    protected Color Cbase;
+    protected Color Cazul;
+    protected Color Cvermelho;
+    protected Color Cpreto;
+
+    [Header("Cores B")]
+    protected Color Bazul;
+    protected Color BBazul;
+    protected Color Bvermelho;
+    protected Color BBvermelho;
+    protected Color Bpreto;
+    protected Color BBpreto;
+
+    [Header("Cores L")]
+    public Material[] materials; // 0 = amarelinho bonitinho | 1 = brilho
+    protected Color Lazul;
+    protected Color Lvermelho;
+    protected Color Lpreto;
+
+    private void Awake()
+    {
+        ColorUtility.TryParseHtmlString("#CDCDCD", out Cbase);
+        ColorUtility.TryParseHtmlString("#1B426C", out Cazul);
+        ColorUtility.TryParseHtmlString("#6C1B1B", out Cvermelho);
+        ColorUtility.TryParseHtmlString("#3D3D3D", out Cpreto);
+
+        ColorUtility.TryParseHtmlString("#28938E", out Bazul);
+        ColorUtility.TryParseHtmlString("#217B77", out BBazul);
+        ColorUtility.TryParseHtmlString("#932C28", out Bvermelho);
+        ColorUtility.TryParseHtmlString("#7B2321", out BBvermelho);
+        ColorUtility.TryParseHtmlString("#353535", out Bpreto);
+        ColorUtility.TryParseHtmlString("#2E2E2E", out BBpreto);
+
+        ColorUtility.TryParseHtmlString("#008BFF", out Lazul);
+        ColorUtility.TryParseHtmlString("#FF0007", out Lvermelho);
+        ColorUtility.TryParseHtmlString("#000000", out Lpreto);
+    }
 
     protected virtual void Start()
     {
@@ -49,12 +90,33 @@ public class S_Equilibrio : MonoBehaviour
         dirBalanco.y = 0;
         dirBalanco.Normalize();
 
+        renderersBlocos = new Renderer[blocos.Count][];
+
+        for (int i = 0; i < blocos.Count; i++)
+        {
+            renderersBlocos[i] = blocos[i].GetComponentsInChildren<Renderer>();
+        }
+
         TrocaEquilibrio("c", 0);
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (energia.rodandoSS && !noEnergy)
+        {
+            noEnergy = true;
+            SemCor();
+        }
+
+        if (!energia.rodandoSS && noEnergy)
+        {
+            noEnergy = false;
+
+            AtualizarBB(dirFulga != null);
+            TrocarCor(direcaoEquilibrio, dirFulga != null);
+        }
+
         if (pCentral == null || energia.rodandoSS) return;
 
         tempoMesmoEquilibrio += Time.deltaTime;
@@ -81,7 +143,7 @@ public class S_Equilibrio : MonoBehaviour
 
         // --------------------------------------------------------------
         float porcentagemEnergia = energia.energia / energia.energiaMax;
-        tempoTroca = Mathf.Lerp(1f, 0.25f, porcentagemEnergia);
+        if (contadorTroca == 0) tempoTroca = Mathf.Lerp(1f, 0.25f, porcentagemEnergia);
 
         string novoEquilibrio = null;
         float distanciaCentro = Vector3.Distance(pCentral.transform.position, inicialPos);
@@ -149,7 +211,7 @@ public class S_Equilibrio : MonoBehaviour
 
         tempoMesmoEquilibrio = 0f;
 
-        dirBalanco = UnityEngine.Random.insideUnitSphere;
+        dirBalanco = Random.insideUnitSphere;
         dirBalanco.y = 0;
         dirBalanco.Normalize();
 
@@ -159,39 +221,101 @@ public class S_Equilibrio : MonoBehaviour
         else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
 
-        TrocarCor(letra);
+        TrocarCor(letra, false);
     }
 
-    public virtual void PlacaFuga(string letra)
+    public virtual void TrocarCor(string letra, bool emFuga)
     {
-        tempoMesmoEquilibrio = 0f;
+        if (emFuga)
+        {
+            tempoMesmoEquilibrio = 0f;
 
-        dirBalanco = UnityEngine.Random.insideUnitSphere;
-        dirBalanco.y = 0;
-        dirBalanco.Normalize();
+            dirBalanco = Random.insideUnitSphere;
+            dirBalanco.y = 0;
+            dirBalanco.Normalize();
 
-        dirFulga = letra;
+            dirFulga = letra;
+        }
 
-        blocos[0].material.color = letra == "c" ? corFuga : corNormal;
-        blocos[1].material.color = letra == "t" ? corFuga : corNormal;
-        blocos[2].material.color = letra == "d" ? corFuga : corNormal;
-        blocos[3].material.color = letra == "f" ? corFuga : corNormal;
-        blocos[4].material.color = letra == "e" ? corFuga : corNormal;
-    }
+        if (noEnergy)
+        {
+            SemCor();
+            return;
+        }
 
-    public void TrocarCor(string letra)
-    {
         int index = 0;
         if (letra == "c") index = 0;
-        if (letra == "t") index = 1;
+        if (letra == "t") index = 3;
         if (letra == "d") index = 2;
-        if (letra == "f") index = 3;
+        if (letra == "f") index = 1;
         if (letra == "e") index = 4;
 
-        for (int i = 0; i < blocos.Count; i++)
+        // Atualiza B e BB apenas se o estado mudou
+        if (ultimoEstadoFuga != emFuga) AtualizarBB(emFuga);
+
+        // Desliga o bloco anterior
+        if (blocoAtual >= 0 && blocoAtual != index)
         {
-            if (i != index) blocos[i].material.color = corNormal;
-            else blocos[i].material.color = corAtiva;
+            Renderer[] pAntigo = renderersBlocos[blocoAtual];
+
+            pAntigo[0].material = materials[0];
+            pAntigo[1].material.color = Cbase;
         }
+
+        // Liga o bloco novo
+        Renderer[] pNovo = renderersBlocos[index];
+        pNovo[0].material = materials[1];
+
+        if (emFuga)
+        {
+            pNovo[0].material.SetColor("_Cor", Lvermelho);
+            pNovo[1].material.color = Cvermelho;
+        }
+        else
+        {
+            pNovo[0].material.SetColor("_Cor", Lazul);
+            pNovo[1].material.color = Cazul;
+        }
+
+        blocoAtual = index;
+    }
+
+    public virtual void SemCor()
+    {
+        for (int i = 0; i < renderersBlocos.Length; i++)
+        {
+            Renderer[] p = renderersBlocos[i];
+
+            p[2].material.color = BBpreto;
+            p[3].material.color = Bpreto;
+
+            if (blocoAtual == i)
+            {
+                p[0].material = materials[1];
+                p[0].material.SetColor("_Cor", Lpreto);
+                p[1].material.color = Cpreto;
+            }
+        }
+    }
+
+    protected void AtualizarBB(bool emFuga)
+    {
+        for (int i = 0; i < renderersBlocos.Length; i++)
+        {
+            Renderer[] p = renderersBlocos[i];
+
+            if (emFuga)
+            {
+                p[2].material.color = BBvermelho;
+                p[3].material.color = Bvermelho;
+            }
+            else
+            {
+                p[2].material.color = BBazul;
+                p[3].material.color = Bazul;
+            }
+        }
+
+        ultimoEstadoFuga = emFuga;
     }
 }

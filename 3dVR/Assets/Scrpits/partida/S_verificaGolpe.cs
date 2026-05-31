@@ -118,7 +118,7 @@ public class S_verificaGolpe : MonoBehaviour
         timeSlow = true;
 
         //ativa a fuga do adv
-        adv.gameObject.GetComponentInChildren<S_Equilibrio>().PlacaFuga(ataque.IdirEqui);
+        adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(ataque.IdirEqui, true);
 
         //cria o ponto e caminho
         CriarPonto(2, jog, adv);
@@ -161,7 +161,7 @@ public class S_verificaGolpe : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(adv.dirEqui);
+        adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(adv.dirEqui, true);
 
         if (Spde.tocouClimax)
         {

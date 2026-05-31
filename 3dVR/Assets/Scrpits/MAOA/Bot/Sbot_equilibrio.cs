@@ -94,8 +94,8 @@ public class Sbot_equilibrio : S_Equilibrio
 
         for (int i = 0; i < blocos.Count; i++)
         {
-            if (i != index) blocos[i].material.color = corNormal;
-            else blocos[i].material.color = corAtiva;
+            //if (i != index) blocos[i].material.color = corNormal;
+            //else blocos[i].material.color = corAtiva;
         }
 
         ((Sbot_jogador)jogador).VerificaVar(0);
@@ -139,9 +139,9 @@ public class Sbot_equilibrio : S_Equilibrio
         movendo = false;
     }
 
-    public override void PlacaFuga(string letra)
+    public override void TrocarCor(string letra, bool emFuga)
     {
-        base.PlacaFuga(letra);
+        //base.PlacaFuga(letra);
         fugaQualPlaca = letra;
     }
 }
