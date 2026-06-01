@@ -60,7 +60,7 @@ public class S_Equilibrio : MonoBehaviour
     protected Color Lvermelho;
     protected Color Lpreto;
 
-    private void Awake()
+    protected void Awake()
     {
         ColorUtility.TryParseHtmlString("#CDCDCD", out Cbase);
         ColorUtility.TryParseHtmlString("#1B426C", out Cazul);

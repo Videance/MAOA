@@ -86,7 +86,7 @@ public class Sbot_jogador : S_jogador
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        if (dirEqui == "c" || posPerna.Contains("F"))
+        if (dirEqui == "c" || posPerna.Contains("F") || Senergia.rodandoSS)
         {
             S_moveTudo.J2dirX = 0f;
             S_moveTudo.J2dirY = 0f;
@@ -234,7 +234,7 @@ public class Sbot_jogador : S_jogador
         switch (q)
         {
             case 0:
-                if (golpeP[0] || equilibrio.movendo || equilibrio.equilibrioCandidato != null) goto case 1;
+                if (golpeP[0] || equilibrio.movendo || equilibrio.equilibrioCandidato != null || Senergia.rodandoSS) goto case 1;
                 if (golpe.JdirEqui == "c") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
                 if (golpe.JdirEqui == "t") StartCoroutine(equilibrio.mover(vectorPlacas[1].transform.position));
                 if (golpe.JdirEqui == "d") StartCoroutine(equilibrio.mover(vectorPlacas[2].transform.position));

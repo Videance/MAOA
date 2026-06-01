@@ -10,10 +10,10 @@ public class Sbot_equilibrio : S_Equilibrio
 
     protected override void Start()
     {
-        base.Start();
-
         if (Sbot_jogador.dificuldade != 1)
             speedMax += Mathf.Sqrt(Sbot_jogador.dificuldade);
+
+        base.Start();
     }
 
     // Update is called once per frame
@@ -81,40 +81,34 @@ public class Sbot_equilibrio : S_Equilibrio
 
     public override void TrocaEquilibrio(string letra, int index)
     {
-        string equilibrioAnterior = direcaoEquilibrio;
+        if (jogador.dirEqui == letra) return;
+        direcaoEquilibrio = letra;
+        jogador.dirEqui = letra;
 
-        base.TrocaEquilibrio(letra, index);
+        if (dirFulga != null)
+        {
+            if (letra != dirFulga) return;
+            else dirFulga = null;
+        }
 
-        if (equilibrioAnterior != direcaoEquilibrio)
-            ((Sbot_jogador)jogador).VerificaVar(0);
+        if (primeira) primeira = false;
+        else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
+        energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
+
+        ((Sbot_jogador)jogador).VerificaVar(0);
+
+        TrocarCor(letra, false);
     }
 
     public IEnumerator mover(Vector3 final)
     {
         movendo = true;
 
-        // POSSIVELMENTE SERA RETIRADO
-        if (final == Vector3.zero)
-        {
-            float pcX = inicialPos.x;
-            float pcZ = inicialPos.z;
-
-            float distancia = dist;
-
-            Vector2 rand = Random.insideUnitCircle * distancia;
-
-            float x = pcX + rand.x;
-            float z = pcZ + rand.y;
-
-            final = new Vector3(x, 0, z);
-        }
-        //
-
         final.y = pCentral.transform.position.y;
 
         while (Vector3.Distance(pCentral.transform.position, final) > 0.0005f)
         {
-            if (energia.energia <= 0)
+            if (energia.rodandoSS)
             {
                 movendo = false;
                 yield break;
@@ -125,11 +119,5 @@ public class Sbot_equilibrio : S_Equilibrio
         pCentral.transform.position = final;
 
         movendo = false;
-    }
-
-    public override void TrocarCor(string letra, bool emFuga)
-    {
-        base.TrocarCor(letra, emFuga);
-        fugaQualPlaca = letra;
     }
 }
