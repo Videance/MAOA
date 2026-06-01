@@ -103,19 +103,7 @@ public class S_Equilibrio : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (energia.rodandoSS && !noEnergy)
-        {
-            noEnergy = true;
-            SemCor();
-        }
-
-        if (!energia.rodandoSS && noEnergy)
-        {
-            noEnergy = false;
-
-            AtualizarBB(dirFulga != null);
-            TrocarCor(direcaoEquilibrio, dirFulga != null);
-        }
+        AtualizaEstadoEnergia();
 
         if (pCentral == null || energia.rodandoSS) return;
 
@@ -139,7 +127,7 @@ public class S_Equilibrio : MonoBehaviour
 
         Vector3 alvo = inicialPos + offset.normalized * distancia + balanco;
 
-        pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, alvo, Time.deltaTime * speedi);
+        pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, alvo, Time.unscaledDeltaTime * speedi);
 
         // --------------------------------------------------------------
         float porcentagemEnergia = energia.energia / energia.energiaMax;
@@ -254,7 +242,7 @@ public class S_Equilibrio : MonoBehaviour
         if (ultimoEstadoFuga != emFuga) AtualizarBB(emFuga);
 
         // Desliga o bloco anterior
-        if (blocoAtual >= 0 && blocoAtual != index)
+        if (!emFuga && blocoAtual >= 0 && blocoAtual != index)
         {
             Renderer[] pAntigo = renderersBlocos[blocoAtual];
 
@@ -317,5 +305,22 @@ public class S_Equilibrio : MonoBehaviour
         }
 
         ultimoEstadoFuga = emFuga;
+    }
+
+    protected void AtualizaEstadoEnergia()
+    {
+        if (energia.rodandoSS && !noEnergy)
+        {
+            noEnergy = true;
+            SemCor();
+        }
+
+        if (!energia.rodandoSS && noEnergy)
+        {
+            noEnergy = false;
+
+            AtualizarBB(dirFulga != null);
+            TrocarCor(direcaoEquilibrio, dirFulga != null);
+        }
     }
 }

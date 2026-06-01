@@ -19,7 +19,10 @@ public class Sbot_equilibrio : S_Equilibrio
     // Update is called once per frame
     protected override void Update()
     {
-        if (pCentral == null || energia.rodandoSS) return;
+        AtualizaEstadoEnergia();
+
+        if (pCentral == null || energia.rodandoSS)
+            return;
 
         float porcentagemEnergia = energia.energia / energia.energiaMax;
         tempoTroca = Mathf.Lerp(1f, 0.25f, porcentagemEnergia);
@@ -78,27 +81,12 @@ public class Sbot_equilibrio : S_Equilibrio
 
     public override void TrocaEquilibrio(string letra, int index)
     {
-        if (jogador.dirEqui == letra) return;
-        direcaoEquilibrio = letra;
-        jogador.dirEqui = letra;
+        string equilibrioAnterior = direcaoEquilibrio;
 
-        if (dirFulga != null)
-        {
-            if (letra != dirFulga) return;
-            else dirFulga = null;
-        }
+        base.TrocaEquilibrio(letra, index);
 
-        if (primeira) primeira = false;
-        else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
-        energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
-
-        for (int i = 0; i < blocos.Count; i++)
-        {
-            //if (i != index) blocos[i].material.color = corNormal;
-            //else blocos[i].material.color = corAtiva;
-        }
-
-        ((Sbot_jogador)jogador).VerificaVar(0);
+        if (equilibrioAnterior != direcaoEquilibrio)
+            ((Sbot_jogador)jogador).VerificaVar(0);
     }
 
     public IEnumerator mover(Vector3 final)
@@ -131,7 +119,7 @@ public class Sbot_equilibrio : S_Equilibrio
                 movendo = false;
                 yield break;
             }
-            pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, final, Time.deltaTime * speed);
+            pCentral.transform.position = Vector3.Lerp(pCentral.transform.position, final, Time.unscaledDeltaTime * speed);
             yield return null;
         }
         pCentral.transform.position = final;
@@ -141,7 +129,7 @@ public class Sbot_equilibrio : S_Equilibrio
 
     public override void TrocarCor(string letra, bool emFuga)
     {
-        //base.PlacaFuga(letra);
+        base.TrocarCor(letra, emFuga);
         fugaQualPlaca = letra;
     }
 }
