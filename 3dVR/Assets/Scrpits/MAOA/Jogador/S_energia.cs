@@ -90,11 +90,11 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         
         n = 5;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.25f);
 
         while (energia < energiaMax)
         {
-            energia += 20;
+            energia += energiaMax * 0.25f;
             if (energia < energiaMax) yield return new WaitForSeconds(0.25f);
         }
 

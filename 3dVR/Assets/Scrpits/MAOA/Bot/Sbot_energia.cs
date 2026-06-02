@@ -66,11 +66,11 @@ public class Sbot_energia : S_energia
 
         n = 5;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.25f);
 
         while (energia < energiaMax)
         {
-            energia += energiaMax * 0.21f;
+            energia += energiaMax * 0.25f;
             if (energia < energiaMax) yield return new WaitForSeconds(0.25f);
         }
 

@@ -37,6 +37,7 @@ public class S_Equilibrio : MonoBehaviour
 
     private bool ultimoEstadoFuga = false;
     private int blocoAtual = -1;
+    private int faixaEnergia = -1;
 
     bool noEnergy = false;
 
@@ -47,12 +48,11 @@ public class S_Equilibrio : MonoBehaviour
     protected Color Cpreto;
 
     [Header("Cores B")]
-    protected Color Bazul;
-    protected Color BBazul;
+    protected Color Bverde;
+    protected Color Bamarelo;
+    protected Color Blaranja;
     protected Color Bvermelho;
-    protected Color BBvermelho;
     protected Color Bpreto;
-    protected Color BBpreto;
 
     [Header("Cores L")]
     public Material[] materials; // 0 = amarelinho bonitinho | 1 = brilho
@@ -67,12 +67,11 @@ public class S_Equilibrio : MonoBehaviour
         ColorUtility.TryParseHtmlString("#6C1B1B", out Cvermelho);
         ColorUtility.TryParseHtmlString("#3D3D3D", out Cpreto);
 
-        ColorUtility.TryParseHtmlString("#28938E", out Bazul);
-        ColorUtility.TryParseHtmlString("#217B77", out BBazul);
-        ColorUtility.TryParseHtmlString("#932C28", out Bvermelho);
-        ColorUtility.TryParseHtmlString("#7B2321", out BBvermelho);
-        ColorUtility.TryParseHtmlString("#353535", out Bpreto);
-        ColorUtility.TryParseHtmlString("#2E2E2E", out BBpreto);
+        ColorUtility.TryParseHtmlString("#00FF13", out Bverde);
+        ColorUtility.TryParseHtmlString("#81FF00", out Bamarelo);
+        ColorUtility.TryParseHtmlString("#FF6F00", out Blaranja);
+        ColorUtility.TryParseHtmlString("#FF0100", out Bvermelho);
+        ColorUtility.TryParseHtmlString("#000000", out Bpreto);
 
         ColorUtility.TryParseHtmlString("#008BFF", out Lazul);
         ColorUtility.TryParseHtmlString("#FF0007", out Lvermelho);
@@ -104,6 +103,7 @@ public class S_Equilibrio : MonoBehaviour
     protected virtual void Update()
     {
         AtualizaEstadoEnergia();
+        AtualizarEnergiaVisual();
 
         if (pCentral == null || energia.rodandoSS) return;
 
@@ -238,9 +238,6 @@ public class S_Equilibrio : MonoBehaviour
         if (letra == "f") index = 1;
         if (letra == "e") index = 4;
 
-        // Atualiza B e BB apenas se o estado mudou
-        if (ultimoEstadoFuga != emFuga) AtualizarBB(emFuga);
-
         // Desliga o bloco anterior
         if (!emFuga && blocoAtual >= 0 && blocoAtual != index)
         {
@@ -274,9 +271,6 @@ public class S_Equilibrio : MonoBehaviour
         {
             Renderer[] p = renderersBlocos[i];
 
-            p[2].material.color = BBpreto;
-            p[3].material.color = Bpreto;
-
             if (blocoAtual == i)
             {
                 p[0].material = materials[1];
@@ -284,27 +278,6 @@ public class S_Equilibrio : MonoBehaviour
                 p[1].material.color = Cpreto;
             }
         }
-    }
-
-    protected void AtualizarBB(bool emFuga)
-    {
-        for (int i = 0; i < renderersBlocos.Length; i++)
-        {
-            Renderer[] p = renderersBlocos[i];
-
-            if (emFuga)
-            {
-                p[2].material.color = BBvermelho;
-                p[3].material.color = Bvermelho;
-            }
-            else
-            {
-                p[2].material.color = BBazul;
-                p[3].material.color = Bazul;
-            }
-        }
-
-        ultimoEstadoFuga = emFuga;
     }
 
     protected void AtualizaEstadoEnergia()
@@ -318,9 +291,62 @@ public class S_Equilibrio : MonoBehaviour
         if (!energia.rodandoSS && noEnergy)
         {
             noEnergy = false;
-
-            AtualizarBB(dirFulga != null);
             TrocarCor(direcaoEquilibrio, dirFulga != null);
+        }
+    }
+
+    protected void AtualizarCorEnergia()
+    {
+        float energia01 = energia.energia / energia.energiaMax;
+
+        int novaFaixa;
+
+        if (energia01 <= 0f) novaFaixa = 0;
+        else if (energia01 <= 0.25f) novaFaixa = 1;
+        else if (energia01 <= 0.50f) novaFaixa = 2;
+        else if (energia01 <= 0.75f) novaFaixa = 3;
+        else novaFaixa = 4;
+
+        if (novaFaixa == faixaEnergia) return;
+
+        faixaEnergia = novaFaixa;
+
+        Color cor =
+            novaFaixa == 0 ? Bpreto :
+            novaFaixa == 1 ? Bvermelho :
+            novaFaixa == 2 ? Blaranja :
+            novaFaixa == 3 ? Bamarelo :
+            Bverde;
+
+        for (int i = 0; i < renderersBlocos.Length; i++)
+        {
+            renderersBlocos[i][2].material.SetColor("_CorCheia", cor);
+            renderersBlocos[i][3].material.SetColor("_CorCheia", cor);
+        }
+    }
+
+    protected void AtualizarEnergiaVisual()
+    {
+        float energia01 = energia.energia / energia.energiaMax;
+
+        AtualizarCorEnergia();
+
+        // Centro
+        renderersBlocos[0][2].material.SetFloat("_Fill", energia01);
+        renderersBlocos[0][3].material.SetFloat("_Fill", energia01);
+
+        int[] ordemEnergia = { 4, 3, 2, 1 }; // F D T E
+
+        float energiaExterior = energia01 * 4f;
+
+        for (int i = 0; i < ordemEnergia.Length; i++)
+        {
+            float fill = Mathf.Clamp01(energiaExterior - i);
+
+            int bloco = ordemEnergia[i];
+
+            renderersBlocos[bloco][2].material.SetFloat("_Fill", fill);
+            renderersBlocos[bloco][3].material.SetFloat("_Fill", fill);
         }
     }
 }

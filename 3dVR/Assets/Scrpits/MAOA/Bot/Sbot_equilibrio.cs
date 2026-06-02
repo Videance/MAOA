@@ -20,6 +20,7 @@ public class Sbot_equilibrio : S_Equilibrio
     protected override void Update()
     {
         AtualizaEstadoEnergia();
+        AtualizarEnergiaVisual();
 
         if (pCentral == null || energia.rodandoSS)
             return;
