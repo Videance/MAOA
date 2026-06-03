@@ -7,9 +7,6 @@ public class S_Postura : MonoBehaviour
     public GameObject pDireita;
     public GameObject pEsquerda;
 
-    public Sprite[] sprites = new Sprite[2];
-    public SpriteRenderer render;
-
     public float distZ;
 
     public string posPerna;
@@ -50,8 +47,6 @@ public class S_Postura : MonoBehaviour
     {
         if (jogador.posPerna == postura) return;
         jogador.posPerna = postura;
-
-        render.sprite = postura.Contains("A") ? sprites[1] : sprites[0];
 
         if (jogador is Sbot_jogador) ((Sbot_jogador)jogador).VerificaVar(1);
         else S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);

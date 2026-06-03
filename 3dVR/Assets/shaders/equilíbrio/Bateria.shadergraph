@@ -11,6 +11,12 @@
         },
         {
             "m_Id": "bb4e2527a16c4681aeede999e659d64b"
+        },
+        {
+            "m_Id": "195f2182e234449e993ee707c5a187dc"
+        },
+        {
+            "m_Id": "943617e7d002485bbbdedb74f3787b5a"
         }
     ],
     "m_Keywords": [],
@@ -380,6 +386,46 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "195f2182e234449e993ee707c5a187dc",
+    "m_Guid": {
+        "m_GuidSerialized": "5c538bb1-f4c4-497b-add0-5ee73415fab1"
+    },
+    "m_Name": "Power",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Power",
+    "m_DefaultReferenceName": "_Power",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    },
+    "m_SliderType": 0,
+    "m_SliderPower": 3.0,
+    "m_EnumType": 0,
+    "m_CSharpEnumString": "",
+    "m_EnumNames": [
+        "Default"
+    ],
+    "m_EnumValues": [
+        0
+    ]
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "2d65f051864a485d99c9a85682155209",
@@ -538,6 +584,12 @@
         },
         {
             "m_Id": "bb4e2527a16c4681aeede999e659d64b"
+        },
+        {
+            "m_Id": "195f2182e234449e993ee707c5a187dc"
+        },
+        {
+            "m_Id": "943617e7d002485bbbdedb74f3787b5a"
         }
     ]
 }
@@ -943,6 +995,38 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "943617e7d002485bbbdedb74f3787b5a",
+    "m_Guid": {
+        "m_GuidSerialized": "76e9fa74-62a4-4306-a42c-7db47a6c6912"
+    },
+    "m_Name": "CorFrasnel",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "CorFrasnel",
+    "m_DefaultReferenceName": "_CorFrasnel",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
 }
 
 {

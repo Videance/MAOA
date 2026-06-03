@@ -53,6 +53,10 @@ public class S_Equilibrio : MonoBehaviour
     protected Color Blaranja;
     protected Color Bvermelho;
     protected Color Bpreto;
+    protected Color Bbverde;
+    protected Color Bbamarelo;
+    protected Color Bblaranja;
+    protected Color Bbvermelho;
 
     [Header("Cores L")]
     public Material[] materials; // 0 = amarelinho bonitinho | 1 = brilho
@@ -62,16 +66,20 @@ public class S_Equilibrio : MonoBehaviour
 
     protected void Awake()
     {
-        ColorUtility.TryParseHtmlString("#CDCDCD", out Cbase);
+        ColorUtility.TryParseHtmlString("#E2BFA1", out Cbase);
         ColorUtility.TryParseHtmlString("#1B426C", out Cazul);
         ColorUtility.TryParseHtmlString("#6C1B1B", out Cvermelho);
         ColorUtility.TryParseHtmlString("#3D3D3D", out Cpreto);
 
-        ColorUtility.TryParseHtmlString("#00FF13", out Bverde);
-        ColorUtility.TryParseHtmlString("#81FF00", out Bamarelo);
-        ColorUtility.TryParseHtmlString("#FF6F00", out Blaranja);
-        ColorUtility.TryParseHtmlString("#FF0100", out Bvermelho);
+        ColorUtility.TryParseHtmlString("#00C521", out Bverde);
+        ColorUtility.TryParseHtmlString("#8DC500", out Bamarelo);
+        ColorUtility.TryParseHtmlString("#C56300", out Blaranja);
+        ColorUtility.TryParseHtmlString("#C61600", out Bvermelho);
         ColorUtility.TryParseHtmlString("#000000", out Bpreto);
+        ColorUtility.TryParseHtmlString("#00890B", out Bbverde);
+        ColorUtility.TryParseHtmlString("#5E8900", out Bbamarelo);
+        ColorUtility.TryParseHtmlString("#895000", out Bblaranja);
+        ColorUtility.TryParseHtmlString("#740300", out Bbvermelho);
 
         ColorUtility.TryParseHtmlString("#008BFF", out Lazul);
         ColorUtility.TryParseHtmlString("#FF0007", out Lvermelho);
@@ -311,17 +319,24 @@ public class S_Equilibrio : MonoBehaviour
 
         faixaEnergia = novaFaixa;
 
-        Color cor =
+        Color cor1 =
             novaFaixa == 0 ? Bpreto :
             novaFaixa == 1 ? Bvermelho :
             novaFaixa == 2 ? Blaranja :
             novaFaixa == 3 ? Bamarelo :
             Bverde;
 
+        Color cor2 =
+                novaFaixa == 0 ? Bpreto :
+                novaFaixa == 1 ? Bbvermelho :
+                novaFaixa == 2 ? Bblaranja :
+                novaFaixa == 3 ? Bbamarelo :
+                Bbverde;
+
         for (int i = 0; i < renderersBlocos.Length; i++)
         {
-            renderersBlocos[i][2].material.SetColor("_CorCheia", cor);
-            renderersBlocos[i][3].material.SetColor("_CorCheia", cor);
+            renderersBlocos[i][2].material.SetColor("_CorCheia", cor1);
+            renderersBlocos[i][3].material.SetColor("_CorCheia", cor2);
         }
     }
 

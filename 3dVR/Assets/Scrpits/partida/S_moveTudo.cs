@@ -1,5 +1,4 @@
-using TMPro;
-using Unity.XR.CoreUtils;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,18 +12,11 @@ public class S_moveTudo : MonoBehaviour
 
     public static GameObject quadra;
 
-    Vector3 posInicial;
-    Quaternion rotInicial;
+    public List<GameObject> objetosQandam = new List<GameObject>();
 
     private void Awake()
     {
-        foreach (Transform t in GetComponentsInChildren<Transform>()) if (t.gameObject.GetNamedChild("Arena")) quadra = t.gameObject;
-    }
-
-    private void Start()
-    {
-        posInicial = transform.position;
-        rotInicial = quadra.transform.rotation;
+        quadra = objetosQandam[0];
     }
 
     void OnEnable()
@@ -39,8 +31,7 @@ public class S_moveTudo : MonoBehaviour
 
     void AoCarregarCena(Scene scene, LoadSceneMode mode)
     {
-        transform.position = posInicial;
-        quadra.transform.rotation = rotInicial;
+        quadra.transform.rotation = Quaternion.identity;
     }
 
     private void Update()
@@ -50,7 +41,7 @@ public class S_moveTudo : MonoBehaviour
         float dirX = J1dirX + J2dirX;
         float dirY = J1dirY + J2dirY;
 
-        if (dirX != 0f) transform.position += new Vector3(0, 0, dirX) * Time.unscaledDeltaTime;
+        if (dirX != 0f) for (int i = 0; i < objetosQandam.Count; i++) objetosQandam[i].transform.position += new Vector3(0, 0, dirX) * Time.unscaledDeltaTime;
         if (dirY != 0f) quadra.transform.RotateAround(quadra.transform.position, Vector3.up, dirY * Time.unscaledDeltaTime);
     }
 }

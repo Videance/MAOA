@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: borda energia
+  m_Name: borda energia 1
   m_Shader: {fileID: -6465566751694194690, guid: 4209ce81f4409294699b47a835a7ff24, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -44,8 +44,8 @@ Material:
     - _XRMotionVectorsPass: 1
     - _power: 0
     m_Colors:
-    - _CorCheia: {r: 0, g: 0.77254903, b: 0.12799974, a: 1}
-    - _CorFrasnel: {r: 0, g: 0.44705883, b: 0.03529412, a: 1}
+    - _CorCheia: {r: 0.4528302, g: 0.00991599, b: 0, a: 1}
+    - _CorFrasnel: {r: 0, g: 0.4433962, b: 0.036671832, a: 1}
     - _CorVazia: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
