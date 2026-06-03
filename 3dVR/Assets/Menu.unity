@@ -2244,7 +2244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a091b10aeab55914a96d5936d6ea0fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_Equilibrio
-  pCentral: {fileID: 0}
+  pCentral: {fileID: 973008860}
   jogador: {fileID: 0}
   multiplicador: 0.75
   direcaoEquilibrio: c

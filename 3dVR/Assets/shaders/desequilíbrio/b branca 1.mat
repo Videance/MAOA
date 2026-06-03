@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fogo
-  m_Shader: {fileID: -6465566751694194690, guid: 066094e3cf9b7c441b8851babcb79d1d, type: 3}
+  m_Name: b branca 1
+  m_Shader: {fileID: -6465566751694194690, guid: cddd45152742c6b41adfb9179a4e7730, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -38,12 +38,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Power: -0.11
+    - _Power: 5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _XRMotionVectorsPass: 1
+    - _alpha: 0
     m_Colors:
-    - _Cor: {r: 1, g: 1, b: 1, a: 1}
-    - _CorB: {r: 1, g: 1, b: 1, a: 1}
+    - _Cor: {r: 0, g: 0.20935953, b: 1, a: 0}
+    - _CorB: {r: 0, g: 1, b: 0.6391189, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &227431226977576434

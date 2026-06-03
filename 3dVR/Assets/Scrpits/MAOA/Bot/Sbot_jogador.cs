@@ -224,7 +224,7 @@ public class Sbot_jogador : S_jogador
 
     void EscolheQuemMove()
     {
-        if ((golpeP[0] || equilibrio.movendo) &&
+        if (Senergia.rodandoSS || (golpeP[0] || equilibrio.movendo) &&
             (golpeP[1] || PEs[0].movendo || PEs[1].movendo) &&
             (golpeP[2] || maoD.movendo) && (golpeP[3] || maoE.movendo))
             return;
@@ -234,7 +234,7 @@ public class Sbot_jogador : S_jogador
         switch (q)
         {
             case 0:
-                if (golpeP[0] || equilibrio.movendo || equilibrio.equilibrioCandidato != null || Senergia.rodandoSS) goto case 1;
+                if (golpeP[0] || equilibrio.movendo || equilibrio.equilibrioCandidato != null) goto case 1;
                 if (golpe.JdirEqui == "c") StartCoroutine(equilibrio.mover(vectorPlacas[0].transform.position));
                 if (golpe.JdirEqui == "t") StartCoroutine(equilibrio.mover(vectorPlacas[1].transform.position));
                 if (golpe.JdirEqui == "d") StartCoroutine(equilibrio.mover(vectorPlacas[2].transform.position));

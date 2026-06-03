@@ -8,10 +8,6 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 {
     S_jogador Jogador;
 
-    [Header("SPRITES")]
-    public SpriteRenderer[] Renderer;
-    public List<Sprite> renBateria = new List<Sprite>();
-
     [Header("%")]
     public TextMesh[] texto;
 
@@ -29,7 +25,6 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     {
         energia = energiaMax;
         Jogador = GetComponent<S_jogador>();
-        Renderer = GetComponentsInChildren<SpriteRenderer>().Take(2).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
         texto = GetComponentsInChildren<TextMesh>();
         maos = GetComponentsInChildren<XRBaseInteractor>().Take(4).ToArray();
@@ -38,14 +33,6 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     private void Update()
     {
         if (S_verificaGolpe.timeSlow) return;
-
-        // troca imagem da bateria
-        if (energia > 80) TrocaSprite(0);
-        else if (energia > 60) TrocaSprite(n+1);
-        else if (energia > 40) TrocaSprite(n+2);
-        else if (energia > 20) TrocaSprite(n+3);
-        else if (energia > 0) TrocaSprite(n+4);
-        else if (energia == 0) TrocaSprite(5);
 
         if (rodandoSS) return;
 
@@ -73,8 +60,6 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
             if (energia == 0) i.text = "out";
         }
     }
-
-    protected void TrocaSprite(int cargas) { foreach (var render in Renderer) { render.sprite = renBateria[cargas]; } }
 
     IEnumerator SemStamina()
     {

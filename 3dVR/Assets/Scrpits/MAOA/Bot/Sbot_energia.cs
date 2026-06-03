@@ -14,7 +14,6 @@ public class Sbot_energia : S_energia
         jogador = GetComponent<Sbot_jogador>();
         energiaMax = 110 + (Mathf.Pow(Sbot_jogador.dificuldade, 1.5f) * 9);
         energia = energiaMax;
-        Renderer = GetComponentsInChildren<SpriteRenderer>().Take(1).ToArray();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
         texto = GetComponentsInChildren<TextMesh>();
         maos = GetComponentsInChildren<XRBaseInteractor>().Take(4).ToArray();
@@ -24,14 +23,6 @@ public class Sbot_energia : S_energia
     void Update()
     {
         if (S_verificaGolpe.timeSlow) return;
-
-        // troca imagem da bateria
-        if (energia > (energiaMax * 0.80f)) TrocaSprite(0);
-        else if (energia > (energiaMax * 0.60f)) TrocaSprite(n + 1);
-        else if (energia > (energiaMax * 0.40f)) TrocaSprite(n + 2);
-        else if (energia > (energiaMax * 0.20f)) TrocaSprite(n + 3);
-        else if (energia > 0) TrocaSprite(n + 4);
-        else if (energia == 0) TrocaSprite(5);
 
         if (rodandoSS) return;
 

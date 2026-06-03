@@ -30,8 +30,8 @@ Material:
     - _Glossiness: 0.7
     - _Smoothness: 0.7
     m_Colors:
-    - _BaseColor: {r: 0.37164116, g: 0.46104375, b: 0.4792453, a: 1}
-    - _Color: {r: 0.3716411, g: 0.46104366, b: 0.4792453, a: 1}
+    - _BaseColor: {r: 0.49768165, g: 0.48113203, b: 1, a: 1}
+    - _Color: {r: 0.49768162, g: 0.48113203, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5657718642894293244
