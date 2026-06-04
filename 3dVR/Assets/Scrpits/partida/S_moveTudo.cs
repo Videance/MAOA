@@ -36,7 +36,7 @@ public class S_moveTudo : MonoBehaviour
 
     private void Update()
     {
-        if (S_verificaGolpe.timeSlow || quadra == null || S_controleTutorial.emTutorial) return;
+        if (S_verificaGolpe.timeSlow || quadra == null || S_controleTutorial.tutorial1) return;
 
         float dirX = J1dirX + J2dirX;
         float dirY = J1dirY + J2dirY;

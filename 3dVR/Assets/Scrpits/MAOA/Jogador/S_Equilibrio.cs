@@ -71,15 +71,15 @@ public class S_Equilibrio : MonoBehaviour
         ColorUtility.TryParseHtmlString("#6C1B1B", out Cvermelho);
         ColorUtility.TryParseHtmlString("#3D3D3D", out Cpreto);
 
-        ColorUtility.TryParseHtmlString("#00C521", out Bverde);
-        ColorUtility.TryParseHtmlString("#8DC500", out Bamarelo);
-        ColorUtility.TryParseHtmlString("#C56300", out Blaranja);
-        ColorUtility.TryParseHtmlString("#C61600", out Bvermelho);
+        ColorUtility.TryParseHtmlString("#00C521", out Bbverde);
+        ColorUtility.TryParseHtmlString("#8DC500", out Bbamarelo);
+        ColorUtility.TryParseHtmlString("#C56300", out Bblaranja);
+        ColorUtility.TryParseHtmlString("#C61600", out Bbvermelho);
         ColorUtility.TryParseHtmlString("#000000", out Bpreto);
-        ColorUtility.TryParseHtmlString("#00890B", out Bbverde);
-        ColorUtility.TryParseHtmlString("#5E8900", out Bbamarelo);
-        ColorUtility.TryParseHtmlString("#895000", out Bblaranja);
-        ColorUtility.TryParseHtmlString("#740300", out Bbvermelho);
+        ColorUtility.TryParseHtmlString("#00890B", out Bverde);
+        ColorUtility.TryParseHtmlString("#5E8900", out Bamarelo);
+        ColorUtility.TryParseHtmlString("#895000", out Blaranja);
+        ColorUtility.TryParseHtmlString("#740300", out Bvermelho);
 
         ColorUtility.TryParseHtmlString("#008BFF", out Lazul);
         ColorUtility.TryParseHtmlString("#FF0007", out Lvermelho);
@@ -214,7 +214,7 @@ public class S_Equilibrio : MonoBehaviour
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
 
         if (primeira) primeira = false;
-        else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
+        else if (!S_verificaGolpe.timeSlow && !S_controleTutorial.tutorial1) energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
 
         TrocarCor(letra, false);

@@ -30,10 +30,13 @@ public class Sbot_energia : S_energia
         {
             energia -= Time.deltaTime / 3;
 
-            int q = 0;
-            foreach (var i in IK) if (i.conectado) { q += 2; }
-            if (jogador.posPerna.Contains("A")) q += 1;
-            if (q > 0) energia -= Time.deltaTime * q;
+            if (!S_controleTutorial.tutorial1)
+            {
+                int q = 0;
+                foreach (var i in IK) if (i.aberto) q += 2; 
+                if (jogador.posPerna.Contains("A")) q += 1;
+                if (q > 0) energia -= Time.deltaTime * q;
+            }
         }
         else StartCoroutine(SemStamina());
 

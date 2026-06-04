@@ -90,7 +90,7 @@ public class S_verificaGolpe : MonoBehaviour
     {
         if (timeSlow || derrotou) yield break;
 
-        if (!S_controleTutorial.emTutorial && !adv.seMovendo)
+        if (!S_controleTutorial.tutorial1 && !adv.seMovendo)
         {
             jog.Fragil();
 
