@@ -156,6 +156,7 @@ public class S_verificaGolpe : MonoBehaviour
         Time.fixedDeltaTime = 0.02f;
 
         adv.gameObject.GetComponentInChildren<S_Equilibrio>().TrocarCor(adv.dirEqui, true);
+        adv.gameObject.GetComponentInChildren<S_Equilibrio>().dirFulga = null;
 
         if (Spde.tocouClimax)
         {
@@ -289,12 +290,14 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (textInfo != null && textInfo.Length > 0)
         {
-            textInfo[0].text =
+            for (int i = 0; i < textInfo.Length; i++)
+            {
+                if (i <= 5) textInfo[i].text =
             "-- P L A C A R --\n" +
             "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
             "BOT: " + S_pontos.Spontos.pontos2;
-
-            textInfo[1].text = "Dificulade =" + Sbot_jogador.dificuldade;
+                else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
+            }
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

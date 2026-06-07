@@ -1,16 +1,12 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class S_onClique : MonoBehaviour
 {
     public GameObject[] UIs;
 
-    private void Awake()
-    {
-        UIs = GetComponentsInChildren<GameObject>(gameObject.CompareTag("ui"));
-    }
-
-    public void TrocaUI(int id) //semore chamado quando troca a UI pra fechar todas
+    public void TrocaUI(int id) //sempre chamado quando troca a UI pra fechar todas
     {
         if (UIs.Length == 0) return;
 
@@ -21,23 +17,24 @@ public class S_onClique : MonoBehaviour
         }
     }
 
-    // MENU
-    public void Arena()
+    public void PlayBot()
     {
-
+        SceneManager.LoadScene("MAOA vdd");
     }
 
-    // ARENA
+    public void PlayMultiplayer()
+    {
+        
+    }
 
+    public void PlayHistory(int i)
+    {
+        
+    }
 
-    // PAUSE
-
-
-    // LEADBOARD
-
-
-    // SETTIGNS
-
-
-    // QUIT
+    // - - - - - - - - - - J O G O - - - - - - - - - - //
+    public void SairPartida()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

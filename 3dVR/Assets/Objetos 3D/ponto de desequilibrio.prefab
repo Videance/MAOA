@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_gira
   eixo: {x: 0, y: 0.5, z: 1}
-  velocidade: 40
+  velocidade: 60
 --- !u!198 &1872274299301702237
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5374,7 +5374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_gira
   eixo: {x: 0, y: -0.5, z: -1}
-  velocidade: -70
+  velocidade: -90
 --- !u!1 &7259024414217854861
 GameObject:
   m_ObjectHideFlags: 0

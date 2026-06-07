@@ -18,7 +18,7 @@ public class S_Equilibrio : MonoBehaviour
     [Header("Direcao do equilibrio")]
     public string direcaoEquilibrio;
     protected bool primeira = true;
-    protected string dirFulga = null;
+    public string dirFulga = null;
     protected float tempoTroca = 0.75f;
     public string equilibrioCandidato = null;
     protected float contadorTroca = 0f;
@@ -35,7 +35,6 @@ public class S_Equilibrio : MonoBehaviour
     public List<GameObject> blocos = new List<GameObject>();
     private Renderer[][] renderersBlocos;
 
-    private bool ultimoEstadoFuga = false;
     private int blocoAtual = -1;
     private int faixaEnergia = -1;
 
@@ -199,11 +198,7 @@ public class S_Equilibrio : MonoBehaviour
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
 
-        if (dirFulga != null)
-        {
-            if (letra != dirFulga) return;
-            else dirFulga = null;
-        }
+        if (dirFulga != null && letra == dirFulga) dirFulga = null;
 
         tempoMesmoEquilibrio = 0f;
 

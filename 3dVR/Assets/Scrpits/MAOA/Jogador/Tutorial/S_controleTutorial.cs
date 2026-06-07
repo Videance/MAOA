@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using static UnityEngine.InputManagerEntry;
 
 public class S_controleTutorial : MonoBehaviour
 {
@@ -86,7 +85,7 @@ public class S_controleTutorial : MonoBehaviour
             {
                 if (S_pontos.Spontos.pontos1 >= 2)
                 {
-                    // puxa a coroutine
+                    StartCoroutine(SprimeiraParte());
                 }
                 else if (S_pontos.Spontos.pontos2 >= 2)
                 {
@@ -98,7 +97,7 @@ public class S_controleTutorial : MonoBehaviour
             {
                 if (S_pontos.Spontos.pontos2 >= 2)
                 {
-                    // puxa a coroutine
+                    StartCoroutine(SprimeiraParte());
                 }
                 else if (S_pontos.Spontos.pontos1 >= 2)
                 {
@@ -410,6 +409,8 @@ public class S_controleTutorial : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    // SEGUNDA METADE DO TUTORIAL
+
     IEnumerator SprimeiraParte() // ensia movimento pelo mapa
     {
         Senergia.energia = 99999999f;
@@ -424,6 +425,8 @@ public class S_controleTutorial : MonoBehaviour
 
         yield return StartCoroutine(Escreve("Quando um dos combatentes toca com seu pé fora da área do tatami, a partida finaliza, dando 1 ponto para o adversário.", 5));
         yield return StartCoroutine(Escreve("Lembre-se: os jogadores compartilham sua força, ou seja, eles podem anular ou aumentar a força de movimento ou giro dependendo de como estão cada um.", 5));
+
+        StartCoroutine(SsegundaParte());
     }
 
     IEnumerator SsegundaParte() // ensia gastos de energia
@@ -432,6 +435,8 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Durante suas partidas, você percebeu que sua energia desce de forma bem lenta, mas é porque nós desativamos os aparatos que a utilizavam.", 1));
         yield return StartCoroutine(Escreve("Existem 4 formas de perder energia: \n" + "Manter sua postura abera. \n" + "manter seus braços longe do ombro. \n" + "Trocar seu equilíbrio. \n" + "Falhar em realizar um golpe.", 5));
         yield return StartCoroutine(Escreve("Todos esse jeitos consomem rapidamente sua energia, então tome cuidado, pois ficar sem energia é algo fatal!", 6));
+
+        StartCoroutine(SterceiraParte());
     }
 
     IEnumerator SterceiraParte() // ensia vulnerável
