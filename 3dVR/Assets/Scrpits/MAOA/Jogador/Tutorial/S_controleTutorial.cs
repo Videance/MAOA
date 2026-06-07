@@ -445,8 +445,8 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Ou seja, só é possivel acertar um golpe em um oponente que esteja fazendo alguma ação de trnasição. Igual para ele que só pode te atingir da mesma forma.", 5));
 
         Destroy(S_verificaGolpe.Vgolpe.gameObject);
-        SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        S_controleCena.modo = S_controleCena.ModoJogo.PvE;
+        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator Escreve(string fala, int t) //yield return StartCoroutine(Escreve("", t));
