@@ -5,13 +5,12 @@ public class Sbot_equilibrio : S_Equilibrio
 {
     public bool movendo = false;
     public string fugaQualPlaca = null;
-    public float speed = 2f;
-    public float speedMax = 2f;
+    public float speed = 1f;
+    public float speedMax = 1f;
 
     protected override void Start()
     {
-        if (Sbot_jogador.dificuldade != 1)
-            speedMax += Mathf.Sqrt(Sbot_jogador.dificuldade);
+        if (Sbot_jogador.dificuldade != 1) speedMax += 1f + 9f * Mathf.Pow(Sbot_jogador.dificuldade / 100f, 2f);
 
         base.Start();
     }

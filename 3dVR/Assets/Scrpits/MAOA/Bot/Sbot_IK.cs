@@ -5,6 +5,7 @@ public class Sbot_IK : S_IK
 {
     public string alvoC;
     float speed = 0.7f;
+    float speedMax = 0.7f;
     Sbot_energia Senergia;
     public bool movendo = false;
     public S_dis_boneGrab DisGrab;
@@ -17,7 +18,7 @@ public class Sbot_IK : S_IK
         Senergia = GetComponentInParent<Sbot_energia>();
         DisGrab = GetComponent<S_dis_boneGrab>();
 
-        speed = Mathf.Sqrt(Sbot_jogador.dificuldade * speed) + speed;
+        speed = Mathf.Sqrt(Sbot_jogador.dificuldade * speedMax) + speedMax;
     }
 
     protected override void Update()

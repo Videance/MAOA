@@ -12,7 +12,7 @@ public class Sbot_energia : S_energia
     void Start()
     {
         jogador = GetComponent<Sbot_jogador>();
-        energiaMax = 110 + (Mathf.Pow(Sbot_jogador.dificuldade, 1.5f) * 9);
+        energiaMax = 30f + 60f * (1f + 9f * Mathf.Pow(Sbot_jogador.dificuldade / 100f, 2f));
         energia = energiaMax;
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
         texto = GetComponentsInChildren<TextMesh>();
