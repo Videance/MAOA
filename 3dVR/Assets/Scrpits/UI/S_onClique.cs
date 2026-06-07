@@ -30,6 +30,7 @@ public class S_onClique : MonoBehaviour
     public void PlayHistory(int i)
     {
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        TrocaUI(8);
         if (i == 0) FindAnyObjectByType<S_controleTutorial>().enabled = true;
     }
 
