@@ -34,7 +34,7 @@ public class S_jogador : MonoBehaviour
 
         IKs = GetComponentsInChildren<S_IK>();
 
-        Sequilibrio = GetComponentInChildren<S_Equilibrio>();
+        Sequilibrio = GetComponent<S_Equilibrio>();
         Senergia = GetComponent<S_energia>();
 
         Collider[] colliders = GetComponentsInChildren<Collider>();

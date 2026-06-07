@@ -63,6 +63,10 @@ public class Sbot_equilibrio : S_Equilibrio
         {
             contadorTroca -= Time.deltaTime;
 
+            float t = 1f - (contadorTroca / tempoTroca);
+            pEquiRender.materials[0].SetFloat("_Fill", t);
+            pEquiRender.materials[1].SetFloat("_Fill", t);
+
             if (contadorTroca <= 0f)
             {
                 int index = 0;
@@ -86,14 +90,10 @@ public class Sbot_equilibrio : S_Equilibrio
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
 
-        if (dirFulga != null)
-        {
-            if (letra != dirFulga) return;
-            else dirFulga = null;
-        }
+        if (dirFulga != null && letra == dirFulga) dirFulga = null;
 
         if (primeira) primeira = false;
-        else if (!S_verificaGolpe.timeSlow) energia.energia -= 5;
+        else if (!S_verificaGolpe.timeSlow && !S_controleTutorial.tutorial1) energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
 
         ((Sbot_jogador)jogador).VerificaVar(0);

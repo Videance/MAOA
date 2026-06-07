@@ -8,6 +8,7 @@ public class S_Equilibrio : MonoBehaviour
     protected Vector3 JinicialPos;
     public S_jogador jogador;
     protected S_energia energia;
+    public Camera cam;
 
     [Header("Valor do equilibrio")]
     protected float dist = 0.576f;
@@ -63,6 +64,9 @@ public class S_Equilibrio : MonoBehaviour
     protected Color Lvermelho;
     protected Color Lpreto;
 
+    [Header("Cores pE")]
+    public Renderer pEquiRender;
+
     protected void Awake()
     {
         ColorUtility.TryParseHtmlString("#E2BFA1", out Cbase);
@@ -83,14 +87,16 @@ public class S_Equilibrio : MonoBehaviour
         ColorUtility.TryParseHtmlString("#008BFF", out Lazul);
         ColorUtility.TryParseHtmlString("#FF0007", out Lvermelho);
         ColorUtility.TryParseHtmlString("#000000", out Lpreto);
+
+        cam = FindAnyObjectByType<Camera>();
     }
 
     protected virtual void Start()
     {
-        jogador = GetComponentInParent<S_jogador>();
+        jogador = GetComponent<S_jogador>();
         energia = GetComponentInParent<S_energia>();
         inicialPos = pCentral.transform.position;
-        JinicialPos = transform.position;
+        JinicialPos = cam.transform.position;
 
         dirBalanco = UnityEngine.Random.insideUnitSphere;
         dirBalanco.y = 0;
@@ -116,7 +122,7 @@ public class S_Equilibrio : MonoBehaviour
 
         tempoMesmoEquilibrio += Time.deltaTime;
 
-        Vector3 offset = transform.position - JinicialPos;
+        Vector3 offset = cam.transform.position - JinicialPos;
         offset.y = 0;
 
         float mag = offset.magnitude;
@@ -175,6 +181,10 @@ public class S_Equilibrio : MonoBehaviour
         {
             contadorTroca -= Time.unscaledDeltaTime;
 
+            float t = 1f - (contadorTroca / tempoTroca);
+            pEquiRender.materials[0].SetFloat("_Fill", t);
+            pEquiRender.materials[1].SetFloat("_Fill", t);
+
             if (contadorTroca <= 0f)
             {
                 int index = 0;
@@ -217,6 +227,9 @@ public class S_Equilibrio : MonoBehaviour
 
     public virtual void TrocarCor(string letra, bool emFuga)
     {
+        pEquiRender.materials[0].SetFloat("_Fill", 0);
+        pEquiRender.materials[1].SetFloat("_Fill", 0);
+
         if (emFuga)
         {
             tempoMesmoEquilibrio = 0f;
@@ -263,9 +276,9 @@ public class S_Equilibrio : MonoBehaviour
         {
             pNovo[0].material.SetColor("_Cor", Lazul);
             pNovo[1].material.color = Cazul;
-        }
 
-        blocoAtual = index;
+            blocoAtual = index;
+        }
     }
 
     public virtual void SemCor()

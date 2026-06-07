@@ -68,9 +68,6 @@ public class S_controleTutorial : MonoBehaviour
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
-            foreach (GameObject rig in RIGimao) rig.SetActive(false);
-            foreach (GameObject rig in RIGperna) rig.SetActive(false);
-
             if (Pparte) StartCoroutine(PrimeiraParte());
             if (Sparte) StartCoroutine(SegundaParte());
             if (Tparte) StartCoroutine(TerceiraParte());
@@ -105,21 +102,6 @@ public class S_controleTutorial : MonoBehaviour
                     S_pontos.Spontos.pontos2 = 0;
                 }
             }
-
-            foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
-            Sequilibrio.enabled = true;
-
-            foreach (GameObject rig in RIGimao) rig.SetActive(true);
-            foreach (GameObject rig in RIGperna) rig.SetActive(true);
-
-            Spostura.enabled = true;
-
-            discoEquilibrioBOT.SetActive(true);
-            bot.SetActive(true);
-            Sbot_jogador.dificuldade = 1;
-            adversario.enabled = true;
-
-            Senergia.energia = 100f;
         }
     }
 
@@ -130,6 +112,21 @@ public class S_controleTutorial : MonoBehaviour
 
     IEnumerator PrimeiraParte()
     {
+        Sequilibrio.enabled = false;
+        foreach (GameObject disco in discoEquilibrio) disco.SetActive(false);
+
+        Spostura.enabled = false;
+
+        foreach (GameObject rig in RIGimao) rig.SetActive(false);
+        foreach (GameObject rig in RIGperna) rig.SetActive(false);
+
+        discoEquilibrioBOT.SetActive(false);
+        bot.SetActive(false);
+        Sbot_jogador.dificuldade = 1;
+        adversario.enabled = false;
+
+        Senergia.energia = 999999999f;
+
         yield return StartCoroutine(Escreve("Este é o seu MAOÁ. Estamos vendo ele através de imagens de um satélite especial equipado neste robô.", 7));
         yield return StartCoroutine(Escreve("Ele é composto de 3 partes principais: Cabeça, Imãos e Pés. Cada uma interligada a uma parte fundamental do judô!", 7));
 
@@ -350,9 +347,9 @@ public class S_controleTutorial : MonoBehaviour
     {
         yield return null;
 
-        Spostura.enabled = true;
-        discoEquilibrioBOT.SetActive(true);
-        bot.SetActive(true);
+        Sequilibrio.enabled = false;
+        foreach (GameObject rig in RIGimao) rig.SetActive(false);
+        foreach (GameObject rig in RIGperna) rig.SetActive(false);
         S_verificaGolpe.esperaDerrota = false;
 
         yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga!", 6));
@@ -368,7 +365,6 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 8));
         yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 8));
 
-        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
         Sequilibrio.enabled = true;
         yield return new WaitUntil(() => jogador.dirEqui == adversario.golpe.IdirEqui);
 
@@ -381,7 +377,7 @@ public class S_controleTutorial : MonoBehaviour
 
         SEparte = false;
         STparte = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator SetimaParte()
@@ -406,7 +402,7 @@ public class S_controleTutorial : MonoBehaviour
 
         Sbot_jogador.dificuldade = 1;
         fazendoBatalha = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 
     // SEGUNDA METADE DO TUTORIAL
@@ -447,7 +443,8 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Ou seja, só é possivel acertar um golpe em um oponente que esteja fazendo alguma ação de trnasição. Igual para ele que só pode te atingir da mesma forma.", 5));
 
         Destroy(S_verificaGolpe.Vgolpe.gameObject);
-        SceneManager.LoadScene("MAOA vdd");
+        SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator Escreve(string fala, int t) //yield return StartCoroutine(Escreve("", t));
