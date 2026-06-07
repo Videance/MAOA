@@ -7168,7 +7168,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 699038371}
-  - component: {fileID: 699038372}
   m_Layer: 0
   m_Name: Textos
   m_TagString: Untagged
@@ -7195,18 +7194,6 @@ Transform:
   - {fileID: 319788080}
   m_Father: {fileID: 956071786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &699038372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699038370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!1001 &703205935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15259,7 +15246,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1716506887}
-  - component: {fileID: 1716506888}
   m_Layer: 0
   m_Name: Textos
   m_TagString: Untagged
@@ -15286,18 +15272,6 @@ Transform:
   - {fileID: 1449706027}
   m_Father: {fileID: 868635022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1716506888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716506886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!1 &1721607157
 GameObject:
   m_ObjectHideFlags: 0
@@ -20234,7 +20208,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3756320022744456809}
-  - component: {fileID: 8330509395900675277}
   m_Layer: 0
   m_Name: Textos
   m_TagString: Untagged
@@ -20770,18 +20743,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 2, z: 1.7}
   m_Center: {x: 0.87, y: 1, z: 0}
---- !u!114 &8330509395900675277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6359652314815125396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d16b102f6eece8f42964b0fc7028d69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::S_giraMapa
 --- !u!114 &8390207726999815381
 MonoBehaviour:
   m_ObjectHideFlags: 0

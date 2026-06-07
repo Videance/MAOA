@@ -31,8 +31,8 @@ public class S_onClique : MonoBehaviour
 
     public void PlayHistory(int i)
     {
+        S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
-        S_controleCena.modo = S_controleCena.ModoJogo.Historia;
         TrocaUI(8);
     }
 
