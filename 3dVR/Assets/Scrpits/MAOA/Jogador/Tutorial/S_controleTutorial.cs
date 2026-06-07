@@ -7,9 +7,12 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class S_controleTutorial : MonoBehaviour
 {
     S_jogador jogador;
+    public GameObject balaoFala;
+    public GameObject botao;
     public TextMeshPro quadroDfala;
     public S_verificaGolpe SVgolpe;
     public static bool emTutorial = true;
+    public static bool passa = false;
 
     // partes do tutorial
     public static bool tutorial1 = true;
@@ -17,7 +20,7 @@ public class S_controleTutorial : MonoBehaviour
 
     [Header("PRIMEIRA PARTE")]
     public static bool Pparte = true;
-    public GameObject[] discoEquilibrio;
+    public GameObject discoEquilibrio;
     public S_Equilibrio Sequilibrio;
 
     [Header("SEGUNDA PARTE")]
@@ -29,7 +32,6 @@ public class S_controleTutorial : MonoBehaviour
 
     [Header("TERCEIRA PARTE")]
     public static bool Tparte = false;
-    public bool[] tocou;
     public GameObject[] RIGperna;
     public S_Postura Spostura;
 
@@ -50,6 +52,7 @@ public class S_controleTutorial : MonoBehaviour
 
     void Awake()
     {
+        if (S_controleCena.modo != S_controleCena.ModoJogo.Tutorial) enabled = false;
         jogador = GetComponent<S_jogador>();
         maoD = RIGimao[0].gameObject.GetComponent<S_IK>();
         maoE = RIGimao[1].gameObject.GetComponent<S_IK>();
@@ -59,9 +62,8 @@ public class S_controleTutorial : MonoBehaviour
     private void Start()
     {
         SVgolpe = S_verificaGolpe.Vgolpe;
-        quadroDfala = GameObject.Find("Textinho").GetComponent<TextMeshPro>();
-
-        tocou = new bool[2] { false, false };
+        balaoFala.SetActive(true);
+        quadroDfala = balaoFala.GetComponentInChildren<TextMeshPro>();
 
         if (!fazendoBatalha)
         {
@@ -113,7 +115,7 @@ public class S_controleTutorial : MonoBehaviour
     IEnumerator PrimeiraParte()
     {
         Sequilibrio.enabled = false;
-        foreach (GameObject disco in discoEquilibrio) disco.SetActive(false);
+        discoEquilibrio.SetActive(false);
 
         Spostura.enabled = false;
 
@@ -130,7 +132,7 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Este é o seu MAOÁ. Estamos vendo ele através de imagens de um satélite especial equipado neste robô.", 7));
         yield return StartCoroutine(Escreve("Ele é composto de 3 partes principais: Cabeça, Imãos e Pés. Cada uma interligada a uma parte fundamental do judô!", 7));
 
-        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
+        discoEquilibrio.SetActive(true);
         Sequilibrio.enabled = true;
 
         yield return StartCoroutine(Escreve("Vamos começar pela cabeça, que cuida do Equilíbrio. Em baixo do seu MAOÁ tem um disco dividido em 5 partes, cada uma simbolizando uma direção.", 8));
@@ -382,7 +384,7 @@ public class S_controleTutorial : MonoBehaviour
 
     IEnumerator SetimaParte()
     {
-        foreach (GameObject disco in discoEquilibrio) disco.SetActive(true);
+        discoEquilibrio.SetActive(true);
         Sequilibrio.enabled = true;
         foreach (GameObject rig in RIGimao) rig.SetActive(true);
         foreach (GameObject rig in RIGperna) rig.SetActive(true);
@@ -450,6 +452,11 @@ public class S_controleTutorial : MonoBehaviour
     IEnumerator Escreve(string fala, int t) //yield return StartCoroutine(Escreve("", t));
     {
         quadroDfala.text = fala;
-        if (t > 0) yield return new WaitForSecondsRealtime(t + 2);
+        yield return null;
+        if (t > 0) yield return new WaitForSeconds(t);
+        botao.SetActive(true);
+        yield return new WaitUntil(() => passa);
+        passa = false;
+        botao.SetActive(false);
     }
 }

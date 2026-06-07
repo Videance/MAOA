@@ -49,7 +49,9 @@ public class Sbot_equilibrio : S_Equilibrio
         if (novoEquilibrio == null || novoEquilibrio == direcaoEquilibrio)
         {
             equilibrioCandidato = null;
-            contadorTroca = 0f;
+            contadorTroca = 0f; 
+            pEquiRender.materials[0].SetFloat("_Fill", 0);
+            pEquiRender.materials[1].SetFloat("_Fill", 0);
             return;
         }
 

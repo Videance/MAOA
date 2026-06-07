@@ -168,6 +168,8 @@ public class S_Equilibrio : MonoBehaviour
         {
             equilibrioCandidato = null;
             contadorTroca = 0f;
+            pEquiRender.materials[0].SetFloat("_Fill", 0);
+            pEquiRender.materials[1].SetFloat("_Fill", 0);
             return;
         }
 
@@ -227,9 +229,6 @@ public class S_Equilibrio : MonoBehaviour
 
     public virtual void TrocarCor(string letra, bool emFuga)
     {
-        pEquiRender.materials[0].SetFloat("_Fill", 0);
-        pEquiRender.materials[1].SetFloat("_Fill", 0);
-
         if (emFuga)
         {
             tempoMesmoEquilibrio = 0f;

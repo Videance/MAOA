@@ -4,6 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class S_controleCena : MonoBehaviour
 {
+    public static ModoJogo modo = ModoJogo.Tutorial;
+
+    public enum ModoJogo
+    {
+        Historia,
+        PvE,
+        PvP,
+        Tutorial
+    }
+
     public static IEnumerator RenovaCena(string nome)
     {
         yield return SceneManager.UnloadSceneAsync(nome);

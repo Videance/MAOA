@@ -19,7 +19,9 @@ public class S_onClique : MonoBehaviour
 
     public void PlayBot()
     {
-        SceneManager.LoadScene("MAOA vdd");
+        SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        S_controleCena.modo = S_controleCena.ModoJogo.PvE;
+        TrocaUI(8);
     }
 
     public void PlayMultiplayer()
@@ -30,13 +32,16 @@ public class S_onClique : MonoBehaviour
     public void PlayHistory(int i)
     {
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        S_controleCena.modo = S_controleCena.ModoJogo.Historia;
         TrocaUI(8);
-        if (i == 0) FindAnyObjectByType<S_controleTutorial>().enabled = true;
     }
 
     // - - - - - - - - - - J O G O - - - - - - - - - - //
     public void SairPartida()
     {
-        SceneManager.LoadScene("Menu");
+        TrocaUI(0);
+        SceneManager.UnloadSceneAsync("MAOA vdd");
     }
+
+    public void PassaDialogo() { S_controleTutorial.passa = true; }
 }
