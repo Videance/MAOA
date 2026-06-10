@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class S_controleCena : MonoBehaviour
 {
+    //cria um evento cm isso
+
     public static ModoJogo modo = ModoJogo.Tutorial;
 
     public enum ModoJogo

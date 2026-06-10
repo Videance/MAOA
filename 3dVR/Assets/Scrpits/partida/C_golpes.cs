@@ -16,4 +16,5 @@ public class C_golpes
     public string pernaAberta;
 
     public GameObject dirPdes;
+    public Sprite imagem;
 }

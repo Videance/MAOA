@@ -1,10 +1,17 @@
-using System;
+using NUnit.Framework;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class S_onClique : MonoBehaviour
 {
     public GameObject[] UIs;
+    S_verificaGolpe Svg;
+
+    private void Awake()
+    {
+        Svg = S_verificaGolpe.Vgolpe;
+    }
 
     public void TrocaUI(int id) //sempre chamado quando troca a UI pra fechar todas
     {
@@ -15,6 +22,11 @@ public class S_onClique : MonoBehaviour
             if (i == id) UIs[i].SetActive(true);
             else UIs[i].SetActive(false);
         }
+    }
+
+    public void EnsinarGolpes(int i)
+    {
+
     }
 
     public void PlayBot()
@@ -31,11 +43,26 @@ public class S_onClique : MonoBehaviour
 
     public void PlayHistory(int i)
     {
-        S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
+        if (i == 0) S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
+        else if (i != 0)
+        {
+            S_controleCena.modo = S_controleCena.ModoJogo.Historia;
+
+            int n = (i * 5) - 1;
+            for (int j = 0; j < 5; j++) S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
+        }
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
         TrocaUI(8);
     }
 
+
+    IEnumerator ensinaGolpes()
+    {
+        //yield return new WaitUntil(() => Cena "MAOA vdd" reze);
+        //espera o evengo
+
+        yield return null;
+    }
     // - - - - - - - - - - J O G O - - - - - - - - - - //
     public void SairPartida()
     {

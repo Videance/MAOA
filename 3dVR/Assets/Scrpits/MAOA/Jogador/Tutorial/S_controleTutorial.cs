@@ -1,3 +1,4 @@
+using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class S_controleTutorial : MonoBehaviour
 
     // partes do tutorial
     public static bool tutorial1 = true;
-    bool fazendoBatalha = false;
 
     [Header("PRIMEIRA PARTE")]
     public static bool Pparte = true;
@@ -57,6 +57,8 @@ public class S_controleTutorial : MonoBehaviour
         maoD = RIGimao[0].gameObject.GetComponent<S_IK>();
         maoE = RIGimao[1].gameObject.GetComponent<S_IK>();
         emTutorial = true;
+        balaoFala = GameObject.Find("TT");
+        botao = balaoFala.GetComponentInChildren<Button>().gameObject;
     }
 
     private void Start()
@@ -65,7 +67,7 @@ public class S_controleTutorial : MonoBehaviour
         balaoFala.SetActive(true);
         quadroDfala = balaoFala.GetComponentInChildren<TextMeshPro>();
 
-        if (!fazendoBatalha)
+        if (tutorial1)
         {
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
@@ -78,33 +80,7 @@ public class S_controleTutorial : MonoBehaviour
             if (SEparte) StartCoroutine(SextaParte());
             if (STparte) StartCoroutine(SetimaParte());
         }
-        else
-        {
-            if (this == S_pontos.Spontos.jogadores[0])
-            {
-                if (S_pontos.Spontos.pontos1 >= 2)
-                {
-                    StartCoroutine(SprimeiraParte());
-                }
-                else if (S_pontos.Spontos.pontos2 >= 2)
-                {
-                    S_pontos.Spontos.pontos1 = 0;
-                    S_pontos.Spontos.pontos2 = 0;
-                }
-            }
-            else
-            {
-                if (S_pontos.Spontos.pontos2 >= 2)
-                {
-                    StartCoroutine(SprimeiraParte());
-                }
-                else if (S_pontos.Spontos.pontos1 >= 2)
-                {
-                    S_pontos.Spontos.pontos1 = 0;
-                    S_pontos.Spontos.pontos2 = 0;
-                }
-            }
-        }
+        else StartCoroutine(SprimeiraParte());
     }
 
     private void Update()
@@ -403,7 +379,7 @@ public class S_controleTutorial : MonoBehaviour
         STparte = false;
 
         Sbot_jogador.dificuldade = 1;
-        fazendoBatalha = true;
+        //apaga o maoa
         S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 

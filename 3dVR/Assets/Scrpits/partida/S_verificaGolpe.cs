@@ -283,9 +283,10 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (S_controleTutorial.emTutorial) yield break;
 
-        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) Sbot_jogador.dificuldade++;
+        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) // UI vitoria;
         if (S_pontos.Spontos.pontos2 >= 2)
         {
+            // UI derrota
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
         }
