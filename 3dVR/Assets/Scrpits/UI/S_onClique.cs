@@ -48,8 +48,10 @@ public class S_onClique : MonoBehaviour
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
 
-            int n = (i * 5) - 1;
-            for (int j = 0; j < 5; j++) S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
+            int inicio = (i - 1) * 5;
+
+            for (int j = 0; j < 5; j++)
+                S_modoHistoria.listaGolpes[j] = Svg.golpes[inicio + j];
         }
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
         TrocaUI(8);

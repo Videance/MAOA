@@ -1,9 +1,12 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class S_pontos : MonoBehaviour
 {
     public static S_pontos Spontos;
+    public static List<Vector2> vitoriasXbot = new List<Vector2>(); //primeir é o nivel dele, o segundo a quantidade de virtórias.
 
     public S_jogador[] jogadores;
 

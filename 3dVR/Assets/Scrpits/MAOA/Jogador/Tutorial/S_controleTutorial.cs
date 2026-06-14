@@ -318,7 +318,7 @@ public class S_controleTutorial : MonoBehaviour
         QIparte = false;
         SEparte = true;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator SextaParte()
@@ -379,8 +379,9 @@ public class S_controleTutorial : MonoBehaviour
         STparte = false;
 
         Sbot_jogador.dificuldade = 1;
-        //apaga o maoa
-        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
+        S_controleCena.modo = S_controleCena.ModoJogo.PvE;
+        SceneManager.LoadScene("Menu");
+        SceneManager.UnloadSceneAsync("MAOA vdd");
     }
 
     // SEGUNDA METADE DO TUTORIAL
@@ -422,7 +423,9 @@ public class S_controleTutorial : MonoBehaviour
 
         Destroy(S_verificaGolpe.Vgolpe.gameObject);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
-        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
+        emTutorial = false;
+        SceneManager.LoadScene("Menu");
+        SceneManager.UnloadSceneAsync("MAOA vdd");
     }
 
     IEnumerator Escreve(string fala, int t) //yield return StartCoroutine(Escreve("", t));

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,12 @@ public class S_verificaGolpe : MonoBehaviour
 
         foreach (var golpe in Vgolpe.golpes)
         {
+            if (S_controleCena.modo == S_controleCena.ModoJogo.Historia && S_modoHistoria.listaGolpes.Length > 0)
+            {
+                if (!S_modoHistoria.listaGolpes.Contains(golpe))
+                    continue;
+            }
+
             int pontos = 0;
 
             if (golpe.conectorImaoDir == jog.imaoDir) pontos++;
@@ -283,12 +290,30 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (S_controleTutorial.emTutorial) yield break;
 
-        if (S_pontos.Spontos.pontos1 >= 2 && adv is Sbot_jogador) // UI vitoria;
-        if (S_pontos.Spontos.pontos2 >= 2)
+        if (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2)
         {
-            // UI derrota
-            S_pontos.Spontos.pontos1 = 0;
-            S_pontos.Spontos.pontos2 = 0;
+            if (adv is Sbot_jogador)
+            {
+                //ganhou
+                if (S_pontos.vitoriasXbot.Count > 0)
+                {
+                    for (int i = 0; i < S_pontos.vitoriasXbot.Count; i++)
+                        if (S_pontos.vitoriasXbot[i].x == Sbot_jogador.dificuldade)
+                        {
+                            S_pontos.vitoriasXbot[i] = new Vector2(S_pontos.vitoriasXbot[i].x, S_pontos.vitoriasXbot[i].y + 1);
+                            break;
+                        }
+                }
+                else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
+            }
+            else
+            {
+                //perde
+            }
+
+            SceneManager.UnloadSceneAsync("MAOA vdd");
+            SceneManager.LoadScene("Menu");
+            yield break;
         }
 
         if (textInfo != null && textInfo.Length > 0)
@@ -303,7 +328,7 @@ public class S_verificaGolpe : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
     }
 
     void ConfigurarGrab(S_jogador jog, bool ativo)
