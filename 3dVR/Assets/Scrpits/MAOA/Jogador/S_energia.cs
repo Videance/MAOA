@@ -21,6 +21,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     public S_IK[] IK;
     public XRBaseInteractor[] maos;
 
+    public ParticleSystem atordoado;
+
     private void Start()
     {
         energia = energiaMax;
@@ -64,6 +66,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     IEnumerator SemStamina()
     {
         if (S_verificaGolpe.timeSlow) yield break;
+
+        atordoado.Play();
 
         rodandoSS = true;
         foreach (var i in IK)

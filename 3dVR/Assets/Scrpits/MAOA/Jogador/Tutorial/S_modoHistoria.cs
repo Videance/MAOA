@@ -13,10 +13,4 @@ public class S_modoHistoria : MonoBehaviour
         jogador = GetComponent<S_jogador>();
         jogador.adversario.GetComponent<Sbot_jogador>().enabled = false;
     }
-
-    public IEnumerator EnsinarGolpes()
-    {
-        //render.sprite = imagem;
-        yield return null;
-    }
 }

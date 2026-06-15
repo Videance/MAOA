@@ -20,7 +20,7 @@ public class Sbot_jogador : S_jogador
     float t1;
     float tt1 = 0;
     int n = 0;
-    public static int dificuldade = 5; // 1 a 5
+    public static int dificuldade = 1; // 1 a 99
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
@@ -52,6 +52,12 @@ public class Sbot_jogador : S_jogador
     {
         if (!equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
+
+        if (seMovendo) escudo.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        else
+        {
+            escudo.Play();
+        }
 
         if (Senergia.rodandoSS) return;
 

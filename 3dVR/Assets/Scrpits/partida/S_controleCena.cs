@@ -12,7 +12,6 @@ public class S_controleCena : MonoBehaviour
     {
         Historia,
         PvE,
-        PvP,
         Tutorial
     }
 

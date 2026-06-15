@@ -24,6 +24,7 @@ public class S_IK : MonoBehaviour
     public Transform peito;
     public bool saindo = false;
     public bool aberto;
+    float t = 0;
 
     [Header("MATERIAIS E CORES")]
     protected Color corBase;
@@ -66,8 +67,9 @@ public class S_IK : MonoBehaviour
     {
         if (transform.position != estavaAli)
         {
+            t = 0f;
             estavaAli = transform.position;
-            Espera();
+            if (!meMovi) Espera();
         }
 
         if (S_verificaGolpe.timeSlow) trocaEstado(estadoMao.desativada);
@@ -224,11 +226,11 @@ public class S_IK : MonoBehaviour
         if (meMovi) yield break;
         meMovi = true;
 
-        while (meMovi)
+        while (t < 0.25f)
         {
-            yield return new WaitForSecondsRealtime(0.05f);
-
-            if (estavaAli == transform.position) meMovi = false;
+            t += Time.unscaledDeltaTime;
+            if (t >= 0.25f) meMovi = false;
+            yield return null;
         }
     }
 

@@ -1,9 +1,11 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class S_verificaGolpe : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class S_verificaGolpe : MonoBehaviour
     public static S_pontoDes Spde;
     public GameObject[] luzes;
     public TextMeshPro[] textInfo;
+    public S_onClique Sclique;
     public static bool derrotaPorLimite = false;
 
     Vector3 dir;
@@ -21,6 +24,7 @@ public class S_verificaGolpe : MonoBehaviour
     [Header("Lista de golpes")]
     [SerializeField] public List<C_golpes> golpes = new List<C_golpes>();
     private static C_golpes ataque;
+    public List<Image> golpes3 = new List<Image>();
 
     public static bool resetaCena = false;
     public static bool timeSlow = false;
@@ -33,6 +37,9 @@ public class S_verificaGolpe : MonoBehaviour
     public static bool esperaDerrota = false;
     public static bool esperaTime = false;
     public GameObject Botiprefab;
+
+    [Header("Partículas")]
+    public ParticleSystem[] fogos = new ParticleSystem[4];
 
     private void Awake()
     {
@@ -51,6 +58,7 @@ public class S_verificaGolpe : MonoBehaviour
     public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
         if (timeSlow || derrotou || !adv.seMovendo) return;
+        var ranking = new List<(C_golpes golpe, int pontos)>();
 
         foreach (var golpe in Vgolpe.golpes)
         {
@@ -73,7 +81,13 @@ public class S_verificaGolpe : MonoBehaviour
                 Vgolpe.StartCoroutine(Vgolpe.TimeSlow(golpe, jog, adv));
                 break;
             }
+
+            ranking.Add((golpe, pontos));
         }
+
+        var top3 = ranking.OrderByDescending(x => x.pontos).Take(3).ToList();
+
+        for (int i = 0; i < 3; i++) golpes3[i].sprite = top3[i].golpe.imagem;
     }
 
     public void CriarPonto(int os2, S_jogador jog, S_jogador adv)
@@ -182,6 +196,7 @@ public class S_verificaGolpe : MonoBehaviour
         else if (adv.dirEqui == ataque.IdirEqui)
         {
             jog.GetComponent<S_energia>().energia -= ataque.custoEnergia;
+            foreach (ParticleSystem p in jog.falhou) p.Play();
 
             //jog - Troca layer dos IK
             for (int i = 0; i < jog.PEs.Length; i++)
@@ -271,6 +286,8 @@ public class S_verificaGolpe : MonoBehaviour
             Hluz.alvo = null;
         }
 
+        foreach (ParticleSystem p in fogos) p.Play();
+
         yield return new WaitForSecondsRealtime(3f);
 
         Time.timeScale = 1f;
@@ -303,6 +320,8 @@ public class S_verificaGolpe : MonoBehaviour
                             S_pontos.vitoriasXbot[i] = new Vector2(S_pontos.vitoriasXbot[i].x, S_pontos.vitoriasXbot[i].y + 1);
                             break;
                         }
+
+                    Sclique.PassarFase();
                 }
                 else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
             }
@@ -312,7 +331,7 @@ public class S_verificaGolpe : MonoBehaviour
             }
 
             SceneManager.UnloadSceneAsync("MAOA vdd");
-            SceneManager.LoadScene("Menu");
+            FindAnyObjectByType<S_onClique>().TrocaUI(0);
             yield break;
         }
 
@@ -328,7 +347,7 @@ public class S_verificaGolpe : MonoBehaviour
             }
         }
 
-        S_controleCena.RenovaCena(SceneManager.GetActiveScene().name);
+        S_controleCena.RenovaCena("MAOA vdd");
     }
 
     void ConfigurarGrab(S_jogador jog, bool ativo)

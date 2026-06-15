@@ -55,6 +55,8 @@ public class Sbot_energia : S_energia
     {
         if (S_verificaGolpe.timeSlow) yield break;
 
+        atordoado.Play();
+
         rodandoSS = true;
         foreach (var i in IK) if (i.conectado) i.Desconecta();
 

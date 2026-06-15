@@ -28,6 +28,10 @@ public class S_jogador : MonoBehaviour
     public GameObject RIG;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
+    [Header("PARTICULAS")]
+    public ParticleSystem escudo;
+    public ParticleSystem[] falhou;
+
     protected virtual void Awake()
     {
         PEs = GetComponentsInChildren<S_dis_pe>();
@@ -84,6 +88,12 @@ public class S_jogador : MonoBehaviour
         seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
             PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
+
+        if (seMovendo) escudo.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        else
+        {
+            escudo.Play();
+        }
 
         if (dirEqui == "c" || posPerna.Contains("F"))
         {

@@ -39,7 +39,7 @@ public class S_dis_boneGrab : MonoBehaviour
         if (distancia >= dis)
             transform.position = GOinicial.transform.position + dir * dis;
 
-        if (distancia >= 0.7f) ik.aberto = true;
-        else if (distancia <= 0.6f) ik.aberto = false;
+        if (distancia >= 0.8f) ik.aberto = true;
+        else if (distancia <= 0.7f) ik.aberto = false;
     }
 }
