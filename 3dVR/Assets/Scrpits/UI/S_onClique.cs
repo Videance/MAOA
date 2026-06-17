@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -8,19 +9,18 @@ public class S_onClique : MonoBehaviour
 {
     public GameObject[] UIs;
     public GameObject historiaButtons;
-    GameObject[] HB;
+    public GameObject[] HB;
     S_verificaGolpe Svg;
     int faseAtual = 1;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
-    float camX = 0f;
-    float camY = 0f;
 
     [Header("Textos")]
     public TextMeshPro TcamX;
     public TextMeshPro TcamY;
     public TextMeshPro Tdificuldade;
+    public GameObject camOffset;
 
     [Header("Particulas")]
     public ParticleSystem[] bordas;
@@ -28,18 +28,24 @@ public class S_onClique : MonoBehaviour
     private void Awake()
     {
         Svg = S_verificaGolpe.Vgolpe;
-        HB = historiaButtons.GetComponentsInChildren<GameObject>();
     }
 
     public void MoverCamera(int dir)
     {
-        if (dir == 0 && camX < 2f) camX += 0.1f;
-        if (dir == 1 && camX > -2f) camX -= 0.1f;
-        if (dir == 2 && camY < 2f) camY += 0.1f;
-        if (dir == 3 && camY > -2f) camY -= 0.1f;
+        Vector3 cam = camOffset.transform.position;
 
-        TcamX.text = "" + camX;
-        TcamY.text = "" + camY;
+        if (dir == 0 && camOffset.transform.position.x < 2f) cam.x += 0.1f;
+        if (dir == 1 && camOffset.transform.position.x > -2f) cam.x -= 0.1f;
+        if (dir == 2 && camOffset.transform.position.y < 2f) cam.y += 0.1f;
+        if (dir == 3 && camOffset.transform.position.y > -2f) cam.y -= 0.1f;
+
+        cam.x = Mathf.Round(cam.x * 10f) / 10f;
+        cam.y = Mathf.Round(cam.y * 10f) / 10f;
+
+        camOffset.transform.position = cam;
+
+        TcamX.text = "" + cam.x;
+        TcamY.text = "" + cam.y;
     }
 
     public void TrocaUI(int id) //sempre chamado quando troca a UI pra fechar todas
@@ -68,7 +74,7 @@ public class S_onClique : MonoBehaviour
     {
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
-        TrocaUI(8);
+        TrocaUI(7);
     }
 
     public void PlayHistory(int i)
@@ -82,7 +88,7 @@ public class S_onClique : MonoBehaviour
             for (int j = 0; j < 5; j++) S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
         }
         SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
-        TrocaUI(8);
+        TrocaUI(7);
     }
 
     public void PassarFase()

@@ -260,7 +260,7 @@ public class S_verificaGolpe : MonoBehaviour
         adv.GetComponentInChildren<S_segueC>().Joga(dir);
 
         tempo = 7f;
-        while (tempo > 0f)
+        while (tempo > 0f && !resetaCena)
         {
             tempo -= Time.unscaledDeltaTime;
             yield return null;
@@ -305,8 +305,6 @@ public class S_verificaGolpe : MonoBehaviour
         luzes[2].SetActive(false);
         luzes[0].SetActive(true);
 
-        if (S_controleTutorial.emTutorial) yield break;
-
         if (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2)
         {
             if (adv is Sbot_jogador)
@@ -347,13 +345,15 @@ public class S_verificaGolpe : MonoBehaviour
             }
         }
 
-        S_controleCena.RenovaCena("MAOA vdd");
+        StartCoroutine(S_controleCena.RenovaCena("MAOA vdd"));
     }
 
     void ConfigurarGrab(S_jogador jog, bool ativo)
     {
         for (int i = 0; i < jog.IKs.Length; i++)
         {
+            if (jog == null) break;
+
             jog.IKs[i].grab.trackPosition = ativo;
             jog.IKs[i].grab.trackRotation = ativo;
             jog.IKs[i].grab.enabled = ativo;

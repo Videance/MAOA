@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using static S_IK;
 
 public class S_dis_pe : S_dis_boneGrab
 {
@@ -14,7 +13,6 @@ public class S_dis_pe : S_dis_boneGrab
     Vector3 posInical;
     public XRGrabInteractable grab;
     public bool segurando = false;
-    S_jogador jog;
 
     private void Awake()
     {
@@ -22,7 +20,6 @@ public class S_dis_pe : S_dis_boneGrab
         dis = Vector3.Distance(GOponta.transform.position, GOinicial.transform.position);
         posInical = transform.position;
         grab = GetComponent<XRGrabInteractable>();
-        jog = GetComponentInParent<S_jogador>();
     }
 
     private void Update()
@@ -111,6 +108,8 @@ public class S_dis_pe : S_dis_boneGrab
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("chb")) return;
+
         S_verificaGolpe.derrotaPorLimite = true;
 
         /// chama coisa de cabo o jogo

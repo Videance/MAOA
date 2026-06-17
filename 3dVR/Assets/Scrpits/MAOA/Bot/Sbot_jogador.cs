@@ -53,10 +53,17 @@ public class Sbot_jogador : S_jogador
         if (!equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
 
-        if (seMovendo) escudo.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        else
+        if (!S_controleTutorial.emTutorial)
         {
-            escudo.Play();
+            if (seMovendo && escudo.IsAlive())
+            {
+                escudo.Stop();
+                escudo.Clear();
+            }
+            else
+            {
+                escudo.Play();
+            }
         }
 
         if (Senergia.rodandoSS) return;

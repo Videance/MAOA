@@ -89,10 +89,17 @@ public class S_jogador : MonoBehaviour
             PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        if (seMovendo) escudo.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        else
+        if (!S_controleTutorial.emTutorial)
         {
-            escudo.Play();
+            if (seMovendo && escudo.IsAlive())
+            {
+                escudo.Stop();
+                escudo.Clear();
+            }
+            else
+            {
+                escudo.Play();
+            }
         }
 
         if (dirEqui == "c" || posPerna.Contains("F"))
