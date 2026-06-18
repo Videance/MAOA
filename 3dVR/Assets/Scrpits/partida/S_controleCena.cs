@@ -1,12 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class S_controleCena : MonoBehaviour
 {
     //cria um evento cm isso
 
     public static ModoJogo modo = ModoJogo.Tutorial;
+    public GameObject JogadorPrefab;
+    public GameObject AdversarioPrefab;
+
+    List<GameObject> vivos = new List<GameObject>();
 
     public enum ModoJogo
     {
@@ -15,9 +19,20 @@ public class S_controleCena : MonoBehaviour
         Tutorial
     }
 
-    public static IEnumerator RenovaCena(string nome)
+    public void ColocarMAOA(bool recria)
     {
-        SceneManager.UnloadSceneAsync(nome);
-        yield return SceneManager.LoadSceneAsync(nome, LoadSceneMode.Additive);
+        if (vivos.Count > 0) for (int i = 0;  i < vivos.Count; i++)
+            {
+                Destroy(vivos[i]);
+                vivos.RemoveAt(i);
+            }
+
+        if (recria)
+        {
+            GameObject jogador = Instantiate(JogadorPrefab);
+            vivos.Add(jogador);
+            GameObject adversario = Instantiate(AdversarioPrefab);
+            vivos.Add(adversario);
+        }
     }
 }

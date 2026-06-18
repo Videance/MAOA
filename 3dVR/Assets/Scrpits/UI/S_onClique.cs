@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class S_onClique : MonoBehaviour
 {
+    S_controleCena controleCena;
     public GameObject[] UIs;
     public GameObject historiaButtons;
     public GameObject[] HB;
@@ -28,6 +29,7 @@ public class S_onClique : MonoBehaviour
     private void Awake()
     {
         Svg = S_verificaGolpe.Vgolpe;
+        controleCena = GetComponentInParent<S_controleCena>();
     }
 
     public void MoverCamera(int dir)
@@ -72,7 +74,7 @@ public class S_onClique : MonoBehaviour
 
     public void PlayBot()
     {
-        SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        controleCena.ColocarMAOA(true);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         TrocaUI(7);
     }
@@ -87,7 +89,7 @@ public class S_onClique : MonoBehaviour
             int n = (i * 5) - 1;
             for (int j = 0; j < 5; j++) S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
         }
-        SceneManager.LoadScene("MAOA vdd", LoadSceneMode.Additive);
+        controleCena.ColocarMAOA(true);
         TrocaUI(7);
     }
 
@@ -129,7 +131,7 @@ public class S_onClique : MonoBehaviour
     public void SairPartida()
     {
         TrocaUI(0);
-        SceneManager.UnloadSceneAsync("MAOA vdd");
+        controleCena.ColocarMAOA(false);
     }
 
     public void PassaDialogo() { S_controleTutorial.passa = true; }

@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class S_controleTutorial : MonoBehaviour
 {
     S_jogador jogador;
+    S_controleCena controleCena;
     public GameObject balaoFala;
     public GameObject botao;
     public TextMeshPro quadroDfala;
@@ -50,12 +51,6 @@ public class S_controleTutorial : MonoBehaviour
     public static bool STparte = false;
     public S_energia Senergia;
 
-    private void Awake()
-    {
-        balaoFala = GameObject.Find("TT");
-        botao = GameObject.Find("TTn");
-    }
-
     private void Start()
     {
         if (S_controleCena.modo != S_controleCena.ModoJogo.Tutorial)
@@ -63,6 +58,11 @@ public class S_controleTutorial : MonoBehaviour
             balaoFala.SetActive(false);
             enabled = false;
         }
+
+        balaoFala = GameObject.Find("TT");
+        botao = GameObject.Find("TTn");
+        controleCena = FindAnyObjectByType<S_controleCena>();
+
         jogador = GetComponent<S_jogador>();
         maoD = RIGimao[0].gameObject.GetComponentInChildren<S_IK>();
         maoE = RIGimao[1].gameObject.GetComponentInChildren<S_IK>();
@@ -385,7 +385,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
         Sbot_jogador.dificuldade = 1;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
-        SceneManager.UnloadSceneAsync("MAOA vdd");
+        controleCena.ColocarMAOA(false);
     }
 
     // SEGUNDA METADE DO TUTORIAL
@@ -429,7 +429,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         emTutorial = false;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
-        SceneManager.UnloadSceneAsync("MAOA vdd");
+        controleCena.ColocarMAOA(false);
     }
 
     IEnumerator Escreve(string fala, int t, bool next) //yield return StartCoroutine(Escreve("", t));

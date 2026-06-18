@@ -112,9 +112,9 @@ public class S_dis_pe : S_dis_boneGrab
 
         S_verificaGolpe.derrotaPorLimite = true;
 
-        /// chama coisa de cabo o jogo
-        /// 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        S_jogador adv = GetComponentInParent<S_jogador>().adversario;
+        S_jogador eu = GetComponentInParent<S_jogador>();
+        StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(adv, eu));
     }
 
     // ---------- CONTROLE DE VARIÁVEL QUANDO SEGURANDO OU NÃO ----------

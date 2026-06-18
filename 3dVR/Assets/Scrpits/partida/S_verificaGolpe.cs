@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class S_verificaGolpe : MonoBehaviour
 {
     public GameObject pDesequil; //objeto de prfab
+    S_controleCena controleCena;
     public GameObject caminho;
     public GameObject pDes; // 1 normal , 2 time , 3 derrota
     public TextMeshPro textTempo;
@@ -53,6 +54,8 @@ public class S_verificaGolpe : MonoBehaviour
             return;
         }
         if (textTempo != null)  textTempo.text = "";
+
+        controleCena = FindAnyObjectByType<S_controleCena>();
     }
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
@@ -328,7 +331,7 @@ public class S_verificaGolpe : MonoBehaviour
                 //perde
             }
 
-            SceneManager.UnloadSceneAsync("MAOA vdd");
+            controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             yield break;
         }
@@ -345,7 +348,7 @@ public class S_verificaGolpe : MonoBehaviour
             }
         }
 
-        StartCoroutine(S_controleCena.RenovaCena("MAOA vdd"));
+        controleCena.ColocarMAOA(true);
     }
 
     void ConfigurarGrab(S_jogador jog, bool ativo)
