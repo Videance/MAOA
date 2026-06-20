@@ -9765,7 +9765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1009315071
 Transform:
   m_ObjectHideFlags: 0
@@ -20786,8 +20786,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1951c72349a77498d951a900c7f9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  JogadorPrefab: {fileID: 3398957372782323409, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
-  AdversarioPrefab: {fileID: 804217410249111170, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+  JogadoresPrefab: {fileID: 0}
+  Jogadores: {fileID: 0}
 --- !u!1 &2080399773
 GameObject:
   m_ObjectHideFlags: 0

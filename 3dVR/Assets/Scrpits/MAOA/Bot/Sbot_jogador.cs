@@ -31,7 +31,6 @@ public class Sbot_jogador : S_jogador
     {
         base.Awake();
 
-        equilibrio = GetComponent<Sbot_equilibrio>();
         foreach (Transform t in GetComponentsInChildren<Transform>()) if (t.CompareTag("e")) vectorPlacas.Add(t.gameObject);
 
         golpeP = new List<bool>();
