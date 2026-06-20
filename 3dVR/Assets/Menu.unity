@@ -9765,7 +9765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1009315071
 Transform:
   m_ObjectHideFlags: 0
@@ -20786,7 +20786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1951c72349a77498d951a900c7f9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  JogadoresPrefab: {fileID: 0}
+  JogadoresPrefab: {fileID: 5076711677852359573, guid: 061f1d68e0227c940b94267d1cbc4d92, type: 3}
   Jogadores: {fileID: 0}
 --- !u!1 &2080399773
 GameObject:

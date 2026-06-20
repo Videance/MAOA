@@ -51,6 +51,12 @@ public class S_controleTutorial : MonoBehaviour
     public static bool STparte = false;
     public S_energia Senergia;
 
+    private void Awake()
+    {
+        balaoFala = GameObject.Find("TT");
+        botao = GameObject.Find("TTn");
+    }
+
     private void Start()
     {
         if (S_controleCena.modo != S_controleCena.ModoJogo.Tutorial)
@@ -59,8 +65,6 @@ public class S_controleTutorial : MonoBehaviour
             enabled = false;
         }
 
-        balaoFala = GameObject.Find("TT");
-        botao = GameObject.Find("TTn");
         controleCena = FindAnyObjectByType<S_controleCena>();
 
         jogador = GetComponent<S_jogador>();
@@ -80,12 +84,7 @@ public class S_controleTutorial : MonoBehaviour
             S_pontos.Spontos.pontos2 = 0;
 
             if (Pparte) StartCoroutine(PrimeiraParte());
-            if (Sparte) StartCoroutine(SegundaParte());
-            if (Tparte) StartCoroutine(TerceiraParte());
-            if (Qparte) StartCoroutine(QuartaParte());
-            if (QIparte) StartCoroutine(QuintaParte());
-            if (SEparte) StartCoroutine(SextaParte());
-            if (STparte) StartCoroutine(SetimaParte());
+            if (Sparte) StartCoroutine(SextaParte());
         }
         else StartCoroutine(SprimeiraParte());
     }
@@ -319,16 +318,15 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         S_verificaGolpe.esperaTime = false;
         S_verificaGolpe.esperaDerrota = true;
 
-        yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 4, true));
-        yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 4, true));
-
         QIparte = false;
         SEparte = true;
+
+        yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 50, false));
     }
 
     IEnumerator SextaParte()
     {
-        yield return null;
+        yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 4, true));
 
         Sequilibrio.enabled = false;
         foreach (GameObject rig in RIGimao) rig.SetActive(false);

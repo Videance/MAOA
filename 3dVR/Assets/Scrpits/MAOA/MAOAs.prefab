@@ -85,6 +85,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: adversario
+      value: 
+      objectReference: {fileID: 1055882313399111295}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -95,6 +99,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1520701998357044010, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
   m_PrefabInstance: {fileID: 1703139990640271118}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2056988021436524940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 804217410249111170, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+  m_PrefabInstance: {fileID: 1703139990640271118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3818223778363931903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2548978598215476209, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+  m_PrefabInstance: {fileID: 1703139990640271118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056988021436524940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562351ac252d1084ba67194116f3ff97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sbot_jogador
+--- !u!1 &6271389945658178376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4659738120689378374, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+  m_PrefabInstance: {fileID: 1703139990640271118}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8907496392549497868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103,6 +128,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2544075396987683645}
     m_Modifications:
+    - target: {fileID: 1377035475679780100, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: bot
+      value: 
+      objectReference: {fileID: 2056988021436524940}
+    - target: {fileID: 1377035475679780100, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: adversario
+      value: 
+      objectReference: {fileID: 3818223778363931903}
+    - target: {fileID: 1377035475679780100, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: discoEquilibrioBOT
+      value: 
+      objectReference: {fileID: 6271389945658178376}
     - target: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.40607
@@ -147,11 +184,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Inst\xE2ncia Jogador Azul"
       objectReference: {fileID: 0}
+    - target: {fileID: 8447336286737003123, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: adversario
+      value: 
+      objectReference: {fileID: 3818223778363931903}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+--- !u!114 &1055882313399111295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8447336286737003123, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 8907496392549497868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb23eb1aaee48ff409a40b4cb05a4064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_jogador
 --- !u!4 &6503118093940964448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
