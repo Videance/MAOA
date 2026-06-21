@@ -97,12 +97,12 @@ public class S_onClique : MonoBehaviour
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
 
-            int n = (i * 5) - 1;
-            for (int j = 0; j < 5; j++)
+            int n = (i * 3) - 1;
+            for (int j = 0; j < 4; j++)
             {
                 S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
                 Debug.Log(Svg.golpes[n - j].nome);
-                Debug.Log(S_modoHistoria.listaGolpes.Length);
+                Debug.Log(S_modoHistoria.listaGolpes.Count);
             }
         }
         controleCena.ColocarMAOA(true);
@@ -133,14 +133,6 @@ public class S_onClique : MonoBehaviour
                     }
                 }
         }
-    }
-
-    IEnumerator ensinaGolpes()
-    {
-        //yield return new WaitUntil(() => Cena "MAOA vdd" reze);
-        //espera o evengo
-
-        yield return null;
     }
 
     // - - - - - - - - - - J O G O - - - - - - - - - - //

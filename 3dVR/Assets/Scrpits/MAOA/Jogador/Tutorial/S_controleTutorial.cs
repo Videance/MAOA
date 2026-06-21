@@ -13,6 +13,7 @@ public class S_controleTutorial : MonoBehaviour
     public GameObject balaoFala;
     public GameObject botao;
     public TextMeshPro quadroDfala;
+    public Image imagem;
     public S_verificaGolpe SVgolpe;
     public static bool emTutorial = true;
     public static bool passa = false;

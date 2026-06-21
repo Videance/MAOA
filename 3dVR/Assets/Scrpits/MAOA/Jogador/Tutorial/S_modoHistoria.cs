@@ -1,11 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class S_modoHistoria : MonoBehaviour
 {
     S_jogador jogador;
     public SpriteRenderer render;
-    public static C_golpes[] listaGolpes;
+    public static List<C_golpes> listaGolpes = new();
+    public static List<C_golpes> aprendidos = new();
 
     private void Awake()
     {

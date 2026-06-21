@@ -63,13 +63,25 @@ public class S_verificaGolpe : MonoBehaviour
         if (timeSlow || derrotou) return;
         var ranking = new List<(C_golpes golpe, int pontos)>();
 
-        Debug.Log("chamei" + jog);
+        if (S_controleCena.modo == S_controleCena.ModoJogo.Historia)
+        {
+            ranking.Add((S_modoHistoria.listaGolpes[0], 4));
+            ranking.Add((S_modoHistoria.listaGolpes[1], 3));
+            ranking.Add((S_modoHistoria.listaGolpes[2], 2));
+            ranking.Add((S_modoHistoria.listaGolpes[3], 1));
+        }
 
         foreach (var golpe in Vgolpe.golpes)
         {
-            if (S_controleCena.modo == S_controleCena.ModoJogo.Historia && S_modoHistoria.listaGolpes.Length > 0)
+            if (S_controleCena.modo == S_controleCena.ModoJogo.Historia && S_modoHistoria.listaGolpes.Count > 0)
             {
                 if (!S_modoHistoria.listaGolpes.Contains(golpe))
+                    continue;
+            }
+
+            if (S_controleCena.modo == S_controleCena.ModoJogo.PvE)
+            {
+                if (!S_modoHistoria.aprendidos.Contains(golpe))
                     continue;
             }
 
@@ -87,12 +99,12 @@ public class S_verificaGolpe : MonoBehaviour
                 break;
             }
 
-            ranking.Add((golpe, pontos));
+            if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) ranking.Add((golpe, pontos));
         }
 
-        var top3 = ranking.OrderByDescending(x => x.pontos).Take(3).ToList();
+        var top3 = ranking.OrderByDescending(x => x.pontos).Take(4).ToList();
 
-        for (int i = 0; i < 3; i++) golpes3[i].sprite = top3[i].golpe.imagem;
+        for (int i = 0; i < 4; i++) golpes3[i].sprite = top3[i].golpe.imagem;
     }
 
     public void CriarPonto(int os2, S_jogador jog, S_jogador adv)
@@ -255,6 +267,16 @@ public class S_verificaGolpe : MonoBehaviour
         if (derrotou) yield break;
         derrotou = true;
 
+        if (S_controleCena.modo == S_controleCena.ModoJogo.Historia)
+        {
+            if (ataque != null &&
+                S_modoHistoria.listaGolpes.Contains(ataque))
+            {
+                S_modoHistoria.listaGolpes.Remove(ataque);
+                S_modoHistoria.aprendidos.Add(ataque);
+            }
+        }
+
         luzes[0].SetActive(false);
         luzes[1].SetActive(false);
         luzes[2].SetActive(true);
@@ -318,7 +340,7 @@ public class S_verificaGolpe : MonoBehaviour
         luzes[2].SetActive(false);
         luzes[0].SetActive(true);
 
-        if (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2)
+        if (S_controleCena.modo != S_controleCena.ModoJogo.Historia && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
             if (adv is Sbot_jogador)
             {
@@ -344,9 +366,41 @@ public class S_verificaGolpe : MonoBehaviour
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
+            if (textInfo != null && textInfo.Length > 0)
+            {
+                for (int i = 0; i < textInfo.Length; i++)
+                {
+                    if (i <= 5) textInfo[i].text =
+                "-- P L A C A R --\n" +
+                "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
+                "BOT: " + S_pontos.Spontos.pontos2;
+                    else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
+                }
+            }
+
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             yield break;
+        }
+        else if (S_modoHistoria.listaGolpes.Count == 0)
+        {
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
+
+            if (textInfo != null && textInfo.Length > 0)
+            {
+                for (int i = 0; i < textInfo.Length; i++)
+                {
+                    if (i <= 5) textInfo[i].text =
+                "-- P L A C A R --\n" +
+                "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
+                "BOT: " + S_pontos.Spontos.pontos2;
+                    else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
+                }
+            }
+
+            controleCena.ColocarMAOA(false);
+            FindAnyObjectByType<S_onClique>().TrocaUI(0);
         }
 
         if (textInfo != null && textInfo.Length > 0)
