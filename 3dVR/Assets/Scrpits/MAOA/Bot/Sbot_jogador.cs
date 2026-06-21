@@ -163,6 +163,7 @@ public class Sbot_jogador : S_jogador
             // evita repetir golpe anterior
             if (nT == n) invalido = true;
             else if (dificuldade >= 3 && golpinho.IdirEqui == adversario.dirEqui) invalido = true;
+            else if (!S_modoHistoria.aprendidos.Contains(golpinho)) invalido = true;
             else
             {
                 foreach (S_Conector v in adversario.conectores)

@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class S_onClique : MonoBehaviour
@@ -30,6 +27,8 @@ public class S_onClique : MonoBehaviour
     {
         Svg = S_verificaGolpe.Vgolpe;
         controleCena = GetComponentInParent<S_controleCena>();
+
+        if (S_modoHistoria.aprendidos.Count == 0 ) for (int i = 0; i < 4; i++) S_modoHistoria.aprendidos.Add(S_verificaGolpe.Vgolpe.golpes[i]);
     }
 
     public void MoverCamera(int dir)
@@ -97,7 +96,7 @@ public class S_onClique : MonoBehaviour
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
 
-            int n = (i * 3) - 1;
+            int n = (i * 4) - 1;
             for (int j = 0; j < 4; j++)
             {
                 S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];

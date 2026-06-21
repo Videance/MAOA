@@ -25054,6 +25054,22 @@ PrefabInstance:
       propertyPath: DisGrab
       value: 
       objectReference: {fileID: 3597645215578322523}
+    - target: {fileID: 4539821232002934806, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539821232002934806, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539821232002934806, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829278207761926295, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: dis
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4829278207761926295, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: GOponta
       value: 

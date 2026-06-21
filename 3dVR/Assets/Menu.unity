@@ -192,7 +192,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1477,7 +1477,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -2011,7 +2011,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4908,7 +4908,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -9771,7 +9771,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -10593,7 +10593,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -12315,6 +12315,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2080399775}
+    - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12397,7 +12401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5472279621703421942, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Name
-      value: Marrom 2
+      value: Marrom 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13617,7 +13621,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -16595,10 +16599,10 @@ PrefabInstance:
       addedObject: {fileID: 648239792}
     - targetCorrespondingSourceObject: {fileID: 8747907324888668265, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2102780862}
+      addedObject: {fileID: 1296622659}
     - targetCorrespondingSourceObject: {fileID: 8747907324888668265, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1296622659}
+      addedObject: {fileID: 2102780862}
     - targetCorrespondingSourceObject: {fileID: 8747907324888668265, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1156958516}
@@ -17401,7 +17405,7 @@ GameObject:
   - component: {fileID: 1670621044}
   - component: {fileID: 1670621043}
   - component: {fileID: 1670621042}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Vrido
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18759,7 +18763,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -18869,7 +18873,7 @@ PrefabInstance:
       objectReference: {fileID: 2080399775}
     - target: {fileID: 785223515858904717, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4911986636278355204, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Pivot.x
@@ -21041,8 +21045,16 @@ PrefabInstance:
       value: caixa do robo
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21288,7 +21300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5472279621703421942, guid: 04713f9d23efd52478e97f7a349df4c0, type: 3}
       propertyPath: m_Name
-      value: Marrom 1
+      value: Marrom 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22013,7 +22025,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 0.33773577, a: 1}
-  m_Intensity: 1000
+  m_Intensity: 800
   m_Range: 80
   m_SpotAngle: 33.69045
   m_InnerSpotAngle: 32.95093
@@ -22050,7 +22062,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -22144,7 +22156,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 0.9254902, b: 0.9975568, a: 1}
-  m_Intensity: 500
+  m_Intensity: 400
   m_Range: 40
   m_SpotAngle: 32.46031
   m_InnerSpotAngle: 30.473417
@@ -22181,7 +22193,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -27272,7 +27284,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.3830188, g: 1, b: 0.41239887, a: 1}
-  m_Intensity: 1000
+  m_Intensity: 800
   m_Range: 80
   m_SpotAngle: 33.69045
   m_InnerSpotAngle: 32.95093
@@ -27309,7 +27321,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -27388,7 +27400,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.2471698, g: 0.56526685, b: 1, a: 1}
-  m_Intensity: 1000
+  m_Intensity: 800
   m_Range: 80
   m_SpotAngle: 33.69045
   m_InnerSpotAngle: 32.95093
@@ -27425,7 +27437,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -28309,7 +28321,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 0.99806356, b: 0.9264151, a: 1}
-  m_Intensity: 500
+  m_Intensity: 400
   m_Range: 40
   m_SpotAngle: 33.69045
   m_InnerSpotAngle: 32.95093
@@ -28346,7 +28358,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -28460,6 +28472,7 @@ MonoBehaviour:
   balaoFala: {fileID: 1009315070}
   botao: {fileID: 1828461318}
   quadroDfala: {fileID: 1557230647}
+  imagem: {fileID: 0}
   SVgolpe: {fileID: 701526669805547845}
   discoEquilibrio: {fileID: 0}
   Sequilibrio: {fileID: 0}
@@ -28734,7 +28747,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.98490566, g: 0.4819909, b: 0.2880383, a: 1}
-  m_Intensity: 1000
+  m_Intensity: 800
   m_Range: 80
   m_SpotAngle: 33.69045
   m_InnerSpotAngle: 32.95093
@@ -28771,7 +28784,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -33854,7 +33867,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 0.9859257, b: 0.9037736, a: 1}
-  m_Intensity: 500
+  m_Intensity: 400
   m_Range: 40
   m_SpotAngle: 36.233646
   m_InnerSpotAngle: 31.751976
@@ -33891,7 +33904,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -34173,7 +34186,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -44376,7 +44389,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.9254902, g: 0.9724189, b: 1, a: 1}
-  m_Intensity: 300
+  m_Intensity: 200
   m_Range: 50
   m_SpotAngle: 113.256905
   m_InnerSpotAngle: 87.71645
@@ -44413,7 +44426,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0

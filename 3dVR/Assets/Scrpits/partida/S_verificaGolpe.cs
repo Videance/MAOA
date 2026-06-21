@@ -102,9 +102,9 @@ public class S_verificaGolpe : MonoBehaviour
             if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) ranking.Add((golpe, pontos));
         }
 
-        var top3 = ranking.OrderByDescending(x => x.pontos).Take(4).ToList();
+        var top4 = ranking.OrderByDescending(x => x.pontos).Take(4).ToList();
 
-        for (int i = 0; i < 4; i++) golpes3[i].sprite = top3[i].golpe.imagem;
+        for (int i = 0; i < top4.Count; i++) golpes3[i].sprite = top4[i].golpe.imagem;
     }
 
     public void CriarPonto(int os2, S_jogador jog, S_jogador adv)
@@ -340,7 +340,7 @@ public class S_verificaGolpe : MonoBehaviour
         luzes[2].SetActive(false);
         luzes[0].SetActive(true);
 
-        if (S_controleCena.modo != S_controleCena.ModoJogo.Historia && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
+        if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
             if (adv is Sbot_jogador)
             {
@@ -382,7 +382,7 @@ public class S_verificaGolpe : MonoBehaviour
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             yield break;
         }
-        else if (S_modoHistoria.listaGolpes.Count == 0)
+        else if (S_modoHistoria.listaGolpes.Count == 0 && S_controleCena.modo == S_controleCena.ModoJogo.Historia)
         {
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
