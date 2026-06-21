@@ -2525,6 +2525,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6440476718615431188, guid: af5e936c2bf34824a9fdc1524d1e0fd0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440476718615431188, guid: af5e936c2bf34824a9fdc1524d1e0fd0, type: 3}
       propertyPath: m_EnableFarCasting
       value: 1
       objectReference: {fileID: 0}
@@ -7376,22 +7380,22 @@ PrefabInstance:
     - target: {fileID: 5289182684458692542, guid: e5db301629853dd4a99835fa70099d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2080399773}
+      objectReference: {fileID: 2080399775}
     - target: {fileID: 5289182684458692542, guid: e5db301629853dd4a99835fa70099d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5289182684458692542, guid: e5db301629853dd4a99835fa70099d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: PlayBot
       objectReference: {fileID: 0}
     - target: {fileID: 5289182684458692542, guid: e5db301629853dd4a99835fa70099d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: 
+      value: S_onClique, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5289182684458692542, guid: e5db301629853dd4a99835fa70099d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13682,6 +13686,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396776546}
   m_CullTransparentMesh: 0
+--- !u!114 &1414411387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5125750785700063828, guid: af5e936c2bf34824a9fdc1524d1e0fd0, type: 3}
+  m_PrefabInstance: {fileID: 243731569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a07ef133a37d140a87cdf1f1c75fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1427645052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20786,6 +20801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1951c72349a77498d951a900c7f9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  Sct: {fileID: 5608546843466031238}
   JogadoresPrefab: {fileID: 5076711677852359573, guid: 061f1d68e0227c940b94267d1cbc4d92, type: 3}
   Jogadores: {fileID: 0}
 --- !u!1 &2080399773
@@ -21143,6 +21159,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109746906}
   m_CullTransparentMesh: 1
+--- !u!114 &2112857078 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6440476718615431188, guid: af5e936c2bf34824a9fdc1524d1e0fd0, type: 3}
+  m_PrefabInstance: {fileID: 243731569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a07ef133a37d140a87cdf1f1c75fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2123080471
 GameObject:
   m_ObjectHideFlags: 0
@@ -21577,7 +21604,10 @@ MonoBehaviour:
   - {fileID: 332536882}
   - {fileID: 1702847077}
   - {fileID: 7897522867964951999}
-  Sclique: {fileID: 0}
+  Sclique: {fileID: 2080399775}
+  nearFarInteractors:
+  - {fileID: 1414411387}
+  - {fileID: 2112857078}
   golpes:
   - nome: O-soto-gari
     custoEnergia: 10
@@ -27214,13 +27244,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7dceceda45d04df46acc4d71f8715e0a, type: 2}
+      objectReference: {fileID: 6389991485519240161, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
     - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: c7c799ee406e37d48baa70ed017914d7, type: 2}
+      objectReference: {fileID: 2104212959445488773, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
+    - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9221491229941650563, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
+    - target: {fileID: -5754084199372789682, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8563135981553767809, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
     - target: {fileID: 919132149155446097, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: m_Name
       value: Arena
@@ -28115,6 +28157,7 @@ GameObject:
   - component: {fileID: 701526669805547845}
   - component: {fileID: 1739152102164642047}
   - component: {fileID: 2403628050507303224}
+  - component: {fileID: 5608546843466031238}
   m_Layer: 0
   m_Name: Controle de partida
   m_TagString: Untagged
@@ -28122,6 +28165,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5608546843466031238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608546843466031237}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2727f75e27a354b81e38013aeded1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_controleTutorial
+  jogador: {fileID: 0}
+  controleCena: {fileID: 2052761448}
+  balaoFala: {fileID: 1009315070}
+  botao: {fileID: 1828461318}
+  quadroDfala: {fileID: 1557230647}
+  SVgolpe: {fileID: 701526669805547845}
+  discoEquilibrio: {fileID: 0}
+  Sequilibrio: {fileID: 0}
+  RIGimao:
+  - {fileID: 0}
+  - {fileID: 0}
+  maoD: {fileID: 0}
+  maoE: {fileID: 0}
+  bot: {fileID: 0}
+  RIGperna:
+  - {fileID: 0}
+  - {fileID: 0}
+  Spostura: {fileID: 0}
+  adversario: {fileID: 0}
+  discoEquilibrioBOT: {fileID: 0}
+  Senergia: {fileID: 0}
 --- !u!114 &5611469141566650319
 MonoBehaviour:
   m_ObjectHideFlags: 0

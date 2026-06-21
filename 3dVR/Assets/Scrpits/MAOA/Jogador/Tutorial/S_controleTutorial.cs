@@ -2,13 +2,14 @@ using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class S_controleTutorial : MonoBehaviour
 {
-    S_jogador jogador;
-    S_controleCena controleCena;
+    public S_jogador jogador;
+    public S_controleCena controleCena;
     public GameObject balaoFala;
     public GameObject botao;
     public TextMeshPro quadroDfala;
@@ -27,8 +28,8 @@ public class S_controleTutorial : MonoBehaviour
     [Header("SEGUNDA PARTE")]
     public static bool Sparte = false;
     public GameObject[] RIGimao;
-    S_IK maoD;
-    S_IK maoE;
+    public S_IK maoD;
+    public S_IK maoE;
     public GameObject bot;
 
     [Header("TERCEIRA PARTE")]
@@ -51,12 +52,6 @@ public class S_controleTutorial : MonoBehaviour
     public static bool STparte = false;
     public S_energia Senergia;
 
-    private void Awake()
-    {
-        balaoFala = GameObject.Find("TT");
-        botao = GameObject.Find("TTn");
-    }
-
     private void Start()
     {
         if (S_controleCena.modo != S_controleCena.ModoJogo.Tutorial)
@@ -65,33 +60,64 @@ public class S_controleTutorial : MonoBehaviour
             enabled = false;
         }
 
-        controleCena = FindAnyObjectByType<S_controleCena>();
-
-        jogador = GetComponent<S_jogador>();
-        maoD = RIGimao[0].gameObject.GetComponentInChildren<S_IK>();
-        maoE = RIGimao[1].gameObject.GetComponentInChildren<S_IK>();
         emTutorial = true;
 
         balaoFala.SetActive(true);
         botao.SetActive(false);
 
-        SVgolpe = S_verificaGolpe.Vgolpe;
-        quadroDfala = balaoFala.GetComponentInChildren<TextMeshPro>();
 
         if (tutorial1)
         {
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
-            if (Pparte) StartCoroutine(PrimeiraParte());
-            if (Sparte) StartCoroutine(SextaParte());
+            StartCoroutine(PrimeiraParte());
         }
         else StartCoroutine(SprimeiraParte());
     }
 
-    private void Update()
+    public void PegarVar()
     {
-        if (Senergia.energia <= 100 && !SEparte) Senergia.energia = 999999;
+        GameObject MAOA = controleCena.Jogadores;
+        S_jogador[] jogadores = MAOA.GetComponentsInChildren<S_jogador>();
+
+        Debug.Log(jogadores.Length);
+
+        foreach (S_jogador j in jogadores)
+        {
+            if (j is Sbot_jogador)
+            {
+                bot = j.gameObject;
+                adversario = bot.GetComponent<Sbot_jogador>();
+                discoEquilibrioBOT = bot.GetComponentInChildren<S_off>().gameObject;
+            }
+            else
+            {
+                GameObject jg = j.gameObject;
+
+                jogador = j;
+                discoEquilibrio = jg.GetComponentInChildren<S_off>().gameObject;
+                Sequilibrio = jg.GetComponent<S_Equilibrio>();
+
+                var rigs = jg.GetComponentsInChildren<TwoBoneIKConstraint>();
+                foreach (var rig in rigs)
+                {
+                    if (rig.name.Contains("bra dir"))
+                        RIGimao[0] = rig.gameObject;
+                    else if (rig.name.Contains("bra esq"))
+                        RIGimao[1] = rig.gameObject;
+                    else if (rig.name.Contains("per dir"))
+                        RIGperna[0] = rig.gameObject;
+                    else if (rig.name.Contains("per esq"))
+                        RIGperna[1] = rig.gameObject;
+                }
+
+                maoD = RIGimao[0].GetComponentInChildren<S_IK>();
+                maoE = RIGimao[1].GetComponentInChildren<S_IK>();
+                Spostura = jg.GetComponentInChildren<S_Postura>();
+                Senergia = jg.GetComponent<S_energia>();
+            }
+        }
     }
 
     IEnumerator PrimeiraParte()
@@ -105,9 +131,8 @@ public class S_controleTutorial : MonoBehaviour
         foreach (GameObject rig in RIGperna) rig.SetActive(false);
 
         discoEquilibrioBOT.SetActive(false);
-        bot.SetActive(false);
         Sbot_jogador.dificuldade = 1;
-        adversario.enabled = false;
+        bot.SetActive(false);
 
         Senergia.energia = 999999999f;
 
@@ -152,7 +177,6 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Ótimo! agora, que você ja sabe como mover as Imãos do seu MAOÁ! Agora vamos aprender pra que isso serve!", 4, true));
 
         bot.SetActive(true);
-        adversario.enabled = false;
 
         yield return StartCoroutine(Escreve("As imãos cuidam da pegada do judô. O seu adversário, igual a você, possui pontos de conexão em seu corpo localizado nas juntas do MAOÁ", 4, true));
         yield return StartCoroutine(Escreve("Esses pontos permitem que você conecte as Imãos do seu MAOÁ nelas, mudando sua pegada.", 4, true));
@@ -318,15 +342,18 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         S_verificaGolpe.esperaTime = false;
         S_verificaGolpe.esperaDerrota = true;
 
+        yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 7, true));
+        yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 4, true));
+
         QIparte = false;
         SEparte = true;
 
-        yield return StartCoroutine(Escreve("Vush! e lá se foi o adversário voando pelos ares!", 50, false));
+        StartCoroutine(SextaParte());
     }
 
     IEnumerator SextaParte()
     {
-        yield return StartCoroutine(Escreve("Viu? É simples! você conseguiu fazer uma projeção de sucesso! mas lembre-se que em uma situação real, errar lhe tira da zona.", 4, true));
+        yield return null;
 
         Sequilibrio.enabled = false;
         foreach (GameObject rig in RIGimao) rig.SetActive(false);
@@ -336,20 +363,20 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         yield return StartCoroutine(Escreve("Agora faremos o oposto. Você será atingido por um golpe e irá realizar uma fuga!", 2, false));
 
         Sbot_jogador.dificuldade = 5;
-        adversario.enabled = true;
+        Sbot_jogador.naoMover = false;
         adversario.golpe = S_verificaGolpe.Vgolpe.golpes[4];
 
         S_verificaGolpe.esperaTime = true;
 
         yield return new WaitUntil(() => S_verificaGolpe.timeSlow == true);
 
-        yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 4, true));
-        yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 1, false));
+        yield return StartCoroutine(Escreve("Bom, você foi atingido por um golpe. Quando isso acontecer, seu disco de equilíbrio, aqule em baixo de você, ficará com um dos paineis brilhando.", 9, false));
+        yield return StartCoroutine(Escreve("E para você fugir do golpe, você deve mover seu equilíbrio para essa direção antes que o oponente leve o orbe de projeção até o fim da seta dele.", 4, false));
 
         Sequilibrio.enabled = true;
         yield return new WaitUntil(() => jogador.dirEqui == adversario.golpe.IdirEqui);
 
-        adversario.enabled = false;
+        Sbot_jogador.naoMover = true;
         S_verificaGolpe.esperaTime = false;
 
         yield return StartCoroutine(Escreve("Isso ai! Você se defendeu do golpe trocando seu equilíbrio antes do tempo! Quando fizer isso, seu oponente ficará desestabilizado e soltará tudo.", 4, true));
@@ -363,20 +390,24 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
     IEnumerator SetimaParte()
     {
-        discoEquilibrio.SetActive(true);
-        Sequilibrio.enabled = true;
-        foreach (GameObject rig in RIGimao) rig.SetActive(true);
-        foreach (GameObject rig in RIGperna) rig.SetActive(true);
-        Spostura.enabled = true;
-        discoEquilibrioBOT.SetActive(true);
-        bot.SetActive(true);
-
         yield return StartCoroutine(Escreve("Igual a outras máquinas, o seu MAOÁ também precisa de energia para funcionar", 4, true));
 
         Senergia.energia = 100f;
 
         yield return StartCoroutine(Escreve("Ao redor do seus disco de equilíbrio, você possui uma barra de energia, indo de 100% até 0%", 4, true));
         yield return StartCoroutine(Escreve("Ela não pode ser recuperada por ações e desce ao longo do tempo, e quando chegar a 0 seu MAOÁ irá parar de funcionar por um tempo enquanto ela se regenera.", 4, true));
+
+        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        Senergia.energia -= 25f;
+        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        Senergia.energia -= 25f;
+        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        Senergia.energia -= 25f;
+        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        Senergia.energia -= 25f;
+
+        yield return new WaitForSeconds(4f);
+
         yield return StartCoroutine(Escreve("Vamos realizar uma batalha teste, sabendo de tudo que você soube de até agora!", 4, true));
 
         STparte = false;
@@ -384,6 +415,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         Sbot_jogador.dificuldade = 1;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
         controleCena.ColocarMAOA(false);
+        enabled = false;
     }
 
     // SEGUNDA METADE DO TUTORIAL
@@ -428,6 +460,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         emTutorial = false;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
         controleCena.ColocarMAOA(false);
+        enabled = false;
     }
 
     IEnumerator Escreve(string fala, int t, bool next) //yield return StartCoroutine(Escreve("", t));

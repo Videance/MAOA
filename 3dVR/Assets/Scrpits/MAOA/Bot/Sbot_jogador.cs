@@ -24,14 +24,17 @@ public class Sbot_jogador : S_jogador
 
     Sbot_equilibrio equilibrio;
     public List<GameObject> vectorPlacas = new List<GameObject>();
-    public GameObject pDesequilibrio;
     public Collider[] colliderSeta;
+
+    public static bool naoMover = false;
 
     protected override void Awake()
     {
         base.Awake();
 
         foreach (Transform t in GetComponentsInChildren<Transform>()) if (t.CompareTag("e")) vectorPlacas.Add(t.gameObject);
+
+        equilibrio = GetComponent<Sbot_equilibrio>();
 
         golpeP = new List<bool>();
         for (int i = 0; i < 4; i++) golpeP.Add(false);
@@ -49,7 +52,9 @@ public class Sbot_jogador : S_jogador
 
     private void Update()
     {
-        if (!equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
+        if (naoMover) return;
+
+        if (equilibrio != null && !equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
 
         if (!S_controleTutorial.emTutorial)
@@ -236,7 +241,7 @@ public class Sbot_jogador : S_jogador
 
     void EscolheQuemMove()
     {
-        if (Senergia.rodandoSS || (golpeP[0] || equilibrio.movendo) &&
+        if (naoMover || Senergia.rodandoSS || (golpeP[0] || equilibrio.movendo) &&
             (golpeP[1] || PEs[0].movendo || PEs[1].movendo) &&
             (golpeP[2] || maoD.movendo) && (golpeP[3] || maoE.movendo))
             return;

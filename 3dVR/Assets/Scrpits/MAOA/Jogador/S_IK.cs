@@ -76,12 +76,8 @@ public class S_IK : MonoBehaviour
 
         if (botao.action.WasPressedThisFrame() && estado != estadoMao.desativada)
         {
-            Debug.Log("cliclou");
-            
             if (estado == estadoMao.segurando && cNoAlcance.Count > 0)
             {
-                Debug.Log("conectou");
-
                 if (cNoAlcance.Count == 1) conectado = cNoAlcance[0].gameObject;
                 else if (cNoAlcance.Count >= 2)
                 {
@@ -239,7 +235,6 @@ public class S_IK : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("c") || jogador.conectores.Contains(other.gameObject.GetComponent<S_Conector>())) return;
 
-        Debug.Log("entrou");
         if (!cNoAlcance.Contains(other.GetComponent<S_Conector>())) cNoAlcance.Add(other.GetComponent<S_Conector>());
     }
 
@@ -249,7 +244,6 @@ public class S_IK : MonoBehaviour
 
         if (!other.gameObject.CompareTag("c") || !cNoAlcance.Contains(sOther)) return;
 
-        Debug.Log("saiu");
         if (cNoAlcance.Contains(sOther))
         {
             if (conectado != null && sOther == conectado.GetComponent<S_Conector>()) return;

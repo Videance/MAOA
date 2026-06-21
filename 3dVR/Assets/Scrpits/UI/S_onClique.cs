@@ -60,7 +60,12 @@ public class S_onClique : MonoBehaviour
             else UIs[i].SetActive(false);
         }
 
-        if (id == 8) foreach (ParticleSystem p in bordas) p.Play();
+        if (id == 7)
+        {
+            foreach (ParticleSystem p in bordas) p.Play();
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
+        }
         else if (id == 0) foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
@@ -75,19 +80,30 @@ public class S_onClique : MonoBehaviour
     public void PlayBot()
     {
         controleCena.ColocarMAOA(true);
+        Sbot_jogador.naoMover = false;
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         TrocaUI(7);
     }
 
     public void PlayHistory(int i)
     {
-        if (i == 0) S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
+        if (i == 0)
+        {
+            S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
+            Sbot_jogador.naoMover = true;
+            FindAnyObjectByType<S_controleTutorial>().enabled = true;
+        }
         else if (i != 0)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
 
             int n = (i * 5) - 1;
-            for (int j = 0; j < 5; j++) S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
+            for (int j = 0; j < 5; j++)
+            {
+                S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
+                Debug.Log(Svg.golpes[n - j].nome);
+                Debug.Log(S_modoHistoria.listaGolpes.Length);
+            }
         }
         controleCena.ColocarMAOA(true);
         TrocaUI(7);

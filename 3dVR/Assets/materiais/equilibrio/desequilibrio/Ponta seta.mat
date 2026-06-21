@@ -39,9 +39,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Power: -1.3
+    - _Power: -0.8
     m_Colors:
     - _Cor: {r: 0.9046092, g: 0, b: 1, a: 1}
-    - _CorB: {r: 0.99665344, g: 1, b: 0, a: 1}
+    - _CorB: {r: 1, g: 0.8290603, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

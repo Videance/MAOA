@@ -52,15 +52,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         }
         else StartCoroutine(SemStamina());
 
-        if (energia > energiaMax || energia < 0) energia = Mathf.Clamp(energia, 0, energiaMax);
-
-        //troca o texto da bateria
-        foreach (var i in texto)
-        {
-            i.text = Mathf.RoundToInt(energia).ToString() + "%";
-            if (energia > 0 && i.text == "0%") i.text = "1%";
-            if (energia == 0) i.text = "out";
-        }
+        if ((energia > energiaMax || energia < 0) && energia < 99999) energia = Mathf.Clamp(energia, 0, energiaMax);
     }
 
     IEnumerator SemStamina()

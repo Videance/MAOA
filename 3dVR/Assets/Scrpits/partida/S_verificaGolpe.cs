@@ -1,11 +1,10 @@
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class S_verificaGolpe : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class S_verificaGolpe : MonoBehaviour
     public GameObject[] luzes;
     public TextMeshPro[] textInfo;
     public S_onClique Sclique;
+    public NearFarInteractor[] nearFarInteractors;
     public static bool derrotaPorLimite = false;
 
     Vector3 dir;
@@ -60,8 +60,10 @@ public class S_verificaGolpe : MonoBehaviour
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
     {
-        if (timeSlow || derrotou || !adv.seMovendo) return;
+        if (timeSlow || derrotou) return;
         var ranking = new List<(C_golpes golpe, int pontos)>();
+
+        Debug.Log("chamei" + jog);
 
         foreach (var golpe in Vgolpe.golpes)
         {
@@ -107,6 +109,9 @@ public class S_verificaGolpe : MonoBehaviour
 
         pDes = Instantiate(pDesequil, meio3, pDesequil.transform.rotation);
         Spde = pDes.GetComponent<S_pontoDes>();
+
+
+        if (!esperaTime && jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
     }
 
     public IEnumerator TimeSlow(C_golpes golpe, S_jogador jog, S_jogador adv)
@@ -149,10 +154,10 @@ public class S_verificaGolpe : MonoBehaviour
         luzes[0].SetActive(false);
         luzes[1].SetActive(true);
 
-        if (!esperaTime) if (jog is Sbot_jogador) StartCoroutine(((Sbot_jogador)jog).MoverPdesequilibrio(pDes, caminho));
-
-        //jog - Troca layer dos IK
-        for (int i = 0; i < jog.IKs.Length; i++) jog.IKs[i].trocaEstado(S_IK.estadoMao.desativada);
+        if (jog is Sbot_jogador) foreach (NearFarInteractor n in nearFarInteractors)
+            {
+                n.enabled = false;
+            }
 
         ConfigurarGrab(jog, false);
         ConfigurarGrab(adv, false);
@@ -236,6 +241,11 @@ public class S_verificaGolpe : MonoBehaviour
         ConfigurarGrab(jog, true);
         ConfigurarGrab(adv, true);
         adv.GetComponent<S_energia>().DesativaEnergia(true);
+
+        foreach (NearFarInteractor n in nearFarInteractors)
+        {
+            n.enabled = true;
+        }
 
         timeSlow = false;
     }
@@ -331,6 +341,9 @@ public class S_verificaGolpe : MonoBehaviour
                 //perde
             }
 
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
+
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             yield break;
@@ -346,6 +359,11 @@ public class S_verificaGolpe : MonoBehaviour
             "BOT: " + S_pontos.Spontos.pontos2;
                 else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
             }
+        }
+
+        foreach (NearFarInteractor n in nearFarInteractors)
+        {
+            enabled = true;
         }
 
         controleCena.ColocarMAOA(true);

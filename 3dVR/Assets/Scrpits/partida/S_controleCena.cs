@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class S_controleCena : MonoBehaviour
 {
-    //cria um evento cm isso
+    public S_controleTutorial Sct;
 
     public static ModoJogo modo = ModoJogo.Tutorial;
     public GameObject JogadoresPrefab;
@@ -25,6 +25,10 @@ public class S_controleCena : MonoBehaviour
         {
             GameObject jogador = Instantiate(JogadoresPrefab);
             Jogadores = jogador;
+
+            jogador.GetComponentInChildren<Sbot_jogador>().enabled = true;
+
+            if (Sct.enabled == true) Sct.PegarVar();
         }
     }
 }
