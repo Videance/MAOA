@@ -365,7 +365,6 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
         Sbot_jogador.dificuldade = 5;
         Sbot_jogador.naoMover = false;
-        adversario.golpe = S_verificaGolpe.Vgolpe.golpes[0];
 
         S_verificaGolpe.esperaTime = true;
 
@@ -416,6 +415,8 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         Sbot_jogador.dificuldade = 1;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
         controleCena.ColocarMAOA(false);
+        balaoFala.SetActive(false);
+        botao.SetActive(false);
         enabled = false;
     }
 
@@ -461,6 +462,8 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         emTutorial = false;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
         controleCena.ColocarMAOA(false);
+        balaoFala.SetActive(false);
+        botao.SetActive(false);
         enabled = false;
     }
 

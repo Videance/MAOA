@@ -7,8 +7,8 @@ public class Sbot_jogador : S_jogador
     [Header("GOLPES")]
     public C_golpes golpe;
     public List<bool> golpeP; //0 - equi | 1 - perna | 2 - mao D | 3 - mao E
-    S_Conector conMD;
-    S_Conector conME;
+    public S_Conector conMD;
+    public S_Conector conME;
     bool fazendoGolpe = false;
     int q = 0;
 

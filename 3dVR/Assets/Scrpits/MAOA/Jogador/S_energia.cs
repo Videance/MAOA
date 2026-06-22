@@ -40,10 +40,9 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
         if (energia > 0)
         {
-            energia -= Time.deltaTime / 3;
-
             if (!S_controleTutorial.emTutorial)
             {
+                energia -= Time.deltaTime / 3;
                 int q = 0;
                 foreach (var i in IK) if (i.aberto) { q += 1; }
                 if (Jogador.posPerna.Contains("A")) q += 1;

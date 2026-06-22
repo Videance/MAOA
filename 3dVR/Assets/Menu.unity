@@ -10054,8 +10054,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009315070}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.74, y: 0, z: 2.1700006}
+  m_LocalRotation: {x: -0, y: 0.14063638, z: -0, w: 0.99006134}
+  m_LocalPosition: {x: 2.0936794, y: 0, z: 2.268161}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10064,7 +10064,7 @@ Transform:
   - {fileID: 531062990}
   - {fileID: 1576195723037225495}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 16.169, z: 0}
 --- !u!114 &1009315072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20986,11 +20986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.15
+      value: 5.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.42
+      value: -4.65
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21925,15 +21925,6 @@ MonoBehaviour:
     pernaAberta: Ad
     dirPdes: {fileID: 5402653329503761121, guid: 7b53366e1a9af764283d44933f14dc45, type: 3}
     imagem: {fileID: 21300000, guid: 48912ddba22959b44904b68ef1811460, type: 3}
-  - nome: Hiza-guruma
-    custoEnergia: 10
-    conectorImaoEsq: Cd
-    conectorImaoDir: Oe
-    JdirEqui: f
-    IdirEqui: t
-    pernaAberta: Ad
-    dirPdes: {fileID: 3632986877945806183, guid: d6bb3347df79db041bc889caa1426bc0, type: 3}
-    imagem: {fileID: 21300000, guid: abd549e15b1553c42a38d1e0d0e886c0, type: 3}
   - nome: De-Ashi-Harai
     custoEnergia: 10
     conectorImaoEsq: Cd
@@ -27540,15 +27531,15 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 6389991485519240161, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
+      objectReference: {fileID: 2100000, guid: 674efb2cb2c3c874d9a3a6a9af07433e, type: 2}
     - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2104212959445488773, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
+      objectReference: {fileID: 2100000, guid: 7377cf7ecfa7cf9428e6498c1838eea4, type: 2}
     - target: {fileID: -7511558181221131132, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
-      objectReference: {fileID: 9221491229941650563, guid: 9bba7f1301ee2de429899e73b8c5cce2, type: 3}
+      objectReference: {fileID: 2100000, guid: e7b1b6f1ec2f33c409096a9e8cad1fc5, type: 2}
     - target: {fileID: -5754084199372789682, guid: 9505c7af852c4924cad4bad09151ceaa, type: 3}
       propertyPath: m_Mesh
       value: 

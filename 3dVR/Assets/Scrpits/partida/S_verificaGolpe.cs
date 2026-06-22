@@ -301,15 +301,31 @@ public class S_verificaGolpe : MonoBehaviour
             yield return null;
         }
 
-        if (jog == S_pontos.Spontos.jogadores[0])
+        if (jog is Sbot_jogador)
         {
-            if (resetaCena) S_pontos.Spontos.pontos1 = 2;
-            else S_pontos.Spontos.pontos1 += 1;
+            if (jog == S_pontos.Spontos.jogadores[0])
+            {
+                if (resetaCena) S_pontos.Spontos.pontos1 = 2;
+                else S_pontos.Spontos.pontos1 += 1;
+            }
+            else
+            {
+                if (resetaCena) S_pontos.Spontos.pontos2 = 2;
+                else S_pontos.Spontos.pontos2 += 1;
+            }
         }
         else
         {
-            if (resetaCena) S_pontos.Spontos.pontos2 = 2;
-            else S_pontos.Spontos.pontos2 += 1;
+            if (jog == S_pontos.Spontos.jogadores[0])
+            {
+                if (resetaCena) S_pontos.Spontos.pontos1 = 2;
+                else S_pontos.Spontos.pontos1 += 1;
+            }
+            else
+            {
+                if (resetaCena) S_pontos.Spontos.pontos2 = 2;
+                else S_pontos.Spontos.pontos2 += 1;
+            }
         }
 
         Time.timeScale = 0.05f;
