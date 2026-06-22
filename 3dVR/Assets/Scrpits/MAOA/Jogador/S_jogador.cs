@@ -21,6 +21,8 @@ public class S_jogador : MonoBehaviour
     public S_dis_pe[] PEs;
     public S_Equilibrio Sequilibrio;
     public S_energia Senergia;
+    public List<Renderer> CorpoTodoRend = new List<Renderer>();
+    protected Color[] coresOriginais;
 
     [Header("RAGDOLL")]
     public bool emRagdoll = false;
@@ -29,7 +31,6 @@ public class S_jogador : MonoBehaviour
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
 
     [Header("PARTICULAS")]
-    public ParticleSystem escudo;
     public ParticleSystem[] falhou;
 
     protected virtual void Awake()
@@ -64,6 +65,11 @@ public class S_jogador : MonoBehaviour
         // 2. Ignorar colisão interna
         for (int i = 0; i < colliders.Length; i++)
         {
+            Renderer rend = null;
+
+            if (colliders[i].gameObject.CompareTag("p")) rend = colliders[i].gameObject.GetComponent<Renderer>();
+            if (rend != null) CorpoTodoRend.Add(GetComponent<Renderer>());
+
             for (int j = i + 1; j < colliders.Length; j++)
             {
                 Physics.IgnoreCollision(colliders[i], colliders[j]);
@@ -80,6 +86,11 @@ public class S_jogador : MonoBehaviour
 
         if (transform.position.z < 0) jog1 = true;
 
+        coresOriginais = new Color[CorpoTodoRend.Count];
+
+        for (int i = 0; i < CorpoTodoRend.Count; i++)
+            coresOriginais[i] = CorpoTodoRend[i].materials[0].color;
+
         Ragdoll(false);
     }
 
@@ -89,18 +100,7 @@ public class S_jogador : MonoBehaviour
             PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        if (!S_controleTutorial.emTutorial)
-        {
-            if (seMovendo && escudo.IsAlive())
-            {
-                escudo.Stop();
-                escudo.Clear();
-            }
-            else
-            {
-                escudo.Play();
-            }
-        }
+        AtualizarCorpo();
 
         if (dirEqui == "c" || posPerna.Contains("F"))
         {
@@ -173,5 +173,24 @@ public class S_jogador : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!S_verificaGolpe.timeSlow && other.CompareTag("ch")) StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(adversario, this));
+    }
+
+    protected void AtualizarCorpo()
+    {
+        float brilho = seMovendo ? 1f : 0.7f;
+
+        for (int i = 0; i < CorpoTodoRend.Count; i++)
+        {
+            Material mat = CorpoTodoRend[i].materials[0];
+
+            Color cor = coresOriginais[i];
+
+            mat.color = new Color(
+                cor.r * brilho,
+                cor.g * brilho,
+                cor.b * brilho,
+                cor.a
+            );
+        }
     }
 }

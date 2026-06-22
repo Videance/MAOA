@@ -29,13 +29,17 @@ public class S_onClique : MonoBehaviour
     {
         Svg = S_verificaGolpe.Vgolpe;
         controleCena = GetComponentInParent<S_controleCena>();
-        foreach (GameObject b in HB) b.GetComponent<Button>().interactable = false;
-        PassarFase();
+        foreach (GameObject b in HB)
+        {
+            Button but = b.GetComponent<Button>();
+            if (but != null) but.interactable = false;
+        }
     }
 
     private void Start()
     {
         if (S_modoHistoria.aprendidos.Count == 0) for (int i = 0; i < 4; i++) S_modoHistoria.aprendidos.Add(S_verificaGolpe.Vgolpe.golpes[i]);
+        PassarFase();
     }
 
     private void Update()
@@ -53,16 +57,12 @@ public class S_onClique : MonoBehaviour
     {
         Vector3 cam = camOffset.transform.position;
 
-        if (dir == 0 && camOffset.transform.position.x < 20) cam.x += 1;
-        if (dir == 1 && camOffset.transform.position.x > -20) cam.x -= 1;
-        if (dir == 2 && camOffset.transform.position.y < 20) cam.y += 1;
-        if (dir == 3 && camOffset.transform.position.y > -20) cam.y -= 1;
+        if (dir == 0 && cam.x < 1) cam.x += 0.05f;
+        if (dir == 1 && cam.x > -1) cam.x -= 0.05f;
+        if (dir == 2 && cam.y < 1) cam.y += 0.05f;
+        if (dir == 3 && cam.y > -1) cam.y -= 0.05f;
 
-        cam.x = Mathf.RoundToInt(cam.x);
-        cam.y = Mathf.RoundToInt(cam.y);
-
-        if (cam.x != camOffset.transform.position.x) camOffset.transform.position = new Vector3(cam.x / 10, cam.y, cam.z);
-        if (cam.y != camOffset.transform.position.y) camOffset.transform.position = new Vector3(cam.x, cam.y / 10, cam.z);
+        camOffset.transform.position += new Vector3(cam.x, cam.y, 0);
 
         TcamX.text = "" + cam.x;
         TcamY.text = "" + cam.y;

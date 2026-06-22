@@ -18,6 +18,7 @@ public class S_controleTutorial : MonoBehaviour
     public S_verificaGolpe SVgolpe;
     public static bool emTutorial = true;
     public static bool passa = false;
+    public S_onClique Sclique;
 
     // partes do tutorial
     public static bool tutorial1 = true;
@@ -269,8 +270,10 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
         yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Q" &&
-        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od" &&
-        jogador.posPerna.Contains("A") && jogador.dirEqui == "e");
+        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Cd" &&
+        jogador.posPerna.Contains("Ad") && jogador.dirEqui == "c");
+
+        imagem.SetActive(false);
 
         yield return StartCoroutine(Escreve("Isso ai, você realizou um golpe!", 4, true));
         yield return StartCoroutine(Escreve("No momenti não aconteceu nada, mas é porque estavamos apenas testando.", 4, true));
@@ -290,10 +293,10 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
         imagem2.SetActive(true);
 
-        yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("A") &&
+        yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("F") &&
         maoD.conectado != null && maoE.conectado != null &&
-        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
-        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
+        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Od" &&
+        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Cd");
 
         S_verificaGolpe.esperaTime = true;
         StartCoroutine(S_verificaGolpe.Vgolpe.TimeSlow(S_verificaGolpe.Vgolpe.golpes[4], jogador, jogador.adversario));
@@ -407,6 +410,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         controleCena.ColocarMAOA(false);
         balaoFala.SetActive(false);
         botao.SetActive(false);
+        Sclique.PassarFase();
         enabled = false;
     }
 
@@ -454,6 +458,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         controleCena.ColocarMAOA(false);
         balaoFala.SetActive(false);
         botao.SetActive(false);
+        Sclique.PassarFase();
         enabled = false;
     }
 

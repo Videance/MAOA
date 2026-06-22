@@ -57,19 +57,6 @@ public class Sbot_jogador : S_jogador
         if (equilibrio != null && !equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
 
-        if (!S_controleTutorial.emTutorial)
-        {
-            if (seMovendo && escudo.IsAlive())
-            {
-                escudo.Stop();
-                escudo.Clear();
-            }
-            else
-            {
-                escudo.Play();
-            }
-        }
-
         if (Senergia.rodandoSS) return;
 
         if (t >= tt)
@@ -102,6 +89,8 @@ public class Sbot_jogador : S_jogador
         seMovendo = (maoD.movendo || maoE.movendo ||
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
+
+        AtualizarCorpo();
 
         if (dirEqui == "c" || posPerna.Contains("F") || Senergia.rodandoSS)
         {

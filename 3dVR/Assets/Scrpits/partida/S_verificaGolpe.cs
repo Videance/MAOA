@@ -79,7 +79,7 @@ public class S_verificaGolpe : MonoBehaviour
                     continue;
             }
 
-            if (S_controleCena.modo == S_controleCena.ModoJogo.PvE)
+            if (S_controleCena.modo != S_controleCena.ModoJogo.Historia)
             {
                 if (!S_modoHistoria.aprendidos.Contains(golpe))
                     continue;
@@ -303,29 +303,14 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (jog is Sbot_jogador)
         {
-            if (jog == S_pontos.Spontos.jogadores[0])
-            {
-                if (resetaCena) S_pontos.Spontos.pontos1 = 2;
-                else S_pontos.Spontos.pontos1 += 1;
-            }
-            else
-            {
-                if (resetaCena) S_pontos.Spontos.pontos2 = 2;
-                else S_pontos.Spontos.pontos2 += 1;
-            }
+            if (resetaCena) S_pontos.Spontos.pontos2 = 2;
+            else S_pontos.Spontos.pontos2 += 1;
         }
         else
         {
-            if (jog == S_pontos.Spontos.jogadores[0])
-            {
-                if (resetaCena) S_pontos.Spontos.pontos1 = 2;
-                else S_pontos.Spontos.pontos1 += 1;
-            }
-            else
-            {
-                if (resetaCena) S_pontos.Spontos.pontos2 = 2;
-                else S_pontos.Spontos.pontos2 += 1;
-            }
+            if (resetaCena) S_pontos.Spontos.pontos1 = 2;
+            else S_pontos.Spontos.pontos1 += 1;
+
         }
 
         Time.timeScale = 0.05f;
@@ -405,6 +390,7 @@ public class S_verificaGolpe : MonoBehaviour
 
             mudarTexto();
 
+            Sclique.PassarFase();
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
         }

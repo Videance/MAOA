@@ -27,6 +27,8 @@ public class S_controleCena : MonoBehaviour
             jogador.GetComponentInChildren<Sbot_jogador>().enabled = true;
 
             if (Sct.enabled == true) Sct.PegarVar();
+
+            S_pontos.Spontos.CataJogadores();
         }
     }
 }
