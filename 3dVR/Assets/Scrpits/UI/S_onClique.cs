@@ -9,7 +9,9 @@ public class S_onClique : MonoBehaviour
     public GameObject historiaButtons;
     public GameObject[] HB;
     S_verificaGolpe Svg;
-    int faseAtual = 1;
+    int faseAtual = 0;
+    bool passandoT = false;
+    float T = 0;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
@@ -27,11 +29,24 @@ public class S_onClique : MonoBehaviour
     {
         Svg = S_verificaGolpe.Vgolpe;
         controleCena = GetComponentInParent<S_controleCena>();
+        foreach (GameObject b in HB) b.GetComponent<Button>().interactable = false;
+        PassarFase();
     }
 
     private void Start()
     {
         if (S_modoHistoria.aprendidos.Count == 0) for (int i = 0; i < 4; i++) S_modoHistoria.aprendidos.Add(S_verificaGolpe.Vgolpe.golpes[i]);
+    }
+
+    private void Update()
+    {
+        if (passandoT && !S_verificaGolpe.derrotou && !S_verificaGolpe.timeSlow) T += Time.unscaledDeltaTime;
+        if (T >= 240)
+        {
+            T = 0;
+            passandoT = false;
+            SairPartida();
+        }
     }
 
     public void MoverCamera(int dir)
@@ -63,11 +78,15 @@ public class S_onClique : MonoBehaviour
             else UIs[i].SetActive(false);
         }
 
+        T = 0;
+        passandoT = false;
+
         if (id == 7)
         {
             foreach (ParticleSystem p in bordas) p.Play();
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
+            if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) passandoT = true;
         }
         else if (id == 0) foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
@@ -80,10 +99,11 @@ public class S_onClique : MonoBehaviour
         Tdificuldade.text = "" + Sbot_jogador.dificuldade;
     }
 
-    public void PlayBot()
+    public void PlayBot(bool teste)
     {
         controleCena.ColocarMAOA(true);
-        Sbot_jogador.naoMover = false;
+        if (!teste) Sbot_jogador.naoMover = false;
+        else Sbot_jogador.naoMover = true;
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         TrocaUI(7);
     }
@@ -141,6 +161,8 @@ public class S_onClique : MonoBehaviour
     // - - - - - - - - - - J O G O - - - - - - - - - - //
     public void SairPartida()
     {
+        S_pontos.Spontos.pontos1 = 0;
+        S_pontos.Spontos.pontos2 = 0;
         TrocaUI(0);
         controleCena.ColocarMAOA(false);
     }

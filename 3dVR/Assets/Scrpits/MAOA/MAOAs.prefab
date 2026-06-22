@@ -24726,6 +24726,10 @@ PrefabInstance:
       propertyPath: GOinicial
       value: 
       objectReference: {fileID: 1372440092686782833}
+    - target: {fileID: 1128583404179843556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 8437867951158762276}
     - target: {fileID: 1520701998357044010, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.40607
@@ -25054,6 +25058,10 @@ PrefabInstance:
       propertyPath: DisGrab
       value: 
       objectReference: {fileID: 3597645215578322523}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 3110172455943037437}
     - target: {fileID: 4539821232002934806, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -25110,6 +25118,22 @@ PrefabInstance:
       propertyPath: GOinicial
       value: 
       objectReference: {fileID: 4387875255732713391}
+    - target: {fileID: 7145256130987545049, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 4592565370871700852}
+    - target: {fileID: 7210701616230588381, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: linhaEnergia.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210701616230588381, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: 'linhaEnergia.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4592565370871700852}
+    - target: {fileID: 7210701616230588381, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: 'linhaEnergia.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8437867951158762276}
     - target: {fileID: 7557676727903087572, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_Data.m_Mid
       value: 
@@ -25158,6 +25182,10 @@ PrefabInstance:
       propertyPath: DisGrab
       value: 
       objectReference: {fileID: 6100070982755506073}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 1629549889968437497}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3648124166940874984, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
@@ -25824,6 +25852,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Inst\xE2ncia Jogador Azul"
       objectReference: {fileID: 0}
+    - target: {fileID: 3404474706969643653, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: linhaEnergia.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404474706969643653, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: 'linhaEnergia.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5583603500951388438}
+    - target: {fileID: 3404474706969643653, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: 'linhaEnergia.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6415003976991047231}
     - target: {fileID: 3463817237702120472, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -25896,6 +25936,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 4286643975235899419}
     - target: {fileID: 4111218197841223113, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.005
@@ -25912,6 +25956,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.012
       objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: linhaEnergia
+      value: 
+      objectReference: {fileID: 7152890184956596992}
     - target: {fileID: 4390203108919482717, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -26237,8 +26285,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5198007469326774967, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
   m_PrefabInstance: {fileID: 8907496392549497868}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &4286643975235899419 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4675017053713558551, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 8907496392549497868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5583603500951388438 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3954504668879109402, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 8907496392549497868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6415003976991047231 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2493697763770401331, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 8907496392549497868}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6503118093940964448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2423639969042546796, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+  m_PrefabInstance: {fileID: 8907496392549497868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7152890184956596992 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1790712465018531596, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
   m_PrefabInstance: {fileID: 8907496392549497868}
   m_PrefabAsset: {fileID: 0}

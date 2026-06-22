@@ -11,6 +11,8 @@ public class S_Postura : MonoBehaviour
 
     public string posPerna;
 
+    public Renderer[] linhaEnergia;
+
     void Start()
     {
         jogador = GetComponentInParent<S_jogador>();
@@ -47,6 +49,15 @@ public class S_Postura : MonoBehaviour
     {
         if (jogador.posPerna == postura) return;
         jogador.posPerna = postura;
+
+        Color cor = postura.Contains("A") ? Color.cyan : Color.white;
+
+        foreach (Renderer r in linhaEnergia)
+        {
+            Material[] mats = r.materials;
+            if (mats.Length > 1)
+                mats[1].color = cor;
+        }
 
         if (jogador is Sbot_jogador) ((Sbot_jogador)jogador).VerificaVar(1);
         else S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);

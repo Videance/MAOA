@@ -32,6 +32,8 @@ public class S_IK : MonoBehaviour
     protected Color corDesligado;
     public Material[] materials; // 0 Base | 1 Conectada
 
+    public Renderer linhaEnergia;
+
     [Header("CALCULO SE MOVEU")]
     protected Vector3 estavaAli;
     public bool meMovi = false;
@@ -71,6 +73,11 @@ public class S_IK : MonoBehaviour
             estavaAli = transform.position;
             if (!meMovi) Espera();
         }
+
+        Color cor = aberto ? Color.cyan : Color.white;
+
+        Material[] mats = linhaEnergia.materials;
+        if (mats.Length > 1) mats[1].color = cor;
 
         if (S_verificaGolpe.timeSlow) trocaEstado(estadoMao.desativada);
 

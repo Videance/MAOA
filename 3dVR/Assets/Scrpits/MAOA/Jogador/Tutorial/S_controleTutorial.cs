@@ -13,7 +13,8 @@ public class S_controleTutorial : MonoBehaviour
     public GameObject balaoFala;
     public GameObject botao;
     public TextMeshPro quadroDfala;
-    public Image imagem;
+    public GameObject imagem;
+    public GameObject imagem2;
     public S_verificaGolpe SVgolpe;
     public static bool emTutorial = true;
     public static bool passa = false;
@@ -65,7 +66,7 @@ public class S_controleTutorial : MonoBehaviour
 
         balaoFala.SetActive(true);
         botao.SetActive(false);
-
+        imagem.SetActive(false);
 
         if (tutorial1)
         {
@@ -236,18 +237,16 @@ public class S_controleTutorial : MonoBehaviour
 RIGperna[0].GetComponentInChildren<S_dis_pe>().segurando == false &&
 RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
-        yield return StartCoroutine(Escreve("Existem duas posturas: Fechada, quando suas pernas estão juntas, e Aberta, quando elas estão afastadas.", 4, true));
-        yield return StartCoroutine(Escreve("No momento você esta na fechada. Vamos trocar para a aberta. Segure cada perna e mova uma para frente e outra para trás.", 1, false));
+        yield return StartCoroutine(Escreve("Existem duas posturas principais: Fechada, quando suas pernas estão juntas, e Aberta, quando elas estão afastadas.", 4, true));
+        yield return StartCoroutine(Escreve("No momento você esta na fechada. Vamos trocar para a aberta. Segure a perna esquerda e mova para frente, enquanto segura a direita e a move para trás.", 1, false));
 
-        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
+        yield return new WaitUntil(() => jogador.posPerna.Contains("Ae"));
 
-        yield return StartCoroutine(Escreve("Isso! Agora sua postura é Aberta!", 4, true));
-        yield return StartCoroutine(Escreve("Enquanto aberta, mover seu equilíbrio movimenta você e seu adversário pelo mapa!", 4, true));
-        yield return StartCoroutine(Escreve("Equilíbrio para frente ou para trás, move para frente ou para trás. Enquanto esquerda e direita roda você para esquerda ou direita!", 4, true));
-        yield return StartCoroutine(Escreve("Mas exploramos disso mais tarde. Por agora, feche sua postura e então abra novamente.", 1, false));
+        yield return StartCoroutine(Escreve("Isso! Agora sua postura é Aberta esquerda, porque sua perna esquerda que esta na frente!", 4, true));
+        yield return StartCoroutine(Escreve("Agora vamos treinar mais uma vez. Feche sua postura e então abra novamente, mas agora com a direita na frente.", 1, false));
 
         yield return new WaitUntil(() => jogador.posPerna.Contains("F"));
-        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
+        yield return new WaitUntil(() => jogador.posPerna.Contains("Ad"));
 
         yield return StartCoroutine(Escreve("Perfeito!!! Você ja sabe sobre todas as bases do judo. Que tal avançarmos um pouco e botarmos em prática realizando um golpe?", 4, true));
 
@@ -261,20 +260,17 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
 
         yield return StartCoroutine(Escreve("Para realizar um golpe, temos que juntar tudo que aprendemos até agora. Equilíbrio, pegadas de ambas as imãos e a postura!", 4, true));
         yield return StartCoroutine(Escreve("Cada um possui requisitos para ser ativado, mas não se preocupe! Quando concluídos, o golpe será usado automaticamente!", 4, true));
-        yield return StartCoroutine(Escreve("vamos testar com o golpe XXXXX. Pra isso, conecte a Imão esquerda no Ombro esquerdo e a Imão direita no quadril", 1, false));
+        yield return StartCoroutine(Escreve("vamos testar com o golpe XXXXX. Pra isso, vou lhe mostrar uma imagem de um golpe e vou te ensinar a ler ela.", 4, true));
+
+        imagem.SetActive(true);
+
+        yield return StartCoroutine(Escreve("Do lado direito temos o seu MAOA:" + "\n" + "O disco mostra seu equilíbrio alvo em verde" + "\n" + "As pernas mostram sua postura alvo. Caso seja aberta, a perna mais levantada é a que deve ir para frente.", 4, true));
+        yield return StartCoroutine(Escreve("Do lado esquerdo temos o MAOA do adversário:" + "\n" + "O disco mostra o equilíbrio de fuga que o golpe causará em vermelho" + "\n" + "O corpo mostra em amarelo dois conectores, nos quais é onde suas Imãos devem ir.", 4, true));
 
         yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
         maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Q" &&
-        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
-        yield return StartCoroutine(Escreve("Isso! fizemos as imãos. Agora troque sua postura para Aberta!", 1, false));
-        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
-        yield return StartCoroutine(Escreve("Para finalizar, vamos ativar esse golpe colocando no equilíbrio correto! Ponha seu equilíbrio para a esquerda.", 1, false));
-        yield return new WaitUntil(() => jogador.dirEqui == "e");
-
-        yield return new WaitUntil(() => jogador.dirEqui == "e" && jogador.posPerna.Contains("A") &&
-        maoD.conectado != null && maoE.conectado != null &&
-        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Q" &&
-        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
+        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od" &&
+        jogador.posPerna.Contains("A") && jogador.dirEqui == "e");
 
         yield return StartCoroutine(Escreve("Isso ai, você realizou um golpe!", 4, true));
         yield return StartCoroutine(Escreve("No momenti não aconteceu nada, mas é porque estavamos apenas testando.", 4, true));
@@ -288,19 +284,11 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
     {
         QIparte = true;
 
-        yield return StartCoroutine(Escreve("Você deve ter percebido que ao realizar um golpe apenas um pequeno efeito aconteceu, mas isso é porque estavamos apenas testando.", 4, true));
         yield return StartCoroutine(Escreve("Durante uma verdadeira luta de judô você deve acertar a posição do corpo e depois realizar uma projeção!", 4, true));
         yield return StartCoroutine(Escreve("E agora que você ja sabe da posição, vamos aprender a projeção e como se defender de uma", 4, true));
-        yield return StartCoroutine(Escreve("Realize mais um golpe, o XXXXX, para ativarmos uma projeção", 4, true));
+        yield return StartCoroutine(Escreve("Realize mais um golpe, o XXXXX, para ativarmos uma projeção", 1, false));
 
-        yield return StartCoroutine(Escreve("Conecte a Imão esquerda no Ombro esquerdo e a Imão direita do Ombro direito", 1, false));
-        yield return new WaitUntil(() => maoD.conectado != null && maoE.conectado != null &&
-        maoD.conectado.GetComponent<S_Conector>().localDoCorpo == "Oe" &&
-        maoE.conectado.GetComponent<S_Conector>().localDoCorpo == "Od");
-        yield return StartCoroutine(Escreve("Troque sua postura para Aberta!", 1, false));
-        yield return new WaitUntil(() => jogador.posPerna.Contains("A"));
-        yield return StartCoroutine(Escreve("Ponha seu equilíbrio no centro.", 1, false));
-        yield return new WaitUntil(() => jogador.dirEqui == "c");
+        imagem2.SetActive(true);
 
         yield return new WaitUntil(() => jogador.dirEqui == "c" && jogador.posPerna.Contains("A") &&
         maoD.conectado != null && maoE.conectado != null &&
@@ -315,6 +303,8 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         pdesXR.trackPosition = false;
         pdesXR.trackRotation = false;
         pdesXR.enabled = false;
+
+        imagem2.SetActive(false);
 
         yield return StartCoroutine(Escreve("Buuuuuummm~ Legal né? Entramos dentro da zona de projeção!", 4, true));
         yield return StartCoroutine(Escreve("Aqui dentro tudo fica super lento e duas coisas importântes acontecem: Um jogador tenta realizar uma projeção e o outro fugir dela", 4, true));

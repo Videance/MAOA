@@ -382,17 +382,12 @@ public class S_verificaGolpe : MonoBehaviour
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
-            if (textInfo != null && textInfo.Length > 0)
+            foreach (NearFarInteractor n in nearFarInteractors)
             {
-                for (int i = 0; i < textInfo.Length; i++)
-                {
-                    if (i <= 5) textInfo[i].text =
-                "-- P L A C A R --\n" +
-                "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
-                "BOT: " + S_pontos.Spontos.pontos2;
-                    else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
-                }
+                enabled = true;
             }
+
+            mudarTexto();
 
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
@@ -403,33 +398,18 @@ public class S_verificaGolpe : MonoBehaviour
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
-            if (textInfo != null && textInfo.Length > 0)
+            foreach (NearFarInteractor n in nearFarInteractors)
             {
-                for (int i = 0; i < textInfo.Length; i++)
-                {
-                    if (i <= 5) textInfo[i].text =
-                "-- P L A C A R --\n" +
-                "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
-                "BOT: " + S_pontos.Spontos.pontos2;
-                    else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
-                }
+                enabled = true;
             }
+
+            mudarTexto();
 
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
         }
 
-        if (textInfo != null && textInfo.Length > 0)
-        {
-            for (int i = 0; i < textInfo.Length; i++)
-            {
-                if (i <= 5) textInfo[i].text =
-            "-- P L A C A R --\n" +
-            "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
-            "BOT: " + S_pontos.Spontos.pontos2;
-                else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
-            }
-        }
+        mudarTexto();
 
         foreach (NearFarInteractor n in nearFarInteractors)
         {
@@ -452,6 +432,21 @@ public class S_verificaGolpe : MonoBehaviour
             jog.PEs[i].grab.trackPosition = ativo;
             jog.PEs[i].grab.trackRotation = ativo;
             jog.PEs[i].grab.enabled = ativo;
+        }
+    }
+
+    void mudarTexto()
+    {
+        if (textInfo != null && textInfo.Length > 0)
+        {
+            for (int i = 0; i < textInfo.Length; i++)
+            {
+                if (i <= 5) textInfo[i].text =
+            "-- P L A C A R --\n" +
+            "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
+            "BOT: " + S_pontos.Spontos.pontos2;
+                else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
+            }
         }
     }
 }
