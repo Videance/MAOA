@@ -354,10 +354,10 @@ public class S_verificaGolpe : MonoBehaviour
                             S_pontos.vitoriasXbot[i] = new Vector2(S_pontos.vitoriasXbot[i].x, S_pontos.vitoriasXbot[i].y + 1);
                             break;
                         }
-
-                    Sclique.PassarFase();
                 }
                 else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
+
+                if (!Sbot_jogador.naoMover) Sclique.PassarFase();
             }
             else
             {
@@ -367,10 +367,7 @@ public class S_verificaGolpe : MonoBehaviour
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
-            foreach (NearFarInteractor n in nearFarInteractors)
-            {
-                enabled = true;
-            }
+            foreach (NearFarInteractor n in nearFarInteractors) enabled = true;
 
             mudarTexto();
 

@@ -22,7 +22,7 @@ public class S_jogador : MonoBehaviour
     public S_Equilibrio Sequilibrio;
     public S_energia Senergia;
     public List<Renderer> CorpoTodoRend = new List<Renderer>();
-    protected Color[] coresOriginais;
+    public GameObject escudo;
 
     [Header("RAGDOLL")]
     public bool emRagdoll = false;
@@ -65,11 +65,6 @@ public class S_jogador : MonoBehaviour
         // 2. Ignorar colisão interna
         for (int i = 0; i < colliders.Length; i++)
         {
-            //Renderer rend = null;
-
-            //if (colliders[i].gameObject.CompareTag("p")) rend = colliders[i].gameObject.GetComponent<Renderer>();
-            //if (rend != null) CorpoTodoRend.Add(GetComponent<Renderer>());
-
             for (int j = i + 1; j < colliders.Length; j++)
             {
                 Physics.IgnoreCollision(colliders[i], colliders[j]);
@@ -86,21 +81,23 @@ public class S_jogador : MonoBehaviour
 
         if (transform.position.z < 0) jog1 = true;
 
-        coresOriginais = new Color[CorpoTodoRend.Count];
-
-        for (int i = 0; i < CorpoTodoRend.Count; i++)
-            coresOriginais[i] = CorpoTodoRend[i].materials[0].color;
-
         Ragdoll(false);
     }
 
     private void Update()
     {
-        seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
-            PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
-            ? true : false;
+        if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
+        {
+            seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
+                PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
+                ? true : false;
 
-        AtualizarCorpo();
+            if (!S_controleTutorial.tutorial1)
+            {
+                if (seMovendo && escudo.active == true) escudo.SetActive(false);
+                if (!seMovendo && escudo.active == false) escudo.SetActive(true);
+            }
+        }
 
         if (dirEqui == "c" || posPerna.Contains("F"))
         {
@@ -119,20 +116,20 @@ public class S_jogador : MonoBehaviour
         {
             if (jog1)
             {
-                if (dirEqui == "f") S_moveTudo.J1dirX = -0.8f;
-                if (dirEqui == "t") S_moveTudo.J1dirX = 0.8f;
-                if (dirEqui == "d") S_moveTudo.J1dirY = -2f;
-                if (dirEqui == "e") S_moveTudo.J1dirY = 2f;
+                if (dirEqui == "f") S_moveTudo.J1dirX = -0.5f;
+                if (dirEqui == "t") S_moveTudo.J1dirX = 0.5f;
+                if (dirEqui == "d") S_moveTudo.J1dirY = -1f;
+                if (dirEqui == "e") S_moveTudo.J1dirY = 1f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J1dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J1dirY = 0;
             }
             else
             {
-                if (dirEqui == "f") S_moveTudo.J2dirX = 0.8f;
-                if (dirEqui == "t") S_moveTudo.J2dirX = -0.8f;
-                if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
-                if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
+                if (dirEqui == "f") S_moveTudo.J2dirX = 0.5f;
+                if (dirEqui == "t") S_moveTudo.J2dirX = -0.5f;
+                if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
+                if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
@@ -173,24 +170,5 @@ public class S_jogador : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!S_verificaGolpe.timeSlow && other.CompareTag("ch")) StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(adversario, this));
-    }
-
-    protected void AtualizarCorpo()
-    {
-        float brilho = seMovendo ? 1f : 0.7f;
-
-        for (int i = 0; i < CorpoTodoRend.Count; i++)
-        {
-            Material mat = CorpoTodoRend[i].materials[0];
-
-            Color cor = coresOriginais[i];
-
-            mat.color = new Color(
-                cor.r * brilho,
-                cor.g * brilho,
-                cor.b * brilho,
-                cor.a
-            );
-        }
     }
 }

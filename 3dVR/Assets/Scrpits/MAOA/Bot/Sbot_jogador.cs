@@ -42,8 +42,8 @@ public class Sbot_jogador : S_jogador
 
     private void Start()
     {
-        tt = Random.Range(3, 7) / dificuldade;
-        tt1 = Random.Range(1.5f, 3f) / dificuldade;
+        tt = Random.Range(3, 7) / Mathf.Sqrt(dificuldade);
+        tt1 = Random.Range(1.5f, 3f) / Mathf.Sqrt(dificuldade);
 
         golpe = S_verificaGolpe.Vgolpe.golpes[Random.Range(0, S_verificaGolpe.Vgolpe.golpes.Count)];
 
@@ -62,7 +62,7 @@ public class Sbot_jogador : S_jogador
         if (t >= tt)
         {
             t = 0;
-            tt = Random.Range(2f, 7f) / (dificuldade * 1.35f);
+            tt = Random.Range(2f, 7f) / Mathf.Sqrt(dificuldade);
             int lado = Random.Range(0, 5);
             StartCoroutine(equilibrio.mover(vectorPlacas[lado].transform.position));
         }
@@ -81,16 +81,23 @@ public class Sbot_jogador : S_jogador
         {
             t1 = 0;
             tt1 = Random.Range(4f, 8.5f) / Mathf.Sqrt(dificuldade);
-            int vel = Random.Range(2, 7);
-            if (vel <= dificuldade) StartCoroutine(FazendoGolpe(true));
+            int vel = Random.Range(2, 11);
+            if (vel <= Mathf.Sqrt(dificuldade)) StartCoroutine(FazendoGolpe(true));
             else StartCoroutine(FazendoGolpe(false));
         }
 
-        seMovendo = (maoD.movendo || maoE.movendo ||
+        if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
+        {
+            seMovendo = (maoD.movendo || maoE.movendo ||
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
             ? true : false;
 
-        AtualizarCorpo();
+            if (!S_controleTutorial.tutorial1)
+            {
+                if (seMovendo && escudo.active == true) escudo.SetActive(false);
+                if (!seMovendo && escudo.active == false) escudo.SetActive(true);
+            }
+        }
 
         if (dirEqui == "c" || posPerna.Contains("F") || Senergia.rodandoSS)
         {
@@ -99,10 +106,10 @@ public class Sbot_jogador : S_jogador
         }
         else if (posPerna.Contains("A"))
         {
-            if (dirEqui == "f") S_moveTudo.J2dirX = 0.8f;
-            if (dirEqui == "t") S_moveTudo.J2dirX = -0.8f;
-            if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
-            if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
+            if (dirEqui == "f") S_moveTudo.J2dirX = 0.5f;
+            if (dirEqui == "t") S_moveTudo.J2dirX = -0.5f;
+            if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
+            if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
 
             if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
             if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
@@ -123,10 +130,10 @@ public class Sbot_jogador : S_jogador
             espera = rapidinho ? Random.Range(1.2f, 2f) / Mathf.Sqrt(dificuldade) : Random.Range(4f, 6.5f) / Mathf.Sqrt(dificuldade);
             yield return new WaitForSeconds(espera);
 
-            troca = Random.Range(0, 10);
+            troca = Random.Range(0, 100);
 
-            if (troca == 0 && dificuldade != 1) rapidinho = !rapidinho;
-            if (dificuldade >= 3 && !rapidinho && troca <= dificuldade && troca != 0) rapidinho = true;
+            if (troca == 0 && dificuldade >= 10) rapidinho = !rapidinho;
+            if (dificuldade >= 25 && !rapidinho && troca <= dificuldade && troca != 0) rapidinho = true;
 
             VerificaVar(6);
         }

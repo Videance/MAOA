@@ -68,6 +68,7 @@ public class S_controleTutorial : MonoBehaviour
         balaoFala.SetActive(true);
         botao.SetActive(false);
         imagem.SetActive(false);
+        Sbot_jogador.dificuldade = 1;
 
         if (tutorial1)
         {
@@ -426,7 +427,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         yield return StartCoroutine(Escreve("Você ja sabe sobre as pernas, que elas podem mudar sua postura, mas ela podem fazer mais uma coisa: Mover você e o adversário pelo mapa!", 4, true));
         yield return StartCoroutine(Escreve("Enquanto com a perna aberta, permanecer com seu equilíbrio em alguma direção movimenta você e seu adversário", 4, true));
         yield return StartCoroutine(Escreve("Colocar para os lados faz vocês girarem, e colocar para frente ou para trás empurra nas direções respectivas", 4, true));
-        yield return StartCoroutine(Escreve("Tente se mover um pouco!", 4, true));
+        yield return StartCoroutine(Escreve("Tente se mover um pouco!", 10, true));
 
         yield return StartCoroutine(Escreve("Quando um dos combatentes toca com seu pé fora da área do tatami, a partida finaliza, dando 1 ponto para o adversário.", 4, true));
         yield return StartCoroutine(Escreve("Lembre-se: os jogadores compartilham sua força, ou seja, eles podem anular ou aumentar a força de movimento ou giro dependendo de como estão cada um.", 4, true));
@@ -439,7 +440,7 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         Senergia.energia = Senergia.energiaMax;
         yield return StartCoroutine(Escreve("Durante suas partidas, você percebeu que sua energia desce de forma bem lenta, mas é porque nós desativamos os aparatos que a utilizavam.", 4, true));
         yield return StartCoroutine(Escreve("Existem 4 formas de perder energia: \n" + "Manter sua postura abera. \n" + "manter seus braços longe do ombro. \n" + "Trocar seu equilíbrio. \n" + "Falhar em realizar um golpe.", 4, true));
-        yield return StartCoroutine(Escreve("Todos esse jeitos consomem rapidamente sua energia, então tome cuidado, pois ficar sem energia é algo fatal!", 4, true));
+        yield return StartCoroutine(Escreve("As linhas nos braços e pernas do seu MAOA lhe dizem quando eles estão gastando energia. Enquanto azuis, significa que aquela parte está consumindo energia a mais.", 4, true));
 
         StartCoroutine(SterceiraParte());
     }
@@ -448,8 +449,9 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
     {
         yield return StartCoroutine(Escreve("Vamos aprender sobre a última coisa: Fraqueza.", 4, true));
         yield return StartCoroutine(Escreve("No judô, diferente de como treinamos com o robô agora a pouco, você não consegue utilizar golpes em qualquer momento. Você precisa achar o 'Momentum'.", 4, true));
-        yield return StartCoroutine(Escreve("Mover/segurar seus braços, pernas ou enquanto trocando de equilíbrio deixa você vulnerável pela duração.", 4, true));
-        yield return StartCoroutine(Escreve("Ou seja, só é possivel acertar um golpe em um oponente que esteja fazendo alguma ação de trnasição. Igual para ele que só pode te atingir da mesma forma.", 4, true));
+        yield return StartCoroutine(Escreve("No seu peito, há um escudo. Mover/segurar seus braços, pernas ou enquanto trocando de equilíbrio deixa você vulnerável por um tempo, retirando seu escudo.", 4, true));
+        yield return StartCoroutine(Escreve("Enquanto o oponente possuir escudo não é possível acertar golpes nele! Eles irão falhar e consumir sua energia.", 4, true));
+        yield return StartCoroutine(Escreve("Utilize disso para se proteger de ataques e planejar seus movimentos.", 4, true));
 
         Destroy(S_verificaGolpe.Vgolpe.gameObject);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
