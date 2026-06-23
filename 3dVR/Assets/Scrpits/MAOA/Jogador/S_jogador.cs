@@ -65,10 +65,10 @@ public class S_jogador : MonoBehaviour
         // 2. Ignorar colisão interna
         for (int i = 0; i < colliders.Length; i++)
         {
-            Renderer rend = null;
+            //Renderer rend = null;
 
-            if (colliders[i].gameObject.CompareTag("p")) rend = colliders[i].gameObject.GetComponent<Renderer>();
-            if (rend != null) CorpoTodoRend.Add(GetComponent<Renderer>());
+            //if (colliders[i].gameObject.CompareTag("p")) rend = colliders[i].gameObject.GetComponent<Renderer>();
+            //if (rend != null) CorpoTodoRend.Add(GetComponent<Renderer>());
 
             for (int j = i + 1; j < colliders.Length; j++)
             {
