@@ -1,9 +1,7 @@
-using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class S_controleTutorial : MonoBehaviour
@@ -15,13 +13,14 @@ public class S_controleTutorial : MonoBehaviour
     public TextMeshPro quadroDfala;
     public GameObject imagem;
     public GameObject imagem2;
+    public GameObject golpesImagens;
     public S_verificaGolpe SVgolpe;
-    public static bool emTutorial = true;
+    public static bool emTutorial = true; //true
     public static bool passa = false;
     public S_onClique Sclique;
 
     // partes do tutorial
-    public static bool tutorial1 = true;
+    public static bool tutorial1 = true; //true
 
     [Header("PRIMEIRA PARTE")]
     public static bool Pparte = true;
@@ -70,14 +69,10 @@ public class S_controleTutorial : MonoBehaviour
         imagem.SetActive(false);
         Sbot_jogador.dificuldade = 1;
 
-        if (tutorial1)
-        {
-            S_pontos.Spontos.pontos1 = 0;
-            S_pontos.Spontos.pontos2 = 0;
+        S_pontos.Spontos.pontos1 = 0;
+        S_pontos.Spontos.pontos2 = 0;
 
-            StartCoroutine(PrimeiraParte());
-        }
-        else StartCoroutine(SprimeiraParte());
+        StartCoroutine(PrimeiraParte());
     }
 
     public void PegarVar()
@@ -126,6 +121,7 @@ public class S_controleTutorial : MonoBehaviour
 
     IEnumerator PrimeiraParte()
     {
+        golpesImagens.SetActive(false);
         Sequilibrio.enabled = false;
         discoEquilibrio.SetActive(false);
 
@@ -391,13 +387,13 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         yield return StartCoroutine(Escreve("Ao redor do seus disco de equilíbrio, você possui uma barra de energia, indo de 100% até 0%", 4, true));
         yield return StartCoroutine(Escreve("Ela não pode ser recuperada por ações e desce ao longo do tempo, e quando chegar a 0 seu MAOÁ irá parar de funcionar por um tempo enquanto ela se regenera.", 4, true));
 
-        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        yield return StartCoroutine(Escreve("Perder 25% de energia [4/4]", 2, true));
         Senergia.energia -= 25f;
-        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        yield return StartCoroutine(Escreve("Perder 25% de energia [3/4]", 2, true));
         Senergia.energia -= 25f;
-        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        yield return StartCoroutine(Escreve("Perder 25% de energia [2/4]", 2, true));
         Senergia.energia -= 25f;
-        yield return StartCoroutine(Escreve("Perder 25% de energia", 2, true));
+        yield return StartCoroutine(Escreve("Perder 25% de energia [1/4]", 2, true));
         Senergia.energia -= 25f;
 
         yield return new WaitForSeconds(4f);
@@ -412,13 +408,32 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         balaoFala.SetActive(false);
         botao.SetActive(false);
         Sclique.PassarFase();
+        golpesImagens.SetActive(true);
         enabled = false;
     }
 
     // SEGUNDA METADE DO TUTORIAL
 
-    IEnumerator SprimeiraParte() // ensia movimento pelo mapa
+    public IEnumerator SprimeiraParte() // ensia movimento pelo mapa
     {
+        yield return new WaitForEndOfFrame();
+
+        if (S_controleCena.modo != S_controleCena.ModoJogo.Tutorial)
+        {
+            balaoFala.SetActive(false);
+            enabled = false;
+        }
+
+        emTutorial = true;
+
+        balaoFala.SetActive(true);
+        botao.SetActive(false);
+        imagem.SetActive(false);
+        Sbot_jogador.dificuldade = 1;
+
+        S_pontos.Spontos.pontos1 = 0;
+        S_pontos.Spontos.pontos2 = 0;
+
         Senergia.energia = 99999999f;
         tutorial1 = false;
         foreach (GameObject rig in RIGimao) rig.SetActive(true);
@@ -468,7 +483,8 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
     {
         quadroDfala.text = fala;
         yield return null;
-        if (t > 0) yield return new WaitForSeconds(0); //trocar pra t
+        if (t > 0 && t != 4) yield return new WaitForSecondsRealtime(t); //trocar pra t
+        else if (t == 4) yield return new WaitForSecondsRealtime(2); //trocar pra t
 
         if (next)
         {

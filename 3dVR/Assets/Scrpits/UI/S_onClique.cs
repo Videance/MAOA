@@ -116,6 +116,12 @@ public class S_onClique : MonoBehaviour
             Sbot_jogador.naoMover = true;
             FindAnyObjectByType<S_controleTutorial>().enabled = true;
         }
+        else if (i == -1)
+        {
+            S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
+            Sbot_jogador.naoMover = true;
+            FindAnyObjectByType<S_controleTutorial>().enabled = true;
+        }
         else if (i != 0)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
@@ -130,12 +136,14 @@ public class S_onClique : MonoBehaviour
         }
         controleCena.ColocarMAOA(true);
         TrocaUI(7);
+
+        if (i == -1) StartCoroutine(FindAnyObjectByType<S_controleTutorial>().SprimeiraParte());
     }
 
     public void PassarFase()
     {
         Button butao = HB[faseAtual].GetComponent<Button>();
-        if (butao != null && S_controleCena.modo != S_controleCena.ModoJogo.PvE)
+        if (butao != null)
         {
             faseAtual += 1;
             butao.interactable = true;
@@ -144,17 +152,21 @@ public class S_onClique : MonoBehaviour
         {
             float p = 0;
             int lv = faseAtual * 2;
-            foreach (Vector2 v in S_pontos.vitoriasXbot) 
+            foreach (Vector2 v in S_pontos.vitoriasXbot)
+            {
+                Debug.Log(v);
+
                 if (v.x >= lv)
                 {
                     p += v.y;
-                    if (p > 2)
+                    if (p > 3)
                     {
                         faseAtual += 1;
                         PassarFase();
                         break;
                     }
                 }
+            }
         }
     }
 

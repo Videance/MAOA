@@ -30,5 +30,10 @@ public class S_controleCena : MonoBehaviour
 
             S_pontos.Spontos.CataJogadores();
         }
+
+        S_giraMapa[] move = FindObjectsOfType<S_giraMapa>();
+        for (int i = 0; i < move.Length; i++) move[i].ResetaMapa();
+        S_moveTudo[] move2 = FindObjectsOfType<S_moveTudo>();
+        for (int i = 0; i < move2.Length; i++) move2[i].ResetaMapa();
     }
 }

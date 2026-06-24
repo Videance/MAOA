@@ -1,11 +1,13 @@
-using System.Collections.Generic;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class S_jogador : MonoBehaviour
 {
     public S_jogador adversario;
     public bool jog1;
+    protected float tSeMove = 0;
 
     [Header("POSICAO")]
     public string imaoEsq = null;
@@ -84,13 +86,33 @@ public class S_jogador : MonoBehaviour
         Ragdoll(false);
     }
 
+    protected IEnumerator esperaSeMove()
+    {
+        if (seMovendo) yield break;
+        seMovendo = true;
+
+        while (tSeMove < 0.75f)
+        {
+            tSeMove += Time.unscaledDeltaTime;
+            if (tSeMove >= 0.75f)
+            {
+                seMovendo = false;
+            }
+            yield return null;
+        }
+    }
+
     private void Update()
     {
         if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
         {
-            seMovendo = (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
+            if (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
                 PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
-                ? true : false;
+            {
+                tSeMove = 0;
+                StartCoroutine(esperaSeMove());
+            }
+                
 
             if (!S_controleTutorial.tutorial1)
             {
@@ -116,20 +138,20 @@ public class S_jogador : MonoBehaviour
         {
             if (jog1)
             {
-                if (dirEqui == "f") S_moveTudo.J1dirX = -0.5f;
-                if (dirEqui == "t") S_moveTudo.J1dirX = 0.5f;
-                if (dirEqui == "d") S_moveTudo.J1dirY = -1f;
-                if (dirEqui == "e") S_moveTudo.J1dirY = 1f;
+                if (dirEqui == "f") S_moveTudo.J1dirX = -0.4f;
+                if (dirEqui == "t") S_moveTudo.J1dirX = 0.4f;
+                if (dirEqui == "d") S_moveTudo.J1dirY = -2f;
+                if (dirEqui == "e") S_moveTudo.J1dirY = 2f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J1dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J1dirY = 0;
             }
             else
             {
-                if (dirEqui == "f") S_moveTudo.J2dirX = 0.5f;
-                if (dirEqui == "t") S_moveTudo.J2dirX = -0.5f;
-                if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
-                if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+                if (dirEqui == "f") S_moveTudo.J2dirX = 0.4f;
+                if (dirEqui == "t") S_moveTudo.J2dirX = -0.4f;
+                if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
+                if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
 
                 if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
                 if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;

@@ -19,23 +19,14 @@ public class S_moveTudo : MonoBehaviour
         quadra = objetosQandam[0];
     }
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += AoCarregarCena;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= AoCarregarCena;
-    }
-
-    void AoCarregarCena(Scene scene, LoadSceneMode mode)
+    public void ResetaMapa()
     {
         quadra.transform.rotation = Quaternion.identity;
     }
 
     private void Update()
     {
+        return;
         if (S_verificaGolpe.timeSlow || quadra == null || S_controleTutorial.tutorial1) return;
 
         float dirX = J1dirX + J2dirX;

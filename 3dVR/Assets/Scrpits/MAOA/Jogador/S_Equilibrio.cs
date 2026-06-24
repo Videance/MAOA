@@ -306,7 +306,7 @@ public class S_Equilibrio : MonoBehaviour
         if (!energia.rodandoSS && noEnergy)
         {
             noEnergy = false;
-            TrocarCor(direcaoEquilibrio, dirFulga != null);
+            TrocarCor(direcaoEquilibrio, false);
         }
     }
 

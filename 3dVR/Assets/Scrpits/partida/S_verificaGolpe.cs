@@ -343,6 +343,8 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
+            Debug.Log("nem veio");
+
             if (adv is Sbot_jogador)
             {
                 //ganhou
@@ -357,10 +359,17 @@ public class S_verificaGolpe : MonoBehaviour
                 }
                 else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
 
-                if (!Sbot_jogador.naoMover) Sclique.PassarFase();
+                Debug.Log("quase");
+
+                if (!Sbot_jogador.naoMover)
+                {
+                    Debug.Log("chegou");
+                    Sclique.PassarFase();
+                }
             }
             else
             {
+                Debug.Log("perdeu?");
                 //perde
             }
 

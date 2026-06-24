@@ -109,11 +109,13 @@ public class S_dis_pe : S_dis_boneGrab
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("chb")) return;
 
-        S_verificaGolpe.derrotaPorLimite = true;
+        FindAnyObjectByType<S_controleCena>().ColocarMAOA(true);
 
-        S_jogador adv = GetComponentInParent<S_jogador>().adversario;
-        S_jogador eu = GetComponentInParent<S_jogador>();
-        StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(adv, eu));
+        if (GetComponentInParent<S_jogador>() is Sbot_jogador)
+        {
+            S_pontos.Spontos.pontos2 += 1;
+        }
+        else S_pontos.Spontos.pontos1 += 1;
     }
 
     // ---------- CONTROLE DE VARIÁVEL QUANDO SEGURANDO OU NÃO ----------

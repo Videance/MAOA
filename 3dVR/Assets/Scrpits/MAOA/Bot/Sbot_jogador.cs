@@ -88,9 +88,12 @@ public class Sbot_jogador : S_jogador
 
         if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
         {
-            seMovendo = (maoD.movendo || maoE.movendo ||
+            if (maoD.movendo || maoE.movendo ||
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
-            ? true : false;
+            {
+                tSeMove = 0;
+                StartCoroutine(esperaSeMove());
+            }
 
             if (!S_controleTutorial.tutorial1)
             {
@@ -106,10 +109,10 @@ public class Sbot_jogador : S_jogador
         }
         else if (posPerna.Contains("A"))
         {
-            if (dirEqui == "f") S_moveTudo.J2dirX = 0.5f;
-            if (dirEqui == "t") S_moveTudo.J2dirX = -0.5f;
-            if (dirEqui == "d") S_moveTudo.J2dirY = 1f;
-            if (dirEqui == "e") S_moveTudo.J2dirY = -1f;
+            if (dirEqui == "f") S_moveTudo.J2dirX = 0.4f;
+            if (dirEqui == "t") S_moveTudo.J2dirX = -0.4f;
+            if (dirEqui == "d") S_moveTudo.J2dirY = 2f;
+            if (dirEqui == "e") S_moveTudo.J2dirY = -2f;
 
             if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
             if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;

@@ -21,23 +21,14 @@ public class S_giraMapa : MonoBehaviour
         rotacaoInicial = transform.rotation;
     }
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += AoCarregarCena;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= AoCarregarCena;
-    }
-
-    void AoCarregarCena(Scene scene, LoadSceneMode mode)
+    public void ResetaMapa()
     {
         transform.position = posInicial;
     }
 
     void Update()
     {
+        return;
         if (S_verificaGolpe.timeSlow || S_moveTudo.quadra == null || S_controleTutorial.emTutorial || this == S_moveTudo.quadra) return;
 
         float dirX = S_moveTudo.J1dirX + S_moveTudo.J2dirX;
