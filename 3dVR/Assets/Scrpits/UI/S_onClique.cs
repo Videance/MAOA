@@ -11,7 +11,7 @@ public class S_onClique : MonoBehaviour
     S_verificaGolpe Svg;
     int faseAtual = 0;
     bool passandoT = false;
-    float T = 0;
+    public static float T = 0;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
@@ -21,6 +21,7 @@ public class S_onClique : MonoBehaviour
     public TextMeshPro TcamY;
     public TextMeshPro Tdificuldade;
     public GameObject camOffset;
+    public TextMeshPro[] TextosTelao;
 
     [Header("Particulas")]
     public ParticleSystem[] bordas;
@@ -51,21 +52,8 @@ public class S_onClique : MonoBehaviour
             passandoT = false;
             SairPartida();
         }
-    }
 
-    public void MoverCamera(int dir)
-    {
-        Vector3 cam = camOffset.transform.position;
-
-        if (dir == 0 && cam.x < 1) cam.x += 0.05f;
-        if (dir == 1 && cam.x > -1) cam.x -= 0.05f;
-        if (dir == 2 && cam.y < 1) cam.y += 0.05f;
-        if (dir == 3 && cam.y > -1) cam.y -= 0.05f;
-
-        camOffset.transform.position += new Vector3(cam.x, cam.y, 0);
-
-        TcamX.text = "" + cam.x;
-        TcamY.text = "" + cam.y;
+        for (int i = 0;i < TextosTelao.Length; i++) TextosTelao[i].text = "Tempo de jogo:" + "\n" + T;
     }
 
     public void TrocaUI(int id) //sempre chamado quando troca a UI pra fechar todas
@@ -89,6 +77,8 @@ public class S_onClique : MonoBehaviour
             if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) passandoT = true;
         }
         else if (id == 0) foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        Tdificuldade.text = "" + Sbot_jogador.dificuldade;
     }
 
     public void DificuldadeBot(bool sobe)

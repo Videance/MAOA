@@ -313,6 +313,8 @@ public class S_verificaGolpe : MonoBehaviour
 
         }
 
+        mudarTexto();
+
         Time.timeScale = 0.05f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
@@ -343,8 +345,6 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
-            Debug.Log("nem veio");
-
             if (adv is Sbot_jogador)
             {
                 //ganhou
@@ -359,17 +359,13 @@ public class S_verificaGolpe : MonoBehaviour
                 }
                 else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
 
-                Debug.Log("quase");
-
                 if (!Sbot_jogador.naoMover)
                 {
-                    Debug.Log("chegou");
                     Sclique.PassarFase();
                 }
             }
             else
             {
-                Debug.Log("perdeu?");
                 //perde
             }
 
@@ -433,11 +429,11 @@ public class S_verificaGolpe : MonoBehaviour
         {
             for (int i = 0; i < textInfo.Length; i++)
             {
-                if (i <= 5) textInfo[i].text =
+                if (i <= 3) textInfo[i].text =
             "-- P L A C A R --\n" +
             "Jogador: " + S_pontos.Spontos.pontos1 + "\n" +
             "BOT: " + S_pontos.Spontos.pontos2;
-                else textInfo[i].text = "Dificulade =" + Sbot_jogador.dificuldade;
+                else textInfo[i].text = "Dificulade: " + Sbot_jogador.dificuldade;
             }
         }
     }

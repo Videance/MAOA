@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -7,9 +6,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis_BoneGrab
 {
     S_jogador Jogador;
-
-    [Header("%")]
-    public TextMesh[] texto;
 
     [Header("STAMINA")]
     protected int n = 0;
@@ -28,7 +24,6 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         energia = energiaMax;
         Jogador = GetComponent<S_jogador>();
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
-        texto = GetComponentsInChildren<TextMesh>();
         maos = GetComponentsInChildren<XRBaseInteractor>().Take(4).ToArray();
     }
 
@@ -42,11 +37,10 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         {
             if (!S_controleTutorial.emTutorial)
             {
-                energia -= Time.deltaTime / 3;
-                int q = 0;
-                foreach (var i in IK) if (i.aberto) { q += 1; }
+                float q = 0.35f;
+                foreach (var i in IK) if (i.aberto) { q += 0.5f; }
                 if (Jogador.posPerna.Contains("A")) q += 1;
-                if (q > 0) energia -= Time.deltaTime * q;
+                energia -= Time.deltaTime * q;
             }
         }
         else StartCoroutine(SemStamina());

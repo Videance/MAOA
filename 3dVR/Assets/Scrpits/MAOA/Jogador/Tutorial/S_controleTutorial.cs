@@ -468,13 +468,12 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
         yield return StartCoroutine(Escreve("Enquanto o oponente possuir escudo não é possível acertar golpes nele! Eles irão falhar e consumir sua energia.", 4, true));
         yield return StartCoroutine(Escreve("Utilize disso para se proteger de ataques e planejar seus movimentos.", 4, true));
 
-        Destroy(S_verificaGolpe.Vgolpe.gameObject);
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         emTutorial = false;
         FindAnyObjectByType<S_onClique>().TrocaUI(0);
         controleCena.ColocarMAOA(false);
-        balaoFala.SetActive(false);
         botao.SetActive(false);
+        balaoFala.SetActive(false);
         Sclique.PassarFase();
         enabled = false;
     }

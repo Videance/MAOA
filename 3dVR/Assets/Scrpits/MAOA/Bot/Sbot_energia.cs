@@ -15,7 +15,6 @@ public class Sbot_energia : S_energia
         energiaMax = 30f + 60f * (1f + 9f * Mathf.Pow(Sbot_jogador.dificuldade / 100f, 2f));
         energia = energiaMax;
         IK = GetComponentsInChildren<S_IK>().Take(2).ToArray();
-        texto = GetComponentsInChildren<TextMesh>();
         maos = GetComponentsInChildren<XRBaseInteractor>().Take(4).ToArray();
     }
 
@@ -32,23 +31,15 @@ public class Sbot_energia : S_energia
 
             if (!S_controleTutorial.tutorial1)
             {
-                int q = 0;
-                foreach (var i in IK) if (i.aberto) q += 2; 
+                float q = 0.35f;
+                foreach (var i in IK) if (i.aberto) { q += 0.5f; }
                 if (jogador.posPerna.Contains("A")) q += 1;
-                if (q > 0) energia -= Time.deltaTime * q;
+                energia -= Time.deltaTime * q;
             }
         }
         else StartCoroutine(SemStamina());
 
         if (energia > energiaMax || energia < 0) energia = Mathf.Clamp(energia, 0, energiaMax);
-
-        //troca o texto da bateria
-        foreach (var i in texto)
-        {
-            i.text = Mathf.RoundToInt(energia).ToString() + "%";
-            if (energia > 0 && i.text == "0%") i.text = "1%";
-            if (energia == 0) i.text = "out";
-        }
     }
 
     IEnumerator SemStamina()
