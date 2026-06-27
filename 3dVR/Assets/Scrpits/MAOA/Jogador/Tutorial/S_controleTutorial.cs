@@ -482,8 +482,8 @@ RIGperna[1].GetComponentInChildren<S_dis_pe>().segurando == false);
     {
         quadroDfala.text = fala;
         yield return null;
-        if (t > 0 && t != 4) yield return new WaitForSecondsRealtime(t); //trocar pra t
-        else if (t == 4) yield return new WaitForSecondsRealtime(2); //trocar pra t
+        //if (t > 0 && t != 4) yield return new WaitForSecondsRealtime(t); //trocar pra t
+        //else if (t == 4) yield return new WaitForSecondsRealtime(2); //trocar pra 2
 
         if (next)
         {

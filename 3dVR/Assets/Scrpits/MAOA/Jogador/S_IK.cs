@@ -165,8 +165,6 @@ public class S_IK : MonoBehaviour
         if (ladoEsq) jogador.imaoEsq = conectado.GetComponent<S_Conector>().localDoCorpo;
         else jogador.imaoDir = conectado.GetComponent<S_Conector>().localDoCorpo;
 
-        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
-
         S_Conector Scone = conectado.GetComponent<S_Conector>();
 
         Scone.maoOcupando = this;
@@ -174,6 +172,8 @@ public class S_IK : MonoBehaviour
         Scone.rend.material.SetColor("_Cor", corAtivada);
 
         trocaEstado(estadoMao.conectada);
+
+        S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
     }
 
     public virtual void Desconecta()

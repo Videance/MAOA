@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using static S_IK;
 
 public class S_verificaGolpe : MonoBehaviour
 {
@@ -226,6 +226,11 @@ public class S_verificaGolpe : MonoBehaviour
             {
                 jog.IKs[i].Desconecta();
                 jog.PEs[i].Mover(false, false);
+
+                if (!(adv is Sbot_jogador))
+                {
+                    jog.IKs[i].trocaEstado(estadoMao.livre);
+                }
             }
         }
         else
@@ -329,25 +334,10 @@ public class S_verificaGolpe : MonoBehaviour
 
         foreach (ParticleSystem p in fogos) p.Play();
 
-        yield return new WaitForSecondsRealtime(3f);
-
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
-
-        ConfigurarGrab(jog, true);
-        ConfigurarGrab(adv, true);
-
-        timeSlow = false;
-        resetaCena = false;
-        tempo = 0;
-        derrotou = false;
-        derrotaPorLimite = false;
-
-        luzes[2].SetActive(false);
-        luzes[0].SetActive(true);
-
         if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
+            derrotou = false;
+
             if (adv is Sbot_jogador)
             {
                 //ganhou
@@ -368,7 +358,7 @@ public class S_verificaGolpe : MonoBehaviour
                             S_pontos.vitoriasXbot[i] = new Vector3(
                                 S_pontos.vitoriasXbot[i].x,
                                 S_pontos.vitoriasXbot[i].y + 1,
-                                S_onClique.T);
+                                Mathf.RoundToInt(S_onClique.T));
 
                         break;
                     }
@@ -379,21 +369,43 @@ public class S_verificaGolpe : MonoBehaviour
                     S_pontos.vitoriasXbot.Add(new Vector3(
                         Sbot_jogador.dificuldade,
                         1,
-                        S_onClique.T));
+                        Mathf.RoundToInt(S_onClique.T)));
                 }
 
                 AtualizarLeaderboard();
-
-                if (!Sbot_jogador.naoMover)
-                {
-                    Sclique.PassarFase();
-                }
+                FindAnyObjectByType<S_onClique>().TrocaUI(9);
             }
             else
             {
-                //perde
+                FindAnyObjectByType<S_onClique>().TrocaUI(8);
             }
+        }
+        else if (S_modoHistoria.listaGolpes.Count == 0 && S_controleCena.modo == S_controleCena.ModoJogo.Historia)
+        {
+            derrotou = false;
+            FindAnyObjectByType<S_onClique>().TrocaUI(9);
+        }
 
+        mudarTexto();
+
+        yield return new WaitForSecondsRealtime(3f);
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        ConfigurarGrab(jog, true);
+        ConfigurarGrab(adv, true);
+
+        timeSlow = false;
+        resetaCena = false;
+        tempo = 0;
+        derrotaPorLimite = false;
+
+        luzes[2].SetActive(false);
+        luzes[0].SetActive(true);
+
+        if (!derrotou)
+        {
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
@@ -401,26 +413,16 @@ public class S_verificaGolpe : MonoBehaviour
 
             mudarTexto();
 
+            if (!Sbot_jogador.naoMover) Sclique.PassarFase();
+
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
+            derrotou = false;
+
             yield break;
         }
-        else if (S_modoHistoria.listaGolpes.Count == 0 && S_controleCena.modo == S_controleCena.ModoJogo.Historia)
-        {
-            S_pontos.Spontos.pontos1 = 0;
-            S_pontos.Spontos.pontos2 = 0;
 
-            foreach (NearFarInteractor n in nearFarInteractors)
-            {
-                enabled = true;
-            }
-
-            mudarTexto();
-
-            Sclique.PassarFase();
-            controleCena.ColocarMAOA(false);
-            FindAnyObjectByType<S_onClique>().TrocaUI(0);
-        }
+        derrotou = false;
 
         mudarTexto();
 
@@ -484,13 +486,9 @@ public class S_verificaGolpe : MonoBehaviour
 
             GameObject obj = Instantiate(prefabLeadbord, leadbord.transform);
 
-            TextMeshPro texto = obj.GetComponentInChildren<TextMeshPro>();
+            TextMeshProUGUI texto = obj.GetComponent<TextMeshProUGUI>();
 
-            texto.text =
-                $"{i + 1}º\r\n" +
-                $"DIFICULDADE: {dado.x}\r\n" +
-                $"Melhor Tempo: {dado.z:F2}s\r\n" +
-                $"Vitórias: {(int)dado.y}";
+            if (texto != null) texto.text = "              DIFICULDADE: " + dado.x + "\r\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - \r\nMelhor Tempo: " + Mathf.RoundToInt(dado.z) + "s | Vitórias: " + dado.y;
         }
     }
 }

@@ -57,8 +57,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
         rodandoSS = true;
         foreach (var i in IK)
         {
-            i.trocaEstado(S_IK.estadoMao.desativada);
             if (i.conectado) i.Desconecta();
+            i.trocaEstado(S_IK.estadoMao.desativada);
         }
         foreach (var i in maos) i.GetComponent<XRBaseInteractor>().allowSelect = false; 
         

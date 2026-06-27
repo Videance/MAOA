@@ -12,6 +12,7 @@ public class S_onClique : MonoBehaviour
     int faseAtual = 0;
     bool passandoT = false;
     public static float T = 0;
+    bool naoAvanca = false;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
@@ -53,7 +54,7 @@ public class S_onClique : MonoBehaviour
             SairPartida();
         }
 
-        for (int i = 0;i < TextosTelao.Length; i++) TextosTelao[i].text = "Tempo de jogo:" + "\n" + T;
+        for (int i = 0;i < TextosTelao.Length; i++) TextosTelao[i].text = "Tempo de jogo:" + "\n" + Mathf.RoundToInt(T);
     }
 
     public void TrocaUI(int id) //sempre chamado quando troca a UI pra fechar todas
@@ -76,7 +77,10 @@ public class S_onClique : MonoBehaviour
             S_pontos.Spontos.pontos2 = 0;
             if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) passandoT = true;
         }
-        else if (id == 0) foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        else if (id == 0)
+        {
+            foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
 
         Tdificuldade.text = "" + Sbot_jogador.dificuldade;
     }
@@ -89,17 +93,19 @@ public class S_onClique : MonoBehaviour
         Tdificuldade.text = "" + Sbot_jogador.dificuldade;
     }
 
-    public void PlayBot(bool teste)
+    public void PlayBot(string teste)
     {
         controleCena.ColocarMAOA(true);
-        if (!teste) Sbot_jogador.naoMover = false;
-        else Sbot_jogador.naoMover = true;
+        Sbot_jogador.naoMover = teste.Contains("t") ? true : false;
+        naoAvanca = teste.Contains("a") ? false : true;
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         TrocaUI(7);
     }
 
     public void PlayHistory(int i)
     {
+        naoAvanca = false;
+
         if (i == 0)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
@@ -135,10 +141,13 @@ public class S_onClique : MonoBehaviour
         Button butao = HB[faseAtual].GetComponent<Button>();
         if (butao != null)
         {
+            if (naoAvanca) return;
             faseAtual += 1;
             butao.interactable = true;
+
+            if (faseAtual == 2 || faseAtual == 3 || faseAtual == 4) HB[faseAtual - 2].GetComponent<Button>().interactable = false;
         }
-        else if (S_controleCena.modo == S_controleCena.ModoJogo.PvE)
+        else if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && butao == null)
         {
             float p = 0;
             int lv = faseAtual * 2;
