@@ -142,7 +142,7 @@ public class S_onClique : MonoBehaviour
         {
             float p = 0;
             int lv = faseAtual * 2;
-            foreach (Vector2 v in S_pontos.vitoriasXbot)
+            foreach (Vector3 v in S_pontos.vitoriasXbot)
             {
                 Debug.Log(v);
 

@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class S_verificaGolpe : MonoBehaviour
 {
+    public GameObject prefabLeadbord;
+    public GameObject leadbord;
     public GameObject pDesequil; //objeto de prfab
     S_controleCena controleCena;
     public GameObject caminho;
@@ -348,16 +351,38 @@ public class S_verificaGolpe : MonoBehaviour
             if (adv is Sbot_jogador)
             {
                 //ganhou
-                if (S_pontos.vitoriasXbot.Count > 0)
+                bool encontrou = false;
+
+                for (int i = 0; i < S_pontos.vitoriasXbot.Count; i++)
                 {
-                    for (int i = 0; i < S_pontos.vitoriasXbot.Count; i++)
-                        if (S_pontos.vitoriasXbot[i].x == Sbot_jogador.dificuldade)
-                        {
-                            S_pontos.vitoriasXbot[i] = new Vector2(S_pontos.vitoriasXbot[i].x, S_pontos.vitoriasXbot[i].y + 1);
-                            break;
-                        }
+                    if (S_pontos.vitoriasXbot[i].x == Sbot_jogador.dificuldade)
+                    {
+                        encontrou = true;
+
+                        if (S_pontos.vitoriasXbot[i].z < S_onClique.T)
+                            S_pontos.vitoriasXbot[i] = new Vector3(
+                                S_pontos.vitoriasXbot[i].x,
+                                S_pontos.vitoriasXbot[i].y + 1,
+                                S_pontos.vitoriasXbot[i].z);
+                        else
+                            S_pontos.vitoriasXbot[i] = new Vector3(
+                                S_pontos.vitoriasXbot[i].x,
+                                S_pontos.vitoriasXbot[i].y + 1,
+                                S_onClique.T);
+
+                        break;
+                    }
                 }
-                else S_pontos.vitoriasXbot.Add(new Vector2(Sbot_jogador.dificuldade, 1f));
+
+                if (!encontrou)
+                {
+                    S_pontos.vitoriasXbot.Add(new Vector3(
+                        Sbot_jogador.dificuldade,
+                        1,
+                        S_onClique.T));
+                }
+
+                AtualizarLeaderboard();
 
                 if (!Sbot_jogador.naoMover)
                 {
@@ -435,6 +460,37 @@ public class S_verificaGolpe : MonoBehaviour
             "BOT: " + S_pontos.Spontos.pontos2;
                 else textInfo[i].text = "Dificulade: " + Sbot_jogador.dificuldade;
             }
+        }
+    }
+
+    void AtualizarLeaderboard()
+    {
+        // Ordena pelo menor tempo
+        List<Vector3> top10 = S_pontos.vitoriasXbot
+            .OrderBy(v => v.z)
+            .Take(10)
+            .ToList();
+
+        // Apaga todos os filhos antigos
+        foreach (Transform filho in leadbord.transform)
+        {
+            Destroy(filho.gameObject);
+        }
+
+        // Cria novamente
+        for (int i = 0; i < top10.Count; i++)
+        {
+            Vector3 dado = top10[i];
+
+            GameObject obj = Instantiate(prefabLeadbord, leadbord.transform);
+
+            TextMeshPro texto = obj.GetComponentInChildren<TextMeshPro>();
+
+            texto.text =
+                $"{i + 1}º\r\n" +
+                $"DIFICULDADE: {dado.x}\r\n" +
+                $"Melhor Tempo: {dado.z:F2}s\r\n" +
+                $"Vitórias: {(int)dado.y}";
         }
     }
 }
