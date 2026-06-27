@@ -413,7 +413,7 @@ public class S_verificaGolpe : MonoBehaviour
 
             mudarTexto();
 
-            if (!Sbot_jogador.naoMover) Sclique.PassarFase();
+            if (!Sbot_jogador.naoMover && !S_onClique.naoAvanca) Sclique.PassarFase();
 
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);

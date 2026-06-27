@@ -12,7 +12,7 @@ public class S_onClique : MonoBehaviour
     int faseAtual = 0;
     bool passandoT = false;
     public static float T = 0;
-    bool naoAvanca = false;
+    public static bool naoAvanca = false;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
@@ -104,8 +104,6 @@ public class S_onClique : MonoBehaviour
 
     public void PlayHistory(int i)
     {
-        naoAvanca = false;
-
         if (i == 0)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
@@ -141,7 +139,6 @@ public class S_onClique : MonoBehaviour
         Button butao = HB[faseAtual].GetComponent<Button>();
         if (butao != null)
         {
-            if (naoAvanca) return;
             faseAtual += 1;
             butao.interactable = true;
 
@@ -175,6 +172,7 @@ public class S_onClique : MonoBehaviour
         S_pontos.Spontos.pontos1 = 0;
         S_pontos.Spontos.pontos2 = 0;
         TrocaUI(0);
+        naoAvanca = false;
         controleCena.ColocarMAOA(false);
     }
 
