@@ -29681,7 +29681,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670621040}
-  m_Mesh: {fileID: 7998156965949562257, guid: b379a330de11ed0428c9747f7f5dd565, type: 3}
+  m_Mesh: {fileID: 7998156965949562257, guid: f778ad6c7e6beb34bae35aa4cb24af5b, type: 3}
 --- !u!1 &1693979914
 GameObject:
   m_ObjectHideFlags: 0
@@ -35500,7 +35500,7 @@ PrefabInstance:
     - target: {fileID: -5754084199372789682, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2794106270765247560, guid: 3bcdf6ce5c8991d44a12858dee9f7b5c, type: 3}
+      objectReference: {fileID: 2794106270765247560, guid: a00a394a6ddeace46a41e5b045956155, type: 3}
     - target: {fileID: 919132149155446097, guid: 32a1379c7affc1949af24a54df0f90be, type: 3}
       propertyPath: m_Name
       value: caixa do robo
