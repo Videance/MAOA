@@ -271,6 +271,9 @@ public class S_verificaGolpe : MonoBehaviour
         if (derrotou) yield break;
         derrotou = true;
 
+        S_colisorPontinhos.podecolidir = true;
+        S_colisorPontos.contaVitoria = true;
+
         if (S_controleCena.modo == S_controleCena.ModoJogo.Historia)
         {
             if (ataque != null &&
@@ -402,15 +405,14 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (!derrotou)
         {
+            if (S_pontos.Spontos.pontos1 >= 2 && !Sbot_jogador.naoMover && !S_onClique.naoAvanca) Sclique.PassarFase();
+
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
 
             foreach (NearFarInteractor n in nearFarInteractors) enabled = true;
 
             mudarTexto();
-
-            if (!Sbot_jogador.naoMover && !S_onClique.naoAvanca) Sclique.PassarFase();
-
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             derrotou = false;
@@ -422,10 +424,7 @@ public class S_verificaGolpe : MonoBehaviour
 
         mudarTexto();
 
-        foreach (NearFarInteractor n in nearFarInteractors)
-        {
-            enabled = true;
-        }
+        foreach (NearFarInteractor n in nearFarInteractors) enabled = true;
 
         controleCena.ColocarMAOA(true);
     }

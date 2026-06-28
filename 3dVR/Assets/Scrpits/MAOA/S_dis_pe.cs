@@ -60,6 +60,13 @@ public class S_dis_pe : S_dis_boneGrab
         {
             transform.position = pos;
         }
+
+        Vector3 dir = (transform.position - GOinicial.transform.position).normalized;
+
+        float distancia = Vector3.Distance(transform.position, GOinicial.transform.position);
+
+        if (distancia >= dis)
+            transform.position = GOinicial.transform.position + dir * dis;
     }
 
     public IEnumerator Mover(bool praFrente, bool inverte)
@@ -107,15 +114,15 @@ public class S_dis_pe : S_dis_boneGrab
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("chb")) return;
-
-        FindAnyObjectByType<S_controleCena>().ColocarMAOA(true);
-
-        if (GetComponentInParent<S_jogador>() is Sbot_jogador)
+        if (other.CompareTag("chb"))
         {
-            S_pontos.Spontos.pontos2 += 1;
+            Debug.Log("tocou");
+
+            S_verificaGolpe.timeSlow = true;
+
+            S_jogador eu = GetComponentInParent<S_jogador>();
+            S_verificaGolpe.Vgolpe.StartCoroutine(S_verificaGolpe.Vgolpe.Derrota(eu.adversario, eu));
         }
-        else S_pontos.Spontos.pontos1 += 1;
     }
 
     // ---------- CONTROLE DE VARIÁVEL QUANDO SEGURANDO OU NÃO ----------
