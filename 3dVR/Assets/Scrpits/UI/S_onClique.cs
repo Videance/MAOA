@@ -8,10 +8,9 @@ public class S_onClique : MonoBehaviour
     public GameObject[] UIs;
     public GameObject historiaButtons;
     public GameObject[] HB;
-    S_verificaGolpe Svg;
-    int faseAtual = 0;
+    int faseAtual = 3; //troca pra 0 dps
     bool passandoT = false;
-    public static float T = 0;
+    public static float T = 0; 
     public static bool naoAvanca = false;
 
     [Header("mover cabeça")]
@@ -29,7 +28,6 @@ public class S_onClique : MonoBehaviour
 
     private void Awake()
     {
-        Svg = S_verificaGolpe.Vgolpe;
         controleCena = GetComponentInParent<S_controleCena>();
         foreach (GameObject b in HB)
         {
@@ -105,27 +103,27 @@ public class S_onClique : MonoBehaviour
 
     public void PlayHistory(int i)
     {
+        Sbot_jogador.naoMover = true;
+
         if (i == 0)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
-            Sbot_jogador.naoMover = true;
             FindAnyObjectByType<S_controleTutorial>().enabled = true;
         }
         else if (i == -1)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
-            Sbot_jogador.naoMover = true;
             FindAnyObjectByType<S_controleTutorial>().enabled = true;
         }
-        else if (i != 0)
+        else if (i >= 2)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Historia;
 
             int n = (i * 4) - 1;
             for (int j = 0; j < 4; j++)
             {
-                S_modoHistoria.listaGolpes[j] = Svg.golpes[n - j];
-                Debug.Log(Svg.golpes[n - j].nome);
+                S_modoHistoria.listaGolpes.Add(S_verificaGolpe.Vgolpe.golpes[n - j]);
+                Debug.Log(S_verificaGolpe.Vgolpe.golpes[n - j].nome);
                 Debug.Log(S_modoHistoria.listaGolpes.Count);
             }
         }

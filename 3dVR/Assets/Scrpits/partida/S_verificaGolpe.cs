@@ -68,10 +68,17 @@ public class S_verificaGolpe : MonoBehaviour
 
         if (S_controleCena.modo == S_controleCena.ModoJogo.Historia)
         {
-            ranking.Add((S_modoHistoria.listaGolpes[0], 4));
-            ranking.Add((S_modoHistoria.listaGolpes[1], 3));
-            ranking.Add((S_modoHistoria.listaGolpes[2], 2));
-            ranking.Add((S_modoHistoria.listaGolpes[3], 1));
+            if (S_modoHistoria.listaGolpes.Count > 0)
+                ranking.Add((S_modoHistoria.listaGolpes[0], 4));
+
+            if (S_modoHistoria.listaGolpes.Count > 1)
+                ranking.Add((S_modoHistoria.listaGolpes[1], 3));
+
+            if (S_modoHistoria.listaGolpes.Count > 2)
+                ranking.Add((S_modoHistoria.listaGolpes[2], 2));
+
+            if (S_modoHistoria.listaGolpes.Count > 3)
+                ranking.Add((S_modoHistoria.listaGolpes[3], 1));
         }
 
         foreach (var golpe in Vgolpe.golpes)
@@ -107,7 +114,19 @@ public class S_verificaGolpe : MonoBehaviour
 
         var top4 = ranking.OrderByDescending(x => x.pontos).Take(4).ToList();
 
-        for (int i = 0; i < top4.Count; i++) golpes3[i].sprite = top4[i].golpe.imagem;
+        for (int i = 0; i < golpes3.Count; i++)
+        {
+            if (i < top4.Count)
+            {
+                golpes3[i].sprite = top4[i].golpe.imagem;
+                golpes3[i].enabled = true;
+            }
+            else
+            {
+                golpes3[i].sprite = null;
+                golpes3[i].enabled = false;
+            }
+        }
     }
 
     public void CriarPonto(int os2, S_jogador jog, S_jogador adv)
@@ -280,7 +299,7 @@ public class S_verificaGolpe : MonoBehaviour
                 S_modoHistoria.listaGolpes.Contains(ataque))
             {
                 S_modoHistoria.listaGolpes.Remove(ataque);
-                S_modoHistoria.aprendidos.Add(ataque);
+                if (!S_modoHistoria.aprendidos.Contains(ataque)) S_modoHistoria.aprendidos.Add(ataque);
             }
         }
 
@@ -333,7 +352,7 @@ public class S_verificaGolpe : MonoBehaviour
 
         foreach (ParticleSystem p in fogos) p.Play();
 
-        if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
+        if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && !Sbot_jogador.naoMover && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
             derrotou = false;
 
@@ -383,6 +402,7 @@ public class S_verificaGolpe : MonoBehaviour
         {
             derrotou = false;
             FindAnyObjectByType<S_onClique>().TrocaUI(9);
+            Sclique.PassarFase();
         }
 
         mudarTexto();
