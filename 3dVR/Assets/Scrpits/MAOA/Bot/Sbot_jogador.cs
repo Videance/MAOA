@@ -86,9 +86,9 @@ public class Sbot_jogador : S_jogador
             else StartCoroutine(FazendoGolpe(false));
         }
 
-        if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
+        if (!S_verificaGolpe.timeSlow && !S_verificaGolpe.derrotou)
         {
-            if (maoD.movendo || maoE.movendo ||
+            if (maoD.movendo || maoE.movendo || Senergia.rodandoSS ||
             PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
             {
                 tSeMove = 0;

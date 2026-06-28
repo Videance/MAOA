@@ -104,10 +104,10 @@ public class S_jogador : MonoBehaviour
 
     private void Update()
     {
-        if (!S_verificaGolpe.timeSlow || !S_verificaGolpe.derrotou)
+        if (!S_verificaGolpe.timeSlow && !S_verificaGolpe.derrotou)
         {
             if (IKs[0].estado == S_IK.estadoMao.segurando || IKs[1].estado == S_IK.estadoMao.segurando ||
-                PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel)
+                PEs[0].segurando || PEs[1].segurando || Sequilibrio.equilibrioCandidato != null || vulneravel || Senergia.rodandoSS)
             {
                 tSeMove = 0;
                 StartCoroutine(esperaSeMove());

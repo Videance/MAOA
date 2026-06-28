@@ -38,11 +38,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Power: 1.25
+    - _Power: 1.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _XRMotionVectorsPass: 1
-    - _alpha: 0.05
+    - _alpha: 0.075
     m_Colors:
     - _Cor: {r: 1, g: 0.018630981, b: 0, a: 0}
     - _CorB: {r: 0, g: 1, b: 0.69730544, a: 1}

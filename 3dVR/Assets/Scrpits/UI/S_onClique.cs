@@ -97,6 +97,7 @@ public class S_onClique : MonoBehaviour
     {
         controleCena.ColocarMAOA(true);
         Sbot_jogador.naoMover = teste.Contains("t") ? true : false;
+        if (teste.Contains("a")) Sbot_jogador.dificuldade = faseAtual * 2;
         naoAvanca = teste.Contains("a") ? false : true;
         S_controleCena.modo = S_controleCena.ModoJogo.PvE;
         TrocaUI(7);
@@ -143,26 +144,6 @@ public class S_onClique : MonoBehaviour
             butao.interactable = true;
 
             if (faseAtual == 2 || faseAtual == 3 || faseAtual == 4) HB[faseAtual - 2].GetComponent<Button>().interactable = false;
-        }
-        else if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && butao == null)
-        {
-            float p = 0;
-            int lv = faseAtual * 2;
-            foreach (Vector3 v in S_pontos.vitoriasXbot)
-            {
-                Debug.Log(v);
-
-                if (v.x >= lv)
-                {
-                    p += v.y;
-                    if (p > 3)
-                    {
-                        faseAtual += 1;
-                        PassarFase();
-                        break;
-                    }
-                }
-            }
         }
     }
 

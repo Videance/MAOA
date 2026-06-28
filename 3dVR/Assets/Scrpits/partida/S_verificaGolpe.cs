@@ -226,11 +226,7 @@ public class S_verificaGolpe : MonoBehaviour
             {
                 jog.IKs[i].Desconecta();
                 jog.PEs[i].Mover(false, false);
-
-                if (!(adv is Sbot_jogador))
-                {
-                    jog.IKs[i].trocaEstado(estadoMao.livre);
-                }
+                adv.IKs[i].trocaEstado(estadoMao.livre);
             }
         }
         else
