@@ -76,7 +76,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{fdcb505d-1cc0-494d-8d11-46292dc83ec2}">
 		<property name="volume">
-			<value>-30</value>
+			<value>-35</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{9e8c5396-fb93-4236-8936-26782761ba95}</destination>
@@ -161,7 +161,7 @@
 	<object class="MixerBusFader" id="{2c2bd63a-9fd8-416d-9c8b-8c5e03174dfe}" />
 	<object class="LowpassSimpleEffect" id="{102f235a-aaac-481f-aa9d-bb1b1d575f5a}">
 		<property name="cutoff">
-			<value>1500</value>
+			<value>2100</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{51b6e901-01e2-4578-aad2-32d881980880}">
