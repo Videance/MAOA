@@ -13,7 +13,7 @@ public class S_colisorPontos : MonoBehaviour
             S_colisorPontinhos.podecolidir = false;
             S_verificaGolpe.resetaCena = true;
 
-            estrelas.Play();
+            estrelas.Play(false);
         }
     }
 }

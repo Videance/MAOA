@@ -59,7 +59,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
         S_onClique.PlayOneShot(caindoEnergia);
 
-        atordoado.Play();
+        atordoado.Play(false);
 
         rodandoSS = true;
         foreach (var i in IK)

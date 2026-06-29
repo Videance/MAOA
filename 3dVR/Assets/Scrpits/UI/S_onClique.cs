@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class S_onClique : MonoBehaviour
     public GameObject[] UIs;
     public GameObject historiaButtons;
     public GameObject[] HB;
-    int faseAtual = 2; //troca pra 0 dps
+    int faseAtual = 0; //troca pra 0 dps
     bool passandoT = false;
     public static float T = 0; 
     public static bool naoAvanca = false;
@@ -34,6 +35,7 @@ public class S_onClique : MonoBehaviour
 
     [Header("SONS")]
     public static float volume = 1f;
+    public Slider slider;
 
     // Loops
     public EventReference musicaMenu;
@@ -52,9 +54,9 @@ public class S_onClique : MonoBehaviour
 
     PLAYBACK_STATE estado;
 
-    public void MudarVolume(float vol)
+    public void MudarVolume()
     {
-        volume = vol;
+        volume = slider.value;
         menuInstance.setVolume(volume);
         batalhaInstance.setVolume(volume);
         plateiaInstance.setVolume(volume);
@@ -239,7 +241,7 @@ public class S_onClique : MonoBehaviour
                 Debug.Log(S_modoHistoria.listaGolpes.Count);
             }
         }
-        StartCoroutine(TresDoisUm(true));
+        controleCena.ColocarMAOA(true);
         TrocaUI(7);
 
         if (i == -1) StartCoroutine(FindAnyObjectByType<S_controleTutorial>().SprimeiraParte());
