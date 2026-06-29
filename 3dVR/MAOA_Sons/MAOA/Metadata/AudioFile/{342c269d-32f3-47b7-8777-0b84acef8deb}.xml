@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{342c269d-32f3-47b7-8777-0b84acef8deb}">
+		<property name="assetPath">
+			<value>Track5_Robo_acertando_o_chaomp3.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.063673469387755</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a8a484b5-5d39-4928-935d-67800a7ae69a}</destination>
+		</relationship>
+	</object>
+</objects>

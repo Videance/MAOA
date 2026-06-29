@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{57fd7fde-2b7c-4c85-bdb7-5e144b49dd7c}">
+		<property name="assetPath">
+			<value>Vitor Cervi e Marcela - Plateia Raivosa - Robô.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.6159999999999997</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a8a484b5-5d39-4928-935d-67800a7ae69a}</destination>
+		</relationship>
+	</object>
+</objects>

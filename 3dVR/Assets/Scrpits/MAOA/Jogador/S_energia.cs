@@ -1,4 +1,5 @@
 using System.Collections;
+using FMODUnity;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -18,6 +19,10 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     public XRBaseInteractor[] maos;
 
     public ParticleSystem atordoado;
+
+    [Header("SONS")]
+    public EventReference caindoEnergia;
+    public EventReference subindoEnergia;
 
     private void Start()
     {
@@ -52,6 +57,8 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
     {
         if (S_verificaGolpe.timeSlow) yield break;
 
+        S_onClique.PlayOneShot(caindoEnergia);
+
         atordoado.Play();
 
         rodandoSS = true;
@@ -66,6 +73,7 @@ public class S_energia : MonoBehaviour //controla apenas stamina e solta o S_dis
 
         yield return new WaitForSeconds(3.25f);
 
+        S_onClique.PlayOneShot(subindoEnergia);
         while (energia < energiaMax)
         {
             energia += energiaMax * 0.25f;

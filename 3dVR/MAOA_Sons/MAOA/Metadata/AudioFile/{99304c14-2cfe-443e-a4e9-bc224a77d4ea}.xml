@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{99304c14-2cfe-443e-a4e9-bc224a77d4ea}">
+		<property name="assetPath">
+			<value>Vitor Cervi e Marcela - Cachorro quente... sem salsicha - Robô.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.0800000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a8a484b5-5d39-4928-935d-67800a7ae69a}</destination>
+		</relationship>
+	</object>
+</objects>

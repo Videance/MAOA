@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{30ce344f-938a-4611-bdfa-b0653b23b4f2}">
+		<property name="assetPath">
+			<value>Firework.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.6236734693877555</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a8a484b5-5d39-4928-935d-67800a7ae69a}</destination>
+		</relationship>
+	</object>
+</objects>

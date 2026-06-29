@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,13 @@ public class S_verificaGolpe : MonoBehaviour
     [Header("Partículas")]
     public ParticleSystem[] fogos = new ParticleSystem[4];
 
+    [Header("Sons")]
+    // OneShots
+    public EventReference fogosSom;
+    public EventReference BOOO;
+    public EventReference YAY;
+    public EventReference caida;
+
     private void Awake()
     {
         if (Vgolpe == null)
@@ -70,15 +78,8 @@ public class S_verificaGolpe : MonoBehaviour
         {
             if (S_modoHistoria.listaGolpes.Count > 0)
                 ranking.Add((S_modoHistoria.listaGolpes[0], 4));
-
             if (S_modoHistoria.listaGolpes.Count > 1)
                 ranking.Add((S_modoHistoria.listaGolpes[1], 3));
-
-            if (S_modoHistoria.listaGolpes.Count > 2)
-                ranking.Add((S_modoHistoria.listaGolpes[2], 2));
-
-            if (S_modoHistoria.listaGolpes.Count > 3)
-                ranking.Add((S_modoHistoria.listaGolpes[3], 1));
         }
 
         foreach (var golpe in Vgolpe.golpes)
@@ -106,7 +107,6 @@ public class S_verificaGolpe : MonoBehaviour
             {
                 ataque = golpe;
                 Vgolpe.StartCoroutine(Vgolpe.TimeSlow(golpe, jog, adv));
-                break;
             }
 
             if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) ranking.Add((golpe, pontos));
@@ -152,7 +152,7 @@ public class S_verificaGolpe : MonoBehaviour
     {
         if (timeSlow || derrotou) yield break;
 
-        if (!S_controleTutorial.tutorial1 && !adv.seMovendo)
+        if (!S_controleTutorial.tutorial1 && !adv.seMovendo && !Sbot_jogador.naoMover)
         {
             jog.Fragil();
 
@@ -327,13 +327,18 @@ public class S_verificaGolpe : MonoBehaviour
             yield return null;
         }
 
+        S_onClique.PlayOneShot(fogosSom);
+        foreach (ParticleSystem p in fogos) p.Play();
+
         if (jog is Sbot_jogador)
         {
+            S_onClique.PlayOneShot(BOOO);
             if (resetaCena) S_pontos.Spontos.pontos2 = 2;
             else S_pontos.Spontos.pontos2 += 1;
         }
         else
         {
+            S_onClique.PlayOneShot(YAY);
             if (resetaCena) S_pontos.Spontos.pontos1 = 2;
             else S_pontos.Spontos.pontos1 += 1;
 
@@ -349,8 +354,6 @@ public class S_verificaGolpe : MonoBehaviour
             Hluz.seguirAlvo = true;
             Hluz.alvo = null;
         }
-
-        foreach (ParticleSystem p in fogos) p.Play();
 
         if (S_controleCena.modo == S_controleCena.ModoJogo.PvE && !Sbot_jogador.naoMover && (S_pontos.Spontos.pontos2 >= 2 || S_pontos.Spontos.pontos1 >= 2))
         {
@@ -406,6 +409,8 @@ public class S_verificaGolpe : MonoBehaviour
         }
 
         mudarTexto();
+
+        S_onClique.PlayOneShot(caida);
 
         yield return new WaitForSecondsRealtime(3f);
 

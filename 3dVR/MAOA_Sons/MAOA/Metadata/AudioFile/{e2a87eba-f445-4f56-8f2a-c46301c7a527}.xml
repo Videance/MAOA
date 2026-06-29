@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{e2a87eba-f445-4f56-8f2a-c46301c7a527}">
+		<property name="assetPath">
+			<value>Vitor cervi e Marcela - Máquina de Sorvete da Robotiana - Robô.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.3040000000000003</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a8a484b5-5d39-4928-935d-67800a7ae69a}</destination>
+		</relationship>
+	</object>
+</objects>

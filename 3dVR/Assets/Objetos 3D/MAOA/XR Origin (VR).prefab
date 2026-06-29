@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 6661649863845989772}
   - component: {fileID: 6966737268598843263}
   - component: {fileID: 1175798338153642513}
+  - component: {fileID: 4978580759129641326}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -365,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_Equilibrio
   pCentral: {fileID: 0}
   jogador: {fileID: 0}
+  cam: {fileID: 0}
   multiplicador: 0.75
   direcaoEquilibrio: c
   dirFulga: 
@@ -382,6 +384,20 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 67108321b23ad734086343a7d8ad2788, type: 2}
   - {fileID: 2100000, guid: 755c1135944291d42ab2328c2220cb53, type: 2}
   pEquiRender: {fileID: 0}
+--- !u!114 &4978580759129641326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831675829114963516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &6106440068165449001
 GameObject:
   m_ObjectHideFlags: 0

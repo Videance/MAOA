@@ -116,8 +116,8 @@ public class S_jogador : MonoBehaviour
 
             if (!S_controleTutorial.tutorial1)
             {
-                if (seMovendo && escudo.active == true) escudo.SetActive(false);
-                if (!seMovendo && escudo.active == false) escudo.SetActive(true);
+                if (seMovendo && escudo.activeInHierarchy) escudo.SetActive(false);
+                if (!seMovendo && !escudo.activeInHierarchy) escudo.SetActive(true);
             }
         }
 

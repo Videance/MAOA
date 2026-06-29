@@ -1,4 +1,5 @@
 
+using FMODUnity;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -46,6 +47,7 @@ public class Sbot_energia : S_energia
     {
         if (S_verificaGolpe.timeSlow) yield break;
 
+        S_onClique.PlayOneShot(caindoEnergia);
         atordoado.Play();
 
         rodandoSS = true;
@@ -55,6 +57,7 @@ public class Sbot_energia : S_energia
 
         yield return new WaitForSeconds(3.25f);
 
+        S_onClique.PlayOneShot(subindoEnergia);
         while (energia < energiaMax)
         {
             energia += energiaMax * 0.25f;
