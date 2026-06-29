@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,21 +13,20 @@ public class S_onClique : MonoBehaviour
     public GameObject[] UIs;
     public GameObject historiaButtons;
     public GameObject[] HB;
-    int faseAtual = 0; //troca pra 0 dps
+    public static int faseAtual = 0; //troca pra 0 dps
     bool passandoT = false;
     public static float T = 0; 
     public static bool naoAvanca = false;
     bool TparaVozes = false;
     public GameObject MAOAfake;
+    public GameObject botaoSair;
+    public Button botaoBot;
 
     [Header("mover cabeça")]
     public GameObject CameraOffset;
 
     [Header("Textos")]
-    public TextMeshPro TcamX;
-    public TextMeshPro TcamY;
     public TextMeshPro Tdificuldade;
-    public GameObject camOffset;
     public TextMeshPro[] TextosTelao;
     public TextMeshPro TresDosUm;
 
@@ -74,8 +74,34 @@ public class S_onClique : MonoBehaviour
 
     private void Start()
     {
-        if (S_modoHistoria.aprendidos.Count == 0) for (int i = 0; i < 4; i++) S_modoHistoria.aprendidos.Add(S_verificaGolpe.Vgolpe.golpes[i]);
-        PassarFase();
+        botaoBot.interactable = false;
+
+        if (faseAtual > 0)
+        {
+            for (int i = 0; i < faseAtual; i++)
+            {
+                Button butao = HB[i].GetComponent<Button>();
+                if (butao != null)
+                {
+                    butao.interactable = true;
+                }
+            }
+
+            int v = 0;
+            if (faseAtual >= 3)
+            {
+                botaoBot.interactable = true;
+                v = 2;
+            }
+            else if (faseAtual >= 2) v = 1;
+            else if (faseAtual >= 1) v = 0;
+            for (int o = 0; o <= v; o++) HB[o].GetComponent<Button>().interactable = false;
+        }
+        else if (S_modoHistoria.aprendidos.Count == 0)
+        {
+            for (int i = 0; i < 4; i++) S_modoHistoria.aprendidos.Add(S_verificaGolpe.Vgolpe.golpes[i]);
+            PassarFase();
+        }
 
         menuInstance = RuntimeManager.CreateInstance(musicaMenu);
         batalhaInstance = RuntimeManager.CreateInstance(musicaBatalha);
@@ -105,6 +131,7 @@ public class S_onClique : MonoBehaviour
     IEnumerator TresDoisUm(bool qual)
     {
         GameObject maoa = Instantiate(MAOAfake);
+        botaoSair.SetActive(false);
         TresDosUm.gameObject.SetActive(true);
         TresDosUm.text = "3";
         yield return new WaitForSecondsRealtime(1);
@@ -115,6 +142,7 @@ public class S_onClique : MonoBehaviour
         TresDosUm.text = "GO";
         yield return new WaitForSecondsRealtime(1);
         TresDosUm.gameObject.SetActive(false);
+        botaoSair.SetActive(true);
         Destroy(maoa);
 
         controleCena.ColocarMAOA(qual);
@@ -143,6 +171,11 @@ public class S_onClique : MonoBehaviour
         TparaVozes = false;
     }
 
+    public void SairDoJogo()
+    {
+        Application.Quit();
+    }
+
     public static void PlayOneShot(EventReference evento)
     {
         EventInstance instancia = RuntimeManager.CreateInstance(evento);
@@ -157,11 +190,13 @@ public class S_onClique : MonoBehaviour
 
         for (int i = 0; i < UIs.Length; i++)
         {
-            if (i == id) UIs[i].SetActive(true);
-            else UIs[i].SetActive(false);
+            if (UIs[i] != null)
+            {
+                if (i == id) UIs[i].SetActive(true);
+                else UIs[i].SetActive(false);
+            }
         }
 
-        T = 0;
         passandoT = false;
 
         S_onClique.PlayOneShot(clique);
@@ -169,15 +204,21 @@ public class S_onClique : MonoBehaviour
         if (id == 7)
         {
             foreach (ParticleSystem p in bordas) p.Play();
-            S_pontos.Spontos.pontos1 = 0;
-            S_pontos.Spontos.pontos2 = 0;
             if (S_controleCena.modo == S_controleCena.ModoJogo.PvE) passandoT = true;
-            menuInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            plateiaInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            batalhaInstance.start();
+
+            batalhaInstance.getPlaybackState(out estado);
+            if (!(estado == PLAYBACK_STATE.PLAYING))
+            {
+                menuInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                plateiaInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                batalhaInstance.start();
+            }
         }
         else if (id == 0)
         {
+            T = 0;
+            S_pontos.Spontos.pontos1 = 0;
+            S_pontos.Spontos.pontos2 = 0;
             foreach (ParticleSystem p in bordas) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             menuInstance.getPlaybackState(out estado);
             if (!(estado == PLAYBACK_STATE.PLAYING))
@@ -256,6 +297,7 @@ public class S_onClique : MonoBehaviour
             butao.interactable = true;
 
             if (faseAtual == 2 || faseAtual == 3 || faseAtual == 4) HB[faseAtual - 2].GetComponent<Button>().interactable = false;
+            if (faseAtual == 4) botaoBot.interactable = true;
         }
     }
 

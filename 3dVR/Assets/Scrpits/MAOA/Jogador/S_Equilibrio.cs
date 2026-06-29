@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class S_Equilibrio : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class S_Equilibrio : MonoBehaviour
     protected float tempoTroca = 0.75f;
     public string equilibrioCandidato = null;
     protected float contadorTroca = 0f;
+    public EventReference trocaEqui;
 
     [Header("Instabilidade")]
     public float forcaBalanco = 0.05f;
@@ -209,6 +211,8 @@ public class S_Equilibrio : MonoBehaviour
         if (jogador.dirEqui == letra) return;
         direcaoEquilibrio = letra;
         jogador.dirEqui = letra;
+
+        S_onClique.PlayOneShot(trocaEqui);
 
         if (dirFulga != null && letra == dirFulga) dirFulga = null;
 

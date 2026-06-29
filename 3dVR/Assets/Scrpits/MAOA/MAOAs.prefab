@@ -25170,6 +25170,26 @@ PrefabInstance:
       propertyPath: 'm_Transforms.Array.data[40]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: trocaEqui.Path
+      value: event:/SFX/TrocaEqui
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: trocaEqui.Guid.Data1
+      value: 871471884
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: trocaEqui.Guid.Data2
+      value: 1217811191
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: trocaEqui.Guid.Data3
+      value: 754837426
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846121386075190506, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: trocaEqui.Guid.Data4
+      value: -627844211
+      objectReference: {fileID: 0}
     - target: {fileID: 2445039175097986770, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
@@ -25299,9 +25319,49 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3597645215578322523}
     - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Path
+      value: event:/SFX/Conecta
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: linhaEnergia
       value: 
       objectReference: {fileID: 3110172455943037437}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Path
+      value: event:/SFX/Desconetca
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data1
+      value: -566690994
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data2
+      value: 1110849454
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data3
+      value: -643272830
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data4
+      value: 121132054
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data1
+      value: 1147542521
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data2
+      value: 1136587218
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data3
+      value: 264716989
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604607773640033556, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data4
+      value: -695020339
+      objectReference: {fileID: 0}
     - target: {fileID: 4539821232002934806, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -25467,9 +25527,49 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6100070982755506073}
     - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Path
+      value: event:/SFX/Conecta
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
       propertyPath: linhaEnergia
       value: 
-      objectReference: {fileID: 1629549889968437497}
+      objectReference: {fileID: 7665028277420837446}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Path
+      value: event:/SFX/Desconetca
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data1
+      value: -566690994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data2
+      value: 1110849454
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data3
+      value: -643272830
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: conecta.Guid.Data4
+      value: 121132054
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data1
+      value: 1147542521
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data2
+      value: 1136587218
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data3
+      value: 264716989
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748507559310850, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
+      propertyPath: desconecta.Guid.Data4
+      value: -695020339
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3648124166940874984, guid: e41047c8a0973a84d872cdfeee0a39d8, type: 3}
@@ -26265,9 +26365,49 @@ PrefabInstance:
       value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Path
+      value: event:/SFX/Conecta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: linhaEnergia
       value: 
       objectReference: {fileID: 4286643975235899419}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Path
+      value: event:/SFX/Desconetca
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data1
+      value: -566690994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data2
+      value: 1110849454
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data3
+      value: -643272830
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data4
+      value: 121132054
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data1
+      value: 1147542521
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data2
+      value: 1136587218
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data3
+      value: 264716989
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089084472767340154, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data4
+      value: -695020339
+      objectReference: {fileID: 0}
     - target: {fileID: 4111218197841223113, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.005
@@ -26285,9 +26425,49 @@ PrefabInstance:
       value: 0.012
       objectReference: {fileID: 0}
     - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Path
+      value: event:/SFX/Conecta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: linhaEnergia
       value: 
       objectReference: {fileID: 7152890184956596992}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Path
+      value: event:/SFX/Desconetca
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data1
+      value: -566690994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data2
+      value: 1110849454
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data3
+      value: -643272830
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: conecta.Guid.Data4
+      value: 121132054
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data1
+      value: 1147542521
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data2
+      value: 1136587218
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data3
+      value: 264716989
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306675168497663177, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: desconecta.Guid.Data4
+      value: -695020339
+      objectReference: {fileID: 0}
     - target: {fileID: 4390203108919482717, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -26564,6 +26744,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 7881917281169331981, guid: 0f2604f70f0d5dd4abf28e5a2aa2dfc1, type: 3}
+    - target: {fileID: 8643337691504077707, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: trocaEqui.Path
+      value: event:/SFX/TrocaEqui
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643337691504077707, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: trocaEqui.Guid.Data1
+      value: 871471884
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643337691504077707, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: trocaEqui.Guid.Data2
+      value: 1217811191
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643337691504077707, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: trocaEqui.Guid.Data3
+      value: 754837426
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643337691504077707, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
+      propertyPath: trocaEqui.Guid.Data4
+      value: -627844211
+      objectReference: {fileID: 0}
     - target: {fileID: 8769890519589993490, guid: fa6042396ee3ef24ebe7fef11da6d05a, type: 3}
       propertyPath: m_Mesh
       value: 

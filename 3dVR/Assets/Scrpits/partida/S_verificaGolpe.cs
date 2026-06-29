@@ -45,6 +45,8 @@ public class S_verificaGolpe : MonoBehaviour
 
     [Header("Partículas")]
     public ParticleSystem[] fogos = new ParticleSystem[4];
+    public GameObject particulaExplode;
+    GameObject par;
 
     [Header("Sons")]
     // OneShots
@@ -52,6 +54,7 @@ public class S_verificaGolpe : MonoBehaviour
     public EventReference BOOO;
     public EventReference YAY;
     public EventReference caida;
+    public EventReference explodeSom;
 
     private void Awake()
     {
@@ -67,6 +70,11 @@ public class S_verificaGolpe : MonoBehaviour
         if (textTempo != null)  textTempo.text = "";
 
         controleCena = FindAnyObjectByType<S_controleCena>();
+    }
+
+    private void Start()
+    {
+        AtualizarLeaderboard();
     }
 
     public void AcharGolpe(S_jogador jog, S_jogador adv)
@@ -225,6 +233,9 @@ public class S_verificaGolpe : MonoBehaviour
         if (Spde.tocouClimax)
         {
             dir = Spde.dirFinal;
+
+            par = Instantiate(particulaExplode, pDes.transform.position, Quaternion.identity);
+            S_onClique.PlayOneShot(explodeSom);
 
             //destroi o ponto e caminho
             Destroy(pDes);
@@ -414,6 +425,8 @@ public class S_verificaGolpe : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(3f);
 
+        if (par != null) Destroy(par);
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
@@ -441,6 +454,8 @@ public class S_verificaGolpe : MonoBehaviour
             controleCena.ColocarMAOA(false);
             FindAnyObjectByType<S_onClique>().TrocaUI(0);
             derrotou = false;
+
+            SaveManager.Salvar();
 
             yield break;
         }
@@ -487,9 +502,11 @@ public class S_verificaGolpe : MonoBehaviour
 
     void AtualizarLeaderboard()
     {
+        if (S_pontos.vitoriasXbot.Count == 0) return;
+
         // Ordena pelo menor tempo
         List<Vector3> top10 = S_pontos.vitoriasXbot
-            .OrderBy(v => v.z)
+            .OrderBy(v => v.x)
             .Take(10)
             .ToList();
 

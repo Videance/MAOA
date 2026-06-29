@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using FMODUnity;
 
 public class S_IK : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class S_IK : MonoBehaviour
     [Header("CALCULO SE MOVEU")]
     protected Vector3 estavaAli;
     public bool meMovi = false;
+
+    public EventReference conecta;
+    public EventReference desconecta;
 
     public enum estadoMao
     {
@@ -173,6 +177,8 @@ public class S_IK : MonoBehaviour
 
         trocaEstado(estadoMao.conectada);
 
+        S_onClique.PlayOneShot(conecta);
+
         S_verificaGolpe.Vgolpe.AcharGolpe(jogador, jogador.adversario);
     }
 
@@ -194,6 +200,8 @@ public class S_IK : MonoBehaviour
         conectado = null;
 
         trocaEstado(estadoMao.livre);
+
+        S_onClique.PlayOneShot(desconecta);
 
         StartCoroutine(VoltarProPeito());
     }

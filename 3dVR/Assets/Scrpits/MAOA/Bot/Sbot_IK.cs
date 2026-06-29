@@ -78,6 +78,8 @@ public class Sbot_IK : S_IK
         Scone.rend.material = materials[1];
         Scone.rend.material.SetColor("_Cor", corAtivada);
 
+        S_onClique.PlayOneShot(conecta);
+
         trocaEstado(estadoMao.conectada);
     }
 
@@ -110,6 +112,8 @@ public class Sbot_IK : S_IK
         }
 
         trocaEstado(estadoMao.livre);
+
+        S_onClique.PlayOneShot(desconecta);
 
         StartCoroutine(VoltarProPeito());
     }

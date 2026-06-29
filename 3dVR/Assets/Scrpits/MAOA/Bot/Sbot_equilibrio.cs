@@ -97,6 +97,8 @@ public class Sbot_equilibrio : S_Equilibrio
         else if (!S_verificaGolpe.timeSlow && !S_controleTutorial.tutorial1) energia.energia -= 5;
         energia.energia = Mathf.Clamp(energia.energia, 0, energia.energiaMax);
 
+        S_onClique.PlayOneShot(trocaEqui);
+
         ((Sbot_jogador)jogador).VerificaVar(0);
 
         TrocarCor(letra, false);

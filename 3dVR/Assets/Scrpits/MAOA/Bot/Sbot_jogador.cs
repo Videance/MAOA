@@ -288,8 +288,8 @@ public class Sbot_jogador : S_jogador
             if (box == null) break;
             Vector3 centroMundo = box.bounds.center;
 
-            float vel = equilibrio.speedMax * Random.Range(0.33f, 0.5f);
-            if (S_controleTutorial.emTutorial) vel = vel / 40;
+            float vel = equilibrio.speedMax * Random.Range(0.2f, 0.4f);
+            if (S_controleTutorial.emTutorial) vel = vel / 30;
 
             while (pDese != null && Vector3.Distance(pDese.transform.position, centroMundo) > 0.0001f)
             {

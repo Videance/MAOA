@@ -81,6 +81,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4000
+--- !u!114 &-4675648990632907152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/TrocaEqui
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/TrocaEqui
+  Guid:
+    Data1: 871471884
+    Data2: 1217811191
+    Data3: 754837426
+    Data4: -627844211
+  Banks:
+  - {fileID: 8575252797969240221}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 130
+--- !u!114 &-4623136855953083323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Falha_golpe
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Falha_golpe
+  Guid:
+    Data1: -56240818
+    Data2: 1100151237
+    Data3: 1279975855
+    Data4: -716526512
+  Banks:
+  - {fileID: 8575252797969240221}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3265
 --- !u!114 &-4120034793019591462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,10 +258,10 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639182699730869260
+  lastModified: 639183220933418324
   FileSizes:
   - Name: 
-    Value: 1330
+    Value: 1548
   Exists: 1
 --- !u!114 &-678098515123006121
 MonoBehaviour:
@@ -291,13 +345,18 @@ MonoBehaviour:
   - {fileID: -8497689181289215273}
   - {fileID: -678098515123006121}
   - {fileID: 17544529390140928}
+  - {fileID: -4675648990632907152}
+  - {fileID: -4623136855953083323}
+  - {fileID: 281635675080384965}
+  - {fileID: 7602824455665210797}
+  - {fileID: 6455781898121695783}
   EditorParameters: []
   MasterBanks:
   - {fileID: 8575252797969240221}
   StringsBanks:
   - {fileID: -1096849426041057427}
   cacheVersion: 131859
-  cacheTime: 639182699730869260
+  cacheTime: 639183220933418324
   SerializableEventsDict:
   - key: event:/SFX/Energy_Restoring
     index: 0
@@ -323,6 +382,16 @@ MonoBehaviour:
     index: 10
   - key: event:/Voices/Booing
     index: 11
+  - key: event:/SFX/TrocaEqui
+    index: 12
+  - key: event:/SFX/Falha_golpe
+    index: 13
+  - key: event:/SFX/Conecta
+    index: 14
+  - key: event:/SFX/Acertou_projecao
+    index: 15
+  - key: event:/SFX/Desconetca
+    index: 16
 --- !u!114 &17544529390140928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +419,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6426
+--- !u!114 &281635675080384965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Conecta
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Conecta
+  Guid:
+    Data1: -566690994
+    Data2: 1110849454
+    Data3: -643272830
+    Data4: 121132054
+  Banks:
+  - {fileID: 8575252797969240221}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 626
 --- !u!114 &3726900355890492827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +500,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6700
+--- !u!114 &6455781898121695783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Desconetca
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Desconetca
+  Guid:
+    Data1: 1147542521
+    Data2: 1136587218
+    Data3: 264716989
+    Data4: -695020339
+  Banks:
+  - {fileID: 8575252797969240221}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 626
+--- !u!114 &7602824455665210797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Acertou_projecao
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Acertou_projecao
+  Guid:
+    Data1: -1177209444
+    Data2: 1327057466
+    Data3: 1335440301
+    Data4: -32596870
+  Banks:
+  - {fileID: 8575252797969240221}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1560
 --- !u!114 &8575252797969240221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +569,6 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639182699730854118
+  lastModified: 639183220933398327
   FileSizes: []
   Exists: 1

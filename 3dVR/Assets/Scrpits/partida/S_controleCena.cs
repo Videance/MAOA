@@ -15,6 +15,11 @@ public class S_controleCena : MonoBehaviour
         Tutorial
     }
 
+    private void Awake()
+    {
+        SaveManager.Carregar();
+    }
+
     public void ColocarMAOA(bool recria)
     {
         if (Jogadores != null) Destroy(Jogadores);
