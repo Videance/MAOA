@@ -525,7 +525,7 @@ public class S_verificaGolpe : MonoBehaviour
 
             TextMeshProUGUI texto = obj.GetComponent<TextMeshProUGUI>();
 
-            if (texto != null) texto.text = "              DIFICULDADE: " + dado.x + "\r\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - \r\nMelhor Tempo: " + Mathf.RoundToInt(dado.z) + "s | Vitórias: " + dado.y;
+            if (texto != null) texto.text = "              DIFICULDADE: " + dado.x + "\r\n- - - - - - - - - - - - - - - - - - - - - - - \r\nMelhor Tempo: " + Mathf.RoundToInt(dado.z) + "s | Vitórias: " + dado.y;
         }
     }
 }

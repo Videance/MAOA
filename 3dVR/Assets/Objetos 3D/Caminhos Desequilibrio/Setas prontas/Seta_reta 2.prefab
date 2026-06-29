@@ -100,7 +100,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -194,7 +194,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1c070035dcce7534d8d5e343b15592ed, type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 6098013363895855611}
     - targetCorrespondingSourceObject: {fileID: -842192942856145038, guid: 1c070035dcce7534d8d5e343b15592ed, type: 3}
       insertIndex: -1

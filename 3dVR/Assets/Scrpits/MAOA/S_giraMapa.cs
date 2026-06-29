@@ -28,7 +28,7 @@ public class S_giraMapa : MonoBehaviour
 
     void Update()
     {
-        if (S_verificaGolpe.timeSlow || S_moveTudo.quadra == null || S_controleTutorial.emTutorial || this == S_moveTudo.quadra) return;
+        if (S_verificaGolpe.timeSlow || S_controleCena.Jogadores == null || S_moveTudo.quadra == null || S_controleTutorial.emTutorial || this == S_moveTudo.quadra) return;
 
         float dirX = S_moveTudo.J1dirX + S_moveTudo.J2dirX;
 

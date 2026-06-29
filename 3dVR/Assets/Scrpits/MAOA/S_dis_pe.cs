@@ -116,8 +116,6 @@ public class S_dis_pe : S_dis_boneGrab
     {
         if (other.CompareTag("chb"))
         {
-            Debug.Log("tocou");
-
             S_verificaGolpe.timeSlow = true;
 
             S_jogador eu = GetComponentInParent<S_jogador>();

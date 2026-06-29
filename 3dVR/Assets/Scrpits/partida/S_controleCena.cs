@@ -6,7 +6,7 @@ public class S_controleCena : MonoBehaviour
 
     public static ModoJogo modo = ModoJogo.Tutorial;
     public GameObject JogadoresPrefab;
-    public GameObject Jogadores; 
+    public static GameObject Jogadores; 
 
     public enum ModoJogo
     {

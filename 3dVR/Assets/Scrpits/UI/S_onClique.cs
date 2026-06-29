@@ -1,9 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
-using System.Security.Cryptography.X509Certificates;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -113,7 +111,7 @@ public class S_onClique : MonoBehaviour
 
     private void Update()
     {
-        if (passandoT && !S_verificaGolpe.derrotou && !S_verificaGolpe.timeSlow) T += Time.unscaledDeltaTime;
+        if (passandoT && !S_verificaGolpe.derrotou && !S_verificaGolpe.timeSlow && S_controleCena.Jogadores != null) T += Time.unscaledDeltaTime;
         if (T >= 240)
         {
             T = 0;
@@ -216,6 +214,7 @@ public class S_onClique : MonoBehaviour
         }
         else if (id == 0)
         {
+            botaoSair.SetActive(true);
             T = 0;
             S_pontos.Spontos.pontos1 = 0;
             S_pontos.Spontos.pontos2 = 0;
@@ -264,11 +263,13 @@ public class S_onClique : MonoBehaviour
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
             FindAnyObjectByType<S_controleTutorial>().enabled = true;
+            botaoSair.SetActive(false);
         }
         else if (i == -1)
         {
             S_controleCena.modo = S_controleCena.ModoJogo.Tutorial;
             FindAnyObjectByType<S_controleTutorial>().enabled = true;
+            botaoSair.SetActive(false);
         }
         else if (i >= 2)
         {

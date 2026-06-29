@@ -86,7 +86,7 @@ public class S_jogador : MonoBehaviour
         Ragdoll(false);
     }
 
-    protected IEnumerator esperaSeMove()
+    virtual protected IEnumerator esperaSeMove()
     {
         if (seMovendo) yield break;
         seMovendo = true;

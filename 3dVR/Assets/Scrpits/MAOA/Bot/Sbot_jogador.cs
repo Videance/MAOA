@@ -54,6 +54,22 @@ public class Sbot_jogador : S_jogador
     {
         if (naoMover) return;
 
+        if (!S_verificaGolpe.timeSlow && !S_verificaGolpe.derrotou)
+        {
+            if (maoD.movendo || maoE.movendo || Senergia.rodandoSS ||
+            PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
+            {
+                tSeMove = 0;
+                StartCoroutine(esperaSeMove());
+            }
+
+            if (!S_controleTutorial.tutorial1)
+            {
+                if (seMovendo && escudo.activeInHierarchy) escudo.SetActive(false);
+                if (!seMovendo && !escudo.activeInHierarchy) escudo.SetActive(true);
+            }
+        }
+
         if (equilibrio != null && !equilibrio.movendo && golpeP[0] == false) t += Time.unscaledDeltaTime;
         if (!fazendoGolpe) t1 += Time.unscaledDeltaTime;
 
@@ -86,22 +102,6 @@ public class Sbot_jogador : S_jogador
             else StartCoroutine(FazendoGolpe(false));
         }
 
-        if (!S_verificaGolpe.timeSlow && !S_verificaGolpe.derrotou)
-        {
-            if (maoD.movendo || maoE.movendo || Senergia.rodandoSS ||
-            PEs[0].movendo || PEs[1].movendo || Sequilibrio.equilibrioCandidato != null || vulneravel)
-            {
-                tSeMove = 0;
-                StartCoroutine(esperaSeMove());
-            }
-
-            if (!S_controleTutorial.tutorial1)
-            {
-                if (seMovendo && escudo.active == true) escudo.SetActive(false);
-                if (!seMovendo && escudo.active == false) escudo.SetActive(true);
-            }
-        }
-
         if (dirEqui == "c" || posPerna.Contains("F") || Senergia.rodandoSS)
         {
             S_moveTudo.J2dirX = 0f;
@@ -116,6 +116,25 @@ public class Sbot_jogador : S_jogador
 
             if (dirEqui == "e" || dirEqui == "d") S_moveTudo.J2dirX = 0;
             if (dirEqui == "f" || dirEqui == "t") S_moveTudo.J2dirY = 0;
+        }
+    }
+
+    override protected IEnumerator esperaSeMove()
+    {
+        if (seMovendo) yield break;
+        seMovendo = true;
+
+        float pD = dificuldade / 99;
+        float t = Mathf.Lerp(1f, 0.25f, pD);
+
+        while (tSeMove < t)
+        {
+            tSeMove += Time.unscaledDeltaTime;
+            if (tSeMove >= t)
+            {
+                seMovendo = false;
+            }
+            yield return null;
         }
     }
 

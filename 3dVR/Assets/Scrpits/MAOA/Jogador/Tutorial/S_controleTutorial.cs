@@ -78,7 +78,7 @@ public class S_controleTutorial : MonoBehaviour
 
     public void PegarVar()
     {
-        GameObject MAOA = controleCena.Jogadores;
+        GameObject MAOA = S_controleCena.Jogadores;
         S_jogador[] jogadores = MAOA.GetComponentsInChildren<S_jogador>();
 
         Debug.Log(jogadores.Length);
@@ -192,7 +192,7 @@ public class S_controleTutorial : MonoBehaviour
         yield return StartCoroutine(Escreve("Agora vamos desconectar elas! \r\nPara desconectar o Imão do lado azul [direita], pressione 'TRIGGER' do controle direito.\r\nPara desconectar o Imão do lado branco [esquerda], pressione 'TRIGGER' do controle esquerdo.", 1, false));
 
         yield return new WaitUntil(() => maoD.estado == S_IK.estadoMao.livre && maoE.estado == S_IK.estadoMao.livre);
-        Controles[0].SetActive(false);
+        Controles[1].SetActive(false);
 
         yield return StartCoroutine(Escreve("Isso ai! Lembre sempre:\r\n- Ambas as mãos podem mover qualquer Imão, mas cada Imão tem seu próprio 'TRIGGER'.\r\n- Enquanto conectado, um Imão não pode ser segurado. Desconecte antes.", 2, true));
         yield return StartCoroutine(Escreve("Agora que sabemos sobre o equilíbrio e os Imãos, vamos a última parte do MAOÁ:\r\nAs pernas, que controlam a postura.", 2, true));
